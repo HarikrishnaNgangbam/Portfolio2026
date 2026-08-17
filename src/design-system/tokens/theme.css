@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/*
+  Design tokens extracted directly from the reference site's compiled CSS
+  (harikrishnadesign.figma.site). Values are not approximations — they are
+  the literal CSS custom properties shipped by the original Figma Make build.
+*/
+
+:root {
+  --font-size: 16px;
+
+  /* Icon accent colors — used to color-cycle badges, icon chips, logos */
+  --icon-blue: #5a9dd9;
+  --icon-teal: #5dade2;
+  --icon-purple: #a78bfa;
+  --icon-green: #6fcf97;
+  --icon-orange: #f39c12;
+  --icon-pink: #ec7c9d;
+  --icon-slate: #6a89a7;
+  --icon-cyan: #45b7d1;
+
+  --background: #f5f8fb;
+  --foreground: #384959;
+
+  --card: #ffffffb3;
+  --card-foreground: #384959;
+
+  --popover: #ffffffd9;
+  --popover-foreground: #384959;
+
+  --primary: #5a9dd9;
+  --primary-foreground: #ffffff;
+
+  --secondary: #6a89a726;
+  --secondary-foreground: #6a89a7;
+
+  --tertiary: #bdddfc;
+  --tertiary-foreground: #384959;
+
+  --muted: #bdddfc33;
+  --muted-foreground: #6a89a7;
+
+  --accent: #88bdf21a;
+  --accent-foreground: #88bdf2;
+
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+
+  --border: #6a89a726;
+  --input: transparent;
+  --input-background: #bdddfc1a;
+  --switch-background: #6a89a7;
+
+  --ring: #88bdf24d;
+
+  --chart-1: #88bdf2;
+  --chart-2: #6a89a7;
+  --chart-3: #bdddfc;
+  --chart-4: #384959;
+  --chart-5: #88bdf299;
+
+  --radius: 0.5rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --sidebar: #f5f8fbb3;
+  --sidebar-foreground: #384959;
+  --sidebar-primary: #88bdf2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #bdddfc4d;
+  --sidebar-accent-foreground: #384959;
+  --sidebar-border: #6a89a726;
+  --sidebar-ring: #88bdf24d;
+
+  /* "Acrylic" glass surfaces — nav, cards, modals */
+  --acrylic-base: #fcfdfff7;
+  --acrylic-light: #f8fafdf2;
+  --acrylic-surface: #ffffffd9;
+  --acrylic-border: #88bdf24d;
+  --acrylic-highlight: #bdddfc80;
+
+  --shadow-sm: 0 2px 8px #38495914;
+  --shadow-md: 0 4px 16px #3849591f;
+  --shadow-lg: 0 8px 32px #38495929;
+  --glow-primary: 0 0 20px #88bdf24d, 0 0 40px #88bdf21a;
+}
+
+.dark {
+  --background: #1a1a1e;
+  --foreground: oklch(98.5% 0 0);
+  --card: #28282db3;
+  --card-foreground: oklch(98.5% 0 0);
+  --popover: #28282dd9;
+  --popover-foreground: oklch(98.5% 0 0);
+  --primary: #60cdff;
+  --primary-foreground: oklch(14.5% 0 0);
+  --secondary: #2d2d32cc;
+  --secondary-foreground: oklch(98.5% 0 0);
+  --muted: #2d2d3299;
+  --muted-foreground: oklch(70.8% 0 0);
+  --accent: #60cdff26;
+  --accent-foreground: #60cdff;
+  --destructive: oklch(39.6% 0.141 25.723);
+  --destructive-foreground: oklch(63.7% 0.237 25.331);
+  --border: #ffffff14;
+  --input: #ffffff0d;
+  --ring: #60cdff4d;
+  --chart-1: oklch(48.8% 0.243 264.376);
+  --chart-2: oklch(69.6% 0.17 162.48);
+  --chart-3: oklch(76.9% 0.188 70.08);
+  --chart-4: oklch(62.7% 0.265 303.9);
+  --chart-5: oklch(64.5% 0.246 16.439);
+  --sidebar: #1e1e23b3;
+  --sidebar-foreground: oklch(98.5% 0 0);
+  --sidebar-primary: #60cdff;
+  --sidebar-primary-foreground: oklch(14.5% 0 0);
+  --sidebar-accent: #2d2d3299;
+  --sidebar-accent-foreground: oklch(98.5% 0 0);
+  --sidebar-border: #ffffff14;
+  --sidebar-ring: #60cdff4d;
+  --acrylic-base: #202026d9;
+  --acrylic-border: #ffffff1a;
+  --acrylic-highlight: #ffffff14;
+  --shadow-sm: 0 2px 8px #0000004d;
+  --shadow-md: 0 4px 16px #0006;
+  --shadow-lg: 0 8px 32px #00000080;
+  --glow-primary: 0 0 20px #60cdff33;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-icon-blue: var(--icon-blue);
+  --color-icon-teal: var(--icon-teal);
+  --color-icon-purple: var(--icon-purple);
+  --color-icon-green: var(--icon-green);
+  --color-icon-orange: var(--icon-orange);
+  --color-icon-pink: var(--icon-pink);
+  --color-icon-slate: var(--icon-slate);
+  --color-icon-cyan: var(--icon-cyan);
+
+  --color-acrylic-base: var(--acrylic-base);
+  --color-acrylic-light: var(--acrylic-light);
+  --color-acrylic-surface: var(--acrylic-surface);
+  --color-acrylic-border: var(--acrylic-border);
+  --color-acrylic-highlight: var(--acrylic-highlight);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --shadow-color-sm: var(--shadow-sm);
+  --shadow-color-md: var(--shadow-md);
+  --shadow-color-lg: var(--shadow-lg);
+
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: var(--ring);
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at 20%, #0078d408, #0000 50%),
+      radial-gradient(circle at 80% 80%, #0078d405, #0000 50%);
+    background-attachment: fixed;
+  }
+}

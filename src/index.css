@@ -1,0 +1,9 @@
+@import "./design-system/tokens/theme.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}

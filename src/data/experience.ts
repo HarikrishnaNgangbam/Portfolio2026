@@ -1,0 +1,133 @@
+export interface ExperienceEntry {
+  role: string;
+  company: string;
+  companyLogo?: string;
+  companyLogoAlt?: string;
+  dates: string;
+  location?: string;
+  /** Short 2-bullet summary shown on the Home page. */
+  homeBullets?: string[];
+  /** Full bullet list shown on the Resume page. */
+  resumeBullets: string[];
+}
+
+export const EXPERIENCE: ExperienceEntry[] = [
+  {
+    role: 'Senior Product Designer',
+    company: 'Microsoft - Windows',
+    companyLogo: '/images/logos/microsoft-windows.png',
+    companyLogoAlt: 'Microsoft - Windows logo',
+    dates: 'Aug 2024 - Present',
+    location: 'Hyderabad, India',
+    homeBullets: [
+      'Lead UX strategy for Windows cross-device continuity, shaping how users seamlessly move, resume, and complete tasks across PCs, phones, and connected devices',
+      'Spearheaded multiple AI-Lead Design exploration sprints and workshops',
+    ],
+    resumeBullets: [
+      "Connected Experience & Ecosystem: Lead UX strategy for Windows cross-device continuity, shaping how users seamlessly move, resume, and complete tasks across PCs, phones, and connected devices.",
+      'AI-Driven Experience Innovation: Spearheaded multiple AI-Lead Design exploration sprints and workshops.',
+    ],
+  },
+  {
+    role: 'Head of Design',
+    company: 'RED.HEALTH',
+    companyLogo: '/images/logos/red-health.png',
+    companyLogoAlt: 'RED.HEALTH logo',
+    dates: 'Jun 2024 - Aug 2024',
+    homeBullets: [
+      'Led company-wide design strategy for next-generation emergency medical service products',
+      'Designed the Emergency Medical Service App & 5G-Ambulance Command Center',
+    ],
+    resumeBullets: [
+      'Head of Design: Led the company-wide design strategy for next-generation emergency medical service products.',
+      'Designed the Emergency Medical Service App & 5G-Ambulance Command Center, enabling faster response, streamlined triage, and intuitive user flows for critical situations.',
+    ],
+  },
+  {
+    role: 'Principal Product Designer',
+    company: 'Funding Societies',
+    companyLogo: '/images/logos/funding-societies.png',
+    companyLogoAlt: 'Funding Societies logo',
+    dates: 'Feb 2023 - Nov 2023',
+    resumeBullets: [
+      'Principal Product Designer: Responsible for leading the design & feature of Product Growth Team.',
+    ],
+  },
+  {
+    role: 'Design Manager',
+    company: 'Gojek Tech',
+    companyLogo: '/images/logos/gojek-tech.png',
+    companyLogoAlt: 'Gojek Tech logo',
+    dates: 'Nov 2017 - Nov 2022',
+    homeBullets: [
+      "Led a team of four Product Designer. Owned product and experience vision for Gojek's Care Platform and Communication Platform",
+      "Designed and scaled the entire Gojek's Customer Support Ecosystem. Built the GoAgent - SuperApp for agents",
+    ],
+    resumeBullets: [
+      "Leadership & Ownership: Led a team of four Product Designer. Owned product and experience vision for Gojek's Care Platform and Communication Platform.",
+      "Designed and scaled the entire Gojek's Customer Support Ecosystem. Built the GoAgent - SuperApp for agents.",
+      'Improved support accuracy and operational efficiency across Consumer, Driver, Merchant, and Agent verticals.',
+    ],
+  },
+  {
+    role: 'Industrial Designer',
+    company: 'Godrej & Boyce',
+    companyLogo: '/images/logos/godrej-boyce.png',
+    companyLogoAlt: 'Godrej & Boyce logo',
+    dates: 'Mar 2016 - Nov 2017',
+    resumeBullets: [
+      'Design Manager (R&D Appliance): Responsible for the design & growth of Refrigerator Portfolio.',
+    ],
+  },
+  {
+    role: 'UX Design Intern',
+    company: 'Samsung R&D Institute',
+    companyLogo: '/images/logos/samsung-rd.png',
+    companyLogoAlt: 'Samsung R&D Institute logo',
+    dates: 'Apr 2014 - Dec 2014',
+    resumeBullets: [
+      'Smart Sleep Assistant System: A system of connected devices that help sleep better and enhance the experience of sleeping.',
+    ],
+  },
+];
+
+/** The 3 roles shown in the Home page's abbreviated Work Experience section. */
+export const HOME_EXPERIENCE = EXPERIENCE.filter((e) => e.homeBullets).map((e) => ({
+  ...e,
+  bullets: e.homeBullets!,
+}));
+
+export interface EducationEntry {
+  degree: string;
+  school: string;
+  logo?: string;
+  logoAlt?: string;
+}
+
+export const EDUCATION: EducationEntry[] = [
+  {
+    degree: 'Master of Design, ID',
+    school: 'National Institute of Design',
+    logo: '/images/logos/nid.png',
+    logoAlt: 'National Institute of Design logo',
+  },
+  {
+    degree: 'Bachelor of Engineering',
+    school: 'Mumbai University',
+    logo: '/images/logos/mumbai-university.png',
+    logoAlt: 'Mumbai University logo',
+  },
+];
+
+export const SKILLS = {
+  coreStrengths: [
+    'Design Leadership & Strategy',
+    'Systems & Experience Architecture',
+    'Execution Excellence',
+  ],
+  capabilities: [
+    'Cross-Functional Influence',
+    'Team Leadership & Mentorship',
+    'AI & Future-Forward Craft',
+  ],
+};
