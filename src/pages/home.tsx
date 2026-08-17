@@ -1,4 +1,5 @@
 import { Briefcase, MapPin } from 'lucide-react';
+import { Seo } from '@/components/seo';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { ExperienceCard } from '@/design-system/ui/experience-card';
@@ -14,6 +15,10 @@ function HomePage() {
 
   return (
     <div>
+      <Seo
+        title="Home"
+        description="Multi-disciplinary designer with 10+ years building high-scale products across operating systems and diverse industries."
+      />
       {/* Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -47,6 +52,8 @@ function HomePage() {
                 src="/images/shared/harikrishna-portrait.png"
                 alt="Harikrishna - Senior Product Designer"
                 className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
               />
             </div>
           </Reveal>

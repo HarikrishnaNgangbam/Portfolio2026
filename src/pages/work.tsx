@@ -1,6 +1,7 @@
 import { H1 } from '@/design-system/ui/h1';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
 
 function WorkPage() {
@@ -8,6 +9,10 @@ function WorkPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+      <Seo
+        title="Work"
+        description="Featured projects showcasing my design process and impact."
+      />
       <Reveal>
         <H1 size="hero">Work</H1>
         <p className="text-lg text-muted-foreground leading-relaxed mt-4">

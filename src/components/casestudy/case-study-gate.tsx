@@ -75,6 +75,7 @@ function CaseStudyGate({ slug, children }: CaseStudyGateProps) {
                 setError(false);
               }}
               placeholder="Enter password"
+              aria-label="Case study password"
               autoFocus
               className={`w-full rounded-md border bg-transparent px-4 py-2 text-sm text-foreground outline-none ring-2 ring-transparent focus:ring-primary/40 ${error ? 'border-destructive' : 'border-primary/50'}`}
             />

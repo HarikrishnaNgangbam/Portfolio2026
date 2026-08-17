@@ -37,6 +37,7 @@ function AccessControlPanel() {
                   value={override.password}
                   onChange={(e) => update(project.slug, { password: e.target.value })}
                   placeholder="Set a password"
+                  aria-label={`Password for ${project.title}`}
                   className="w-full rounded-md border border-primary/50 bg-transparent px-3 py-1.5 text-sm text-foreground outline-none ring-2 ring-transparent focus:ring-primary/40"
                 />
                 <button

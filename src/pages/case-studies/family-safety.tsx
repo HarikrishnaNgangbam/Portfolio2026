@@ -22,12 +22,17 @@ import { StepFlow } from '@/components/casestudy/step-flow';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { buttonVariants } from '@/design-system/ui/button';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 
 const MASTER_PROTOTYPE_URL = 'https://familysafetyproto.figma.site/';
 
 function FamilySafetyPage() {
   return (
     <div className="pb-20">
+      <Seo
+        title="Family Safety"
+        description="Democratizing early-stage design while maintaining system quality through a design-led governance model."
+      />
       <CaseStudyHero
         breadcrumbLabel="Family Safety Design System"
         badges={['Design Systems & Operations']}
@@ -97,9 +102,9 @@ function FamilySafetyPage() {
             </Prose>
             <IconCardList
               items={[
-                { icon: X, iconColor: '#dc2626', title: 'PMs waited on designer availability', description: 'Discovery was blocked by design resourcing, slowing velocity' },
-                { icon: X, iconColor: '#dc2626', title: 'PM-created prototypes diverged from system components', description: 'Off-system prototyping created downstream rework and eroded design consistency' },
-                { icon: X, iconColor: '#dc2626', title: 'Vibe coding lacked guardrails', description: 'PMs increasingly used AI-assisted prototyping, but without system discipline, quality suffered' },
+                { icon: X, iconColor: 'var(--icon-red)', title: 'PMs waited on designer availability', description: 'Discovery was blocked by design resourcing, slowing velocity' },
+                { icon: X, iconColor: 'var(--icon-red)', title: 'PM-created prototypes diverged from system components', description: 'Off-system prototyping created downstream rework and eroded design consistency' },
+                { icon: X, iconColor: 'var(--icon-red)', title: 'Vibe coding lacked guardrails', description: 'PMs increasingly used AI-assisted prototyping, but without system discipline, quality suffered' },
               ]}
             />
             <CalloutList
@@ -222,6 +227,10 @@ function FamilySafetyPage() {
               heading="Prompt and output"
               src="/images/casestudy-2/settings-edge-cases.png"
               alt="Figma Make prompt panel and CAPTCHA modal output"
+            />
+            <ImageBlock
+              src="/images/casestudy-2/mobile-controls.png"
+              alt="Mobile app controls and settings interface"
             />
 
             <Prose callout>

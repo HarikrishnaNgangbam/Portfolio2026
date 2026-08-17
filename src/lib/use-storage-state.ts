@@ -7,9 +7,29 @@ import { useCallback, useSyncExternalStore } from 'react';
 // string actually changes.
 const cache = new Map<string, { raw: string | null; parsed: unknown }>();
 
+function safeGetItem(storage: Storage, key: string): string | null {
+  try {
+    return storage.getItem(key);
+  } catch {
+    // Storage can throw (Safari private browsing, disabled cookies, blocked
+    // third-party storage) — treat it as "nothing saved" rather than crashing.
+    return null;
+  }
+}
+
+function safeSetItem(storage: Storage, key: string, value: string): void {
+  try {
+    storage.setItem(key, value);
+  } catch {
+    // Quota exceeded or storage disabled — the in-memory cache below still
+    // updates so the UI stays responsive for the rest of the session, it
+    // just won't persist across reloads.
+  }
+}
+
 function readCached<T>(storageId: string, key: string, storage: Storage, defaultValue: T): T {
   const cacheKey = `${storageId}:${key}`;
-  const raw = storage.getItem(key);
+  const raw = safeGetItem(storage, key);
   const cached = cache.get(cacheKey);
   if (cached && cached.raw === raw) {
     return cached.parsed as T;
@@ -69,7 +89,12 @@ function useStorageState<T>(
     (next: T | ((prev: T) => T)) => {
       const prev = readCached(storageId, key, storage, defaultValue);
       const resolved = typeof next === 'function' ? (next as (prev: T) => T)(prev) : next;
-      storage.setItem(key, JSON.stringify(resolved));
+      const raw = JSON.stringify(resolved);
+      safeSetItem(storage, key, raw);
+      // Keep the cache in sync even if the physical write above was silently
+      // dropped (quota exceeded, storage disabled), so the UI still reflects
+      // the change for the rest of this session.
+      cache.set(`${storageId}:${key}`, { raw, parsed: resolved });
       window.dispatchEvent(new Event(eventName));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

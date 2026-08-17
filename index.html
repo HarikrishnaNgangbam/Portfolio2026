@@ -5,17 +5,14 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <meta
-      name="description"
-      content="Was just trying my hands on Figma make and without me knowing I had a Portfolio ready"
-    />
-    <meta property="og:title" content="Harikrishna Design Portfolio" />
-    <meta
-      property="og:description"
-      content="Was just trying my hands on Figma make and without me knowing I had a Portfolio ready"
-    />
-    <meta property="og:type" content="website" />
-    <title>Harikrishna Design Portfolio</title>
+    <!--
+      No static title/description/OG tags here — every route renders its own
+      via the <Seo> component (src/components/seo.tsx), which React 19 hoists
+      into <head>. A static <title> here would keep sitting alongside the
+      React-rendered one (React can't dedupe a tag it didn't render), so it's
+      left to Seo — the app hydrates fast enough that there's no meaningful
+      blank-tab window in practice.
+    -->
   </head>
   <body>
     <div id="root"></div>

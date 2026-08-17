@@ -36,10 +36,15 @@ import {
   SamsungNotesIcon,
 } from '@/design-system/ui/icons/brands';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 
 function PhoneToPcResumePage() {
   return (
     <div className="pb-20">
+      <Seo
+        title="Phone to PC Resume"
+        description="Enabling users to seamlessly continue their task across Connected Devices."
+      />
       <CaseStudyHero
         breadcrumbLabel="Cross Device Resume"
         badges={['Phone → PC Continuity']}
@@ -132,19 +137,19 @@ function PhoneToPcResumePage() {
               items={[
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Sending links or files to oneself',
                   description: 'Email, cloud storage, or manual copying required',
                 },
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Reopening the correct app and locating context',
                   description: 'The exact position, state, and session were lost',
                 },
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Reconstructing mental state after switching devices',
                   description: 'Cognitive overhead disrupted flow and momentum',
                 },

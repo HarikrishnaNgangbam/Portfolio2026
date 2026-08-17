@@ -20,10 +20,15 @@ import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { CalloutList } from '@/components/casestudy/callout-list';
 import { ImageBlock, VideoBlock } from '@/components/casestudy/image-block';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 
 function PcToPhoneResumePage() {
   return (
     <div className="pb-20">
+      <Seo
+        title="PC to Phone Resume"
+        description="Enabling users to seamlessly continue PC tasks on mobile when they step away."
+      />
       <CaseStudyHero
         breadcrumbLabel="PC to Phone Resume"
         badges={['PC → Phone Continuity', 'Work in Progress']}
@@ -100,19 +105,19 @@ function PcToPhoneResumePage() {
               items={[
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Copying links or manually sharing content',
                   description: 'Users had to email themselves, use cloud storage, or copy links to continue PC tasks on their phone',
                 },
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Reopening apps and hunting for context',
                   description: 'The exact position, state, and session were lost in the transition',
                 },
                 {
                   icon: X,
-                  iconColor: '#dc2626',
+                  iconColor: 'var(--icon-red)',
                   title: 'Reconstructing mental state after leaving PC',
                   description: 'Cognitive overhead disrupted flow precisely when users were most time-constrained',
                 },

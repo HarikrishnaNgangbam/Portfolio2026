@@ -20,7 +20,10 @@ function Header() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl shadow-[var(--shadow-sm)]">
+      <nav
+        aria-label="Main"
+        className="fixed top-0 left-0 right-0 z-50 w-full border-b border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl shadow-[var(--shadow-sm)]"
+      >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             {/* Desktop layout */}
@@ -67,6 +70,8 @@ function Header() {
               <button
                 type="button"
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-nav-panel"
                 onClick={() => setMobileOpen((v) => !v)}
                 className={cn(
                   'flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300',
@@ -85,7 +90,10 @@ function Header() {
 
         {/* Mobile dropdown panel */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl px-4 py-3">
+          <div
+            id="mobile-nav-panel"
+            className="lg:hidden border-t border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl px-4 py-3"
+          >
             <div className="flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {
                 const active = isActive(location.pathname, item.href);

@@ -5,6 +5,7 @@ import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { CardHeading } from '@/design-system/ui/card-heading';
 import { DotList } from '@/design-system/ui/dot-list';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 import { EXPERIENCE, SKILLS } from '@/data/experience';
 
 const CURRENT_ROLE = EXPERIENCE[0];
@@ -12,6 +13,10 @@ const CURRENT_ROLE = EXPERIENCE[0];
 function AboutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 space-y-6">
+      <Seo
+        title="About"
+        description="Multi-disciplinary UX Designer with 10+ years shaping high-scale products across operating systems and diverse industries."
+      />
       <Reveal>
         <H1>About Me</H1>
         <LeadParagraph className="mt-4">

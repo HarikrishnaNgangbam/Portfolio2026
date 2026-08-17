@@ -5,6 +5,7 @@ import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { ContactInfoCard } from '@/design-system/ui/contact-info-card';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 
 const CONTACT_PAGE_METHODS = [
   {
@@ -42,6 +43,10 @@ const CONTACT_PAGE_METHODS = [
 function ContactPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+      <Seo
+        title="Contact"
+        description="Let's discuss how we can work together to create exceptional user experiences."
+      />
       <Reveal>
         <H1>Get In Touch</H1>
         <LeadParagraph className="mt-4">

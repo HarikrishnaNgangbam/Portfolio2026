@@ -18,6 +18,10 @@
   --icon-pink: #ec7c9d;
   --icon-slate: #6a89a7;
   --icon-cyan: #45b7d1;
+  /* Not part of the reference's original 8-color icon palette — added so the
+     repeated "problem" (X) icon color used across case studies has a single
+     source of truth instead of a literal hex scattered across pages. */
+  --icon-red: #dc2626;
 
   --background: #f5f8fb;
   --foreground: #384959;
@@ -175,6 +179,7 @@
   --color-icon-pink: var(--icon-pink);
   --color-icon-slate: var(--icon-slate);
   --color-icon-cyan: var(--icon-cyan);
+  --color-icon-red: var(--icon-red);
 
   --color-acrylic-base: var(--acrylic-base);
   --color-acrylic-light: var(--acrylic-light);

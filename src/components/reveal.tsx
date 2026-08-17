@@ -10,14 +10,25 @@ export interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
  * Fades + slides content in as it enters the viewport, and resets when it
  * leaves — matching the reference site's re-triggering scroll behavior
  * (sections are re-hidden when scrolled away from, not a one-shot reveal).
+ * Respects prefers-reduced-motion by skipping the animation and rendering
+ * content in its final state immediately.
  */
 function Reveal({ className, delay = 0, children, ...props }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(query.matches);
+    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || reducedMotion) return;
     // Positive bottom margin triggers the reveal before the section is
     // actually in view, so content is already visible by the time it
     // scrolls into frame instead of popping in late.
@@ -27,7 +38,15 @@ function Reveal({ className, delay = 0, children, ...props }: RevealProps) {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [reducedMotion]);
+
+  if (reducedMotion) {
+    return (
+      <div ref={ref} className={className} {...props}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div

@@ -23,6 +23,7 @@ import {
   TriangleAlert,
   CircleCheck,
   FlaskConical,
+  MapPin,
   type LucideIcon,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
@@ -33,7 +34,9 @@ import { StepFlow } from '@/components/casestudy/step-flow';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Quote } from '@/components/casestudy/quote';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 
 // Kopdar's brand palette — distinct from the site's --icon-* tokens, sampled from the reference.
 const KD_GREEN = 'rgb(0, 170, 19)';
@@ -92,6 +95,10 @@ function EyebrowHeading({
 function KopdarInitiativePage() {
   return (
     <div className="pb-20">
+      <Seo
+        title="Kopdar Initiative"
+        description="Improving efficiency, consistency, and community connection across Indonesia."
+      />
       <CaseStudyHero
         breadcrumbLabel="Kopdar"
         badges={['● Case Study']}
@@ -127,21 +134,37 @@ function KopdarInitiativePage() {
                 { icon: Globe, iconColor: KD_PURPLE, title: 'Ecosystem', description: 'Platform stability' },
               ]}
             />
-            <Prose>
-              <p>
-                Kopdar keeps Gojek connected to the realities of the people who power
-                the platform—ensuring every decision is grounded in real driver
-                experiences.
-              </p>
-              <p>
-                Kopdar (Kopi Darat, meaning "face-to-face meeting") is Gojek's flagship
-                community engagement program. Led by Performance Katalysts (PKs) and
-                supervised by Performance Katalyst Managers (PKMs), these regular
-                sessions connect thousands of drivers across Indonesia, providing
-                training, support, and building community bonds that strengthen the
-                platform ecosystem.
-              </p>
+            <Prose callout>
+              Kopdar keeps Gojek connected to the realities of the people who power
+              the platform—ensuring every decision is grounded in real driver
+              experiences.
             </Prose>
+            <div className="grid md:grid-cols-2 gap-6 items-stretch">
+              <Prose>
+                <p>
+                  Kopdar (Kopi Darat, meaning "face-to-face meeting") is Gojek's
+                  flagship community engagement program. Led by Performance Katalysts
+                  (PKs) and supervised by Performance Katalyst Managers (PKMs), these
+                  regular sessions connect thousands of drivers across Indonesia,
+                  providing training, support, and building community bonds that
+                  strengthen the platform ecosystem.
+                </p>
+              </Prose>
+              <div className="relative rounded-2xl overflow-hidden min-h-[180px]">
+                <ImageWithFallback
+                  src="/images/casestudy-3/indonesia-map.png"
+                  alt="Map of Indonesia archipelago"
+                  className="w-full h-full object-cover absolute inset-0"
+                />
+                <div className="relative z-10 h-full flex flex-col items-center justify-end text-center p-6 bg-gradient-to-t from-black/50 via-black/10 to-transparent">
+                  <MapPin className="w-6 h-6 text-white mb-1" />
+                  <p className="font-bold text-white">Indonesia-wide Program</p>
+                  <p className="text-white/90 text-sm">
+                    Spanning Jakarta, Surabaya, Makassar, and beyond
+                  </p>
+                </div>
+              </div>
+            </div>
             <StatGrid
               columns={3}
               stats={[
@@ -150,9 +173,6 @@ function KopdarInitiativePage() {
                 { value: '2.7K', label: 'Drivers' },
               ]}
             />
-            <p className="text-center text-muted-foreground text-sm">
-              Indonesia-wide Program — Spanning Jakarta, Surabaya, Makassar, and beyond
-            </p>
           </Section>
         </Reveal>
 
@@ -408,7 +428,10 @@ function KopdarInitiativePage() {
                 </div>
               ))}
             </div>
-            <ImageBlock src="/images/casestudy-3/research-session-2.jpg" alt="User testing session" />
+            <div className="grid sm:grid-cols-2 gap-4">
+              <ImageBlock src="/images/casestudy-3/research-session-2.jpg" alt="User testing session" />
+              <ImageBlock src="/images/casestudy-3/community-meeting.png" alt="Driver community meeting" />
+            </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: `color-mix(in srgb, ${KD_GREEN} 6%, transparent)` }}>

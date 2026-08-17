@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Lock, LockOpen, Eye, EyeOff, X, Palette, ShieldCheck, LayoutList } from 'lucide-react';
 import { Button } from '@/design-system/ui/button';
 import { cn } from '@/lib/utils';
+import { useFocusTrap } from '@/lib/use-focus-trap';
 import { useSettingsUnlocked, SETTINGS_PASSWORD } from '@/lib/settings-session';
 import { DesignSystemPanel } from './settings-panels/design-system-panel';
 import { AccessControlPanel } from './settings-panels/access-control-panel';
@@ -27,6 +28,14 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
   const [error, setError] = useState(false);
   const [tab, setTab] = useState<Tab>('design-system');
 
+  function handleClose() {
+    setInput('');
+    setError(false);
+    onClose();
+  }
+
+  const trapRef = useFocusTrap<HTMLDivElement>(open, handleClose);
+
   if (!open) return null;
 
   function handleSubmit(e: FormEvent) {
@@ -40,14 +49,12 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
     }
   }
 
-  function handleClose() {
-    setInput('');
-    setError(false);
-    onClose();
-  }
-
   return (
     <div
+      ref={trapRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="settings-modal-title"
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/20 backdrop-blur-sm px-4"
       onClick={handleClose}
     >
@@ -59,7 +66,9 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-accent/10">
             <Lock className="w-5 h-5 text-primary" />
           </div>
-          <h2 className="text-xl font-bold text-foreground mb-1">Settings</h2>
+          <h2 id="settings-modal-title" className="text-xl font-bold text-foreground mb-1">
+            Settings
+          </h2>
           <p className="text-sm text-muted-foreground mb-6">
             Enter the settings password to continue
           </p>
@@ -73,7 +82,7 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
                   setError(false);
                 }}
                 placeholder="Enter password"
-                autoFocus
+                aria-label="Settings password"
                 className={cn(
                   'w-full rounded-md border bg-transparent px-4 py-2 text-sm text-foreground outline-none ring-2 ring-transparent focus:ring-primary/40',
                   error ? 'border-destructive' : 'border-primary/50',
@@ -109,7 +118,9 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 border border-border">
                 <Lock className="w-4 h-4 text-primary" />
               </div>
-              <h2 className="text-lg font-bold text-foreground">Settings</h2>
+              <h2 id="settings-modal-title" className="text-lg font-bold text-foreground">
+                Settings
+              </h2>
             </div>
             <div className="flex items-center gap-1">
               <button

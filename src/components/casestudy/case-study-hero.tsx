@@ -165,7 +165,13 @@ function CaseStudyHero({
             {imageBadge}
           </span>
         )}
-        <ImageWithFallback src={coverImage} alt={coverAlt} className="w-full h-auto" />
+        <ImageWithFallback
+          src={coverImage}
+          alt={coverAlt}
+          className="w-full h-auto"
+          loading="eager"
+          fetchPriority="high"
+        />
       </div>
     </div>
   );

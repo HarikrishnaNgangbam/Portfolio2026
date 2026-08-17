@@ -6,6 +6,7 @@ import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { ExperienceCard } from '@/design-system/ui/experience-card';
 import { DotList } from '@/design-system/ui/dot-list';
 import { Reveal } from '@/components/reveal';
+import { Seo } from '@/components/seo';
 import { EXPERIENCE, EDUCATION, SKILLS } from '@/data/experience';
 
 const ALL_SKILLS = [...SKILLS.coreStrengths, ...SKILLS.capabilities];
@@ -13,6 +14,10 @@ const ALL_SKILLS = [...SKILLS.coreStrengths, ...SKILLS.capabilities];
 function ResumePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 space-y-10">
+      <Seo
+        title="Resume"
+        description="Multi-disciplinary UX Designer with 10+ years shaping high-scale products across operating systems and diverse industries."
+      />
       <Reveal>
         <H1>Resume</H1>
         <LeadParagraph className="mt-4">

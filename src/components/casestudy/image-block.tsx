@@ -25,7 +25,7 @@ export interface VideoBlockProps {
   caption?: string;
 }
 
-/** Autoplaying, muted, looping product-demo clip embedded in case-study body content. */
+/** User-initiated, muted, looping product-demo clip embedded in case-study body content. */
 function VideoBlock({ src, heading, caption }: VideoBlockProps) {
   return (
     <div>
@@ -37,6 +37,7 @@ function VideoBlock({ src, heading, caption }: VideoBlockProps) {
           muted
           loop
           playsInline
+          preload="metadata"
           className="w-full h-auto bg-black"
         />
       </div>

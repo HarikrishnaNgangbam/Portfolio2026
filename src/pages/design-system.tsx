@@ -30,6 +30,7 @@ import { StatGrid } from '@/components/casestudy/stat-grid';
 import { Quote } from '@/components/casestudy/quote';
 import { ChecklistSection } from '@/components/casestudy/checklist-section';
 import { SettingsModal } from '@/components/nav/settings-modal';
+import { Seo } from '@/components/seo';
 import { PROJECTS } from '@/data/projects';
 
 const COLOR_TOKENS = [
@@ -111,6 +112,11 @@ function DesignSystemPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Seo
+        title="Design System"
+        description="Internal component and design-token reference."
+        noindex
+      />
       <H1 className="mb-2">Design System</H1>
       <LeadParagraph className="mb-10">
         Living documentation of the tokens and components that power this portfolio —
@@ -351,7 +357,7 @@ function DesignSystemPage() {
           <IconCardList
             columns={2}
             items={[
-              { icon: X, iconColor: '#dc2626', title: 'Manual copying required', description: 'Email, cloud storage, or manual copying' },
+              { icon: X, iconColor: 'var(--icon-red)', title: 'Manual copying required', description: 'Email, cloud storage, or manual copying' },
               { icon: Target, title: 'Strategic response', description: 'Not a one-off feature' },
             ]}
           />
