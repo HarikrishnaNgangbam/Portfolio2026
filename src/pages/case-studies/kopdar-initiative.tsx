@@ -1,11 +1,29 @@
 import {
   Users as UsersIcon,
   Package,
-  Network,
+  Globe,
   Layers,
-  RefreshCcw,
-  ShieldCheck,
+  Clock,
+  TrendingDown,
+  TrendingUp,
+  Search,
+  Zap,
+  Lock,
+  ChartColumn,
   Smartphone,
+  RefreshCw,
+  Calendar,
+  Mic,
+  Clipboard,
+  Radio,
+  FileText,
+  Award,
+  Target,
+  Lightbulb,
+  TriangleAlert,
+  CircleCheck,
+  FlaskConical,
+  type LucideIcon,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { Section } from '@/components/casestudy/section';
@@ -15,9 +33,61 @@ import { StepFlow } from '@/components/casestudy/step-flow';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Quote } from '@/components/casestudy/quote';
-import { CalloutList } from '@/components/casestudy/callout-list';
-import { Badge } from '@/design-system/ui/badge';
 import { Reveal } from '@/components/reveal';
+
+// Kopdar's brand palette — distinct from the site's --icon-* tokens, sampled from the reference.
+const KD_GREEN = 'rgb(0, 170, 19)';
+const KD_ORANGE = 'rgb(255, 107, 0)';
+const KD_TEAL = 'rgb(0, 129, 160)';
+const KD_PURPLE = 'rgb(147, 50, 142)';
+const KD_RED = 'rgb(238, 39, 55)';
+
+function Eyebrow({ icon: Icon, text, color }: { icon: LucideIcon; text: string; color: string }) {
+  return (
+    <span
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border mb-4"
+      style={{ color, borderColor: color, backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)` }}
+    >
+      <Icon className="w-3.5 h-3.5" />
+      {text}
+    </span>
+  );
+}
+
+function EyebrowHeading({
+  icon,
+  eyebrow,
+  color,
+  title,
+  highlight,
+  subtitle,
+}: {
+  icon: LucideIcon;
+  eyebrow: string;
+  color: string;
+  title: string;
+  highlight?: string;
+  subtitle?: string;
+}) {
+  const parts = highlight ? title.split(highlight) : null;
+  return (
+    <div>
+      <Eyebrow icon={icon} text={eyebrow} color={color} />
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+        {parts ? (
+          <>
+            {parts[0]}
+            <span style={{ color }}>{highlight}</span>
+            {parts[1]}
+          </>
+        ) : (
+          title
+        )}
+      </h2>
+      {subtitle && <p className="text-muted-foreground mt-2">{subtitle}</p>}
+    </div>
+  );
+}
 
 function KopdarInitiativePage() {
   return (
@@ -26,18 +96,18 @@ function KopdarInitiativePage() {
         breadcrumbLabel="Kopdar"
         badges={['● Case Study']}
         title="Kopdar Initiative: Scaling Driver Engagement for Gojek"
+        titleHighlight="Driver Engagement"
         subtitle="Improving efficiency, consistency, and community connection across Indonesia"
         meta={[
-          { label: 'Role', value: 'Product Designer' },
-          { label: 'Duration', value: 'Oct 2019 – Apr 2020' },
-          { label: 'Team', value: 'Cross-functional' },
+          { label: 'Role', value: 'Product Designer', icon: UsersIcon, color: KD_GREEN, bg: 'color-mix(in srgb, ' + KD_GREEN + ' 8%, transparent)' },
+          { label: 'Duration', value: 'Oct 2019 – Apr 2020', icon: Clock, color: KD_ORANGE, bg: 'color-mix(in srgb, ' + KD_ORANGE + ' 8%, transparent)' },
+          { label: 'Team', value: 'Cross-functional', icon: UsersIcon, color: KD_TEAL, bg: 'color-mix(in srgb, ' + KD_TEAL + ' 8%, transparent)' },
         ]}
+        metaVariant="cards"
         coverImage="/images/shared/project-kopdar-cover.png"
         coverAlt="Gojek motorcycle driver in green jacket representing driver community"
+        imageBadge="Live from Jakarta"
       />
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-        <Badge>Live from Jakarta</Badge>
-      </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-14">
         <Reveal>
@@ -52,9 +122,9 @@ function KopdarInitiativePage() {
             <IconCardList
               columns={3}
               items={[
-                { icon: UsersIcon, title: 'Community', description: 'Strengthening bonds' },
-                { icon: Package, iconColor: 'var(--icon-green)', title: 'Products', description: 'Continuous improvement' },
-                { icon: Network, iconColor: 'var(--icon-purple)', title: 'Ecosystem', description: 'Platform stability' },
+                { icon: UsersIcon, iconColor: KD_GREEN, title: 'Community', description: 'Strengthening bonds' },
+                { icon: Package, iconColor: KD_TEAL, title: 'Products', description: 'Continuous improvement' },
+                { icon: Globe, iconColor: KD_PURPLE, title: 'Ecosystem', description: 'Platform stability' },
               ]}
             />
             <Prose>
@@ -88,15 +158,18 @@ function KopdarInitiativePage() {
 
         <Reveal>
           <Section title="The Problem">
-            <h3 className="text-xl font-bold text-foreground">The Challenge</h3>
+            <h3 className="flex items-center gap-2 text-xl font-bold text-foreground">
+              <TriangleAlert className="w-5 h-5 text-destructive" />
+              The Challenge
+            </h3>
             <Prose>
               <p>Three critical pain points blocking scale</p>
             </Prose>
             <IconCardList
               items={[
-                { icon: Layers, title: '01 — Too many tools', description: 'PKs juggled between WhatsApp, Google Sheets, Forms, and Slides—fragmented workflows led to confusion and errors.' },
-                { icon: RefreshCcw, iconColor: 'var(--icon-orange)', title: '02 — Too much manual work', description: 'Everything from attendance tracking to report generation was done manually, consuming hours of valuable time.' },
-                { icon: ShieldCheck, iconColor: 'var(--icon-purple)', title: '03 — No consistent measurement', description: "Without standardized metrics, PKM supervisors couldn't evaluate performance or identify areas for improvement across regions." },
+                { icon: Layers, iconColor: KD_GREEN, title: '01 — Too many tools', description: 'PKs juggled between WhatsApp, Google Sheets, Forms, and Slides—fragmented workflows led to confusion and errors.' },
+                { icon: Clock, iconColor: KD_ORANGE, title: '02 — Too much manual work', description: 'Everything from attendance tracking to report generation was done manually, consuming hours of valuable time.' },
+                { icon: TrendingDown, iconColor: KD_RED, title: '03 — No consistent measurement', description: "Without standardized metrics, PKM supervisors couldn't evaluate performance or identify areas for improvement across regions." },
               ]}
             />
           </Section>
@@ -104,7 +177,10 @@ function KopdarInitiativePage() {
 
         <Reveal>
           <Section title="Discovery Phase">
-            <h3 className="text-xl font-bold text-foreground">Research</h3>
+            <h3 className="flex items-center gap-2 text-xl font-bold text-foreground">
+              <Search className="w-5 h-5 text-muted-foreground" />
+              Research
+            </h3>
             <Prose>
               <p>Deep dive into user needs across multiple regions — Jakarta • Oct 2019, Makassar • Jan 2020</p>
             </Prose>
@@ -119,39 +195,105 @@ function KopdarInitiativePage() {
             <IconCardList
               columns={2}
               items={[
-                { icon: RefreshCcw, title: 'Context switching kills productivity', description: 'PKs spend 40% of session time managing tools instead of engaging drivers' },
-                { icon: ShieldCheck, iconColor: 'var(--icon-green)', title: 'Trust requires transparency', description: 'Drivers want to see their attendance tracked in real-time' },
-                { icon: Layers, iconColor: 'var(--icon-purple)', title: 'PKMs need data, not documents', description: 'Supervisors struggle to extract insights from hundreds of spreadsheets' },
-                { icon: Smartphone, iconColor: 'var(--icon-orange)', title: 'Mobile-first is non-negotiable', description: '89% of PKs run sessions from their phones while on the road' },
+                { icon: Zap, iconColor: KD_GREEN, title: 'Context switching kills productivity', description: 'PKs spend 40% of session time managing tools instead of engaging drivers' },
+                { icon: Lock, iconColor: KD_ORANGE, title: 'Trust requires transparency', description: 'Drivers want to see their attendance tracked in real-time' },
+                { icon: ChartColumn, iconColor: KD_TEAL, title: 'PKMs need data, not documents', description: 'Supervisors struggle to extract insights from hundreds of spreadsheets' },
+                { icon: Smartphone, iconColor: KD_PURPLE, title: 'Mobile-first is non-negotiable', description: '89% of PKs run sessions from their phones while on the road' },
               ]}
             />
           </Section>
         </Reveal>
 
         <Reveal>
-          <Section title="User Journey Analysis">
-            <h3 className="text-xl font-bold text-foreground">Workflow Pain Points</h3>
-            <Prose>
-              <p>Mapping the entire Kopdar lifecycle to identify friction</p>
-            </Prose>
+          <Section title="">
+            <EyebrowHeading
+              icon={RefreshCw}
+              eyebrow="User Journey Analysis"
+              color={KD_ORANGE}
+              title="Workflow Pain Points"
+              subtitle="Mapping the entire Kopdar lifecycle to identify friction"
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { n: 1, icon: Calendar, color: KD_GREEN, title: 'Pre-Kopdar', items: ['No Content Database', 'Manual coordinate event', 'No RSVP tracking'] },
+                { n: 2, icon: Mic, color: KD_ORANGE, title: 'During Kopdar', items: ['Most unplanned Kopdar are not reported', 'Switching apps', 'Separate form links'] },
+                { n: 3, icon: ChartColumn, color: KD_PURPLE, title: 'Post Kopdar', items: ['No attendance accountability', 'Manual reconciliation of finance and reports', 'Manual accountability of performance'] },
+                { n: 4, icon: Clipboard, color: KD_RED, title: 'Between Sessions', items: ['Hours of copy-pasting', 'Screenshots only', 'No data insights'] },
+              ].map((stage) => (
+                <div
+                  key={stage.n}
+                  className="rounded-xl border p-5"
+                  style={{ borderColor: stage.color, backgroundColor: `color-mix(in srgb, ${stage.color} 6%, transparent)` }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <span
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-bold"
+                      style={{ backgroundColor: stage.color }}
+                    >
+                      {stage.n}
+                    </span>
+                    <stage.icon className="w-4 h-4" style={{ color: stage.color }} />
+                  </div>
+                  <p className="font-bold mb-2" style={{ color: stage.color }}>
+                    {stage.title}
+                  </p>
+                  <ul className="space-y-1.5 text-sm text-muted-foreground">
+                    {stage.items.map((it) => (
+                      <li key={it} className="flex gap-1.5">
+                        <span aria-hidden="true">→</span>
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
             <ImageBlock
               src="/images/casestudy-3/workflow-pain-points.png"
               alt="Kopdar workflow diagram showing pain points across the lifecycle"
             />
-            <Prose callout>
-              Each Kopdar cycle generated <strong>15+ hours of manual work</strong>{' '}
-              across fragmented tools, with zero visibility for supervisors until
-              reports were manually compiled days later.
-            </Prose>
+            <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: `color-mix(in srgb, ${KD_RED} 6%, transparent)` }}>
+              <TriangleAlert className="w-5 h-5 shrink-0 mt-0.5" style={{ color: KD_RED }} />
+              <p className="text-foreground">
+                Each Kopdar cycle generated <strong>15+ hours of manual work</strong>{' '}
+                across fragmented tools, with zero visibility for supervisors until
+                reports were manually compiled days later.
+              </p>
+            </div>
           </Section>
         </Reveal>
 
         <Reveal>
-          <Section title="The Solution">
-            <h3 className="text-xl font-bold text-foreground">Unified Platform</h3>
-            <Prose>
-              <p>Consolidating the entire Kopdar workflow—from planning to insights</p>
-            </Prose>
+          <Section title="">
+            <EyebrowHeading
+              icon={Zap}
+              eyebrow="The Solution"
+              color={KD_GREEN}
+              title="Unified Platform"
+              highlight="Unified"
+              subtitle="Consolidating the entire Kopdar workflow—from planning to insights"
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {[
+                { icon: UsersIcon, color: KD_GREEN, title: 'Community', description: 'Driver profiles & groups' },
+                { icon: Calendar, color: KD_ORANGE, title: 'Event Setup', description: 'Session scheduling' },
+                { icon: Radio, color: KD_TEAL, title: 'Live Session', description: 'Real-time attendance' },
+                { icon: ChartColumn, color: KD_PURPLE, title: 'Evaluation', description: 'Feedback collection' },
+                { icon: FileText, color: KD_RED, title: 'Reporting', description: 'Automated analytics' },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl border p-5"
+                  style={{ borderColor: item.color, backgroundColor: `color-mix(in srgb, ${item.color} 6%, transparent)` }}
+                >
+                  <item.icon className="w-6 h-6 mb-3" style={{ color: item.color }} />
+                  <p className="font-bold" style={{ color: item.color }}>
+                    {item.title}
+                  </p>
+                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                </div>
+              ))}
+            </div>
             <ImageBlock
               src="/images/casestudy-3/proposed-solution.png"
               alt="Kopdar proposed solution diagram"
@@ -161,11 +303,12 @@ function KopdarInitiativePage() {
               Data Flow Architecture
             </h3>
             <StepFlow
+              variant="numbered"
               steps={[
-                { icon: UsersIcon, title: 'PK creates session', description: 'Selects drivers, sets schedule' },
-                { icon: Smartphone, iconColor: 'var(--icon-green)', title: 'Drivers receive invite', description: 'RSVP & view materials' },
-                { icon: RefreshCcw, iconColor: 'var(--icon-orange)', title: 'Live session runs', description: 'Attendance, Q&A, feedback' },
-                { icon: Network, iconColor: 'var(--icon-purple)', title: 'Auto-sync to PKM', description: 'Real-time dashboards' },
+                { icon: UsersIcon, iconColor: KD_GREEN, title: 'PK creates session', description: 'Selects drivers, sets schedule' },
+                { icon: Smartphone, iconColor: KD_ORANGE, title: 'Drivers receive invite', description: 'RSVP & view materials' },
+                { icon: Radio, iconColor: KD_TEAL, title: 'Live session runs', description: 'Attendance, Q&A, feedback' },
+                { icon: RefreshCw, iconColor: KD_PURPLE, title: 'Auto-sync to PKM', description: 'Real-time dashboards' },
               ]}
             />
             <ImageBlock
@@ -182,9 +325,14 @@ function KopdarInitiativePage() {
         </Reveal>
 
         <Reveal>
-          <Section title="Product Walkthrough">
-            <h3 className="text-xl font-bold text-foreground">Key Screens</h3>
-            <div className="space-y-8">
+          <Section title="">
+            <EyebrowHeading
+              icon={Smartphone}
+              eyebrow="Product Walkthrough"
+              color={KD_PURPLE}
+              title="Key Screens"
+            />
+            <div className="space-y-8 mt-6">
               <ImageBlock
                 heading="01 — Kopdar Dashboard"
                 src="/images/casestudy-3/dashboard-screen.png"
@@ -208,96 +356,126 @@ function KopdarInitiativePage() {
         </Reveal>
 
         <Reveal>
-          <Section title="Validation">
-            <h3 className="text-xl font-bold text-foreground">Testing & Validation</h3>
-            <Prose>
-              <p>Usability testing in Jakarta and Makassar with 24 PKs and 8 PKMs</p>
-            </Prose>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <ImageBlock src="/images/casestudy-3/field-workshop-1.png" alt="Field research workshop" />
-              <ImageBlock src="/images/casestudy-3/field-workshop-2.png" alt="Team workshop in Jakarta" />
-              <ImageBlock src="/images/casestudy-3/research-session-1.jpg" alt="User research session" />
-              <ImageBlock src="/images/casestudy-3/research-session-2.jpg" alt="User testing session" />
-            </div>
-            <h3 className="text-xl font-bold text-foreground mt-6">Key Findings</h3>
-            <CalloutList
-              marker="✓"
-              tone="positive"
-              items={[
-                '92% of PKs completed session creation without assistance',
-                'Average attendance recording time reduced from 8 min to 45 sec',
-                'PKMs praised real-time visibility: "I can finally see what\'s happening"',
-                'QR code check-in was the most-loved feature among drivers',
-              ]}
+          <Section title="">
+            <EyebrowHeading
+              icon={FlaskConical}
+              eyebrow="Validation"
+              color={KD_TEAL}
+              title="Testing & Validation"
+              subtitle="Usability testing in Jakarta and Makassar with 24 PKs and 8 PKMs"
             />
-            <h3 className="text-xl font-bold text-foreground mt-6">Iterations</h3>
-            <div className="space-y-3">
+            <div className="grid sm:grid-cols-3 gap-4 mt-6">
               {[
-                {
-                  before: 'Initial design had separate flows for K1 and K2',
-                  after: 'Combined into one flow with session type selection',
-                },
-                {
-                  before: 'Q&A required internet connection to submit',
-                  after: 'Added offline mode with sync when connection returns',
-                },
-                {
-                  before: 'Dashboard showed too many metrics at once',
-                  after: 'Progressive disclosure with customizable views',
-                },
-              ].map((it, i) => (
-                <div key={i} className="grid sm:grid-cols-2 gap-3">
-                  <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-900">
-                    <span className="font-semibold">Before:</span> {it.before}
-                  </div>
-                  <div className="rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-900">
-                    <span className="font-semibold">After:</span> {it.after}
-                  </div>
+                { img: '/images/casestudy-3/field-workshop-1.png', alt: 'Field research workshop', tag: 'UT, Jakarta, Oct 2019' },
+                { img: '/images/casestudy-3/field-workshop-2.png', alt: 'Team workshop in Jakarta', tag: 'UT, Jakarta, Jan 2020' },
+                { img: '/images/casestudy-3/research-session-1.jpg', alt: 'User research session', tag: 'UT, Makassar, Jan 2020' },
+              ].map((item) => (
+                <div key={item.img} className="rounded-xl overflow-hidden border border-border">
+                  <ImageBlock src={item.img} alt={item.alt} />
+                  <p className="text-center text-sm text-muted-foreground py-2">{item.tag}</p>
                 </div>
               ))}
+            </div>
+            <ImageBlock src="/images/casestudy-3/research-session-2.jpg" alt="User testing session" />
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: `color-mix(in srgb, ${KD_GREEN} 6%, transparent)` }}>
+                <p className="font-bold mb-3" style={{ color: KD_GREEN }}>Key Findings</p>
+                <ul className="space-y-3">
+                  {[
+                    '92% of PKs completed session creation without assistance',
+                    'Average attendance recording time reduced from 8 min to 45 sec',
+                    'PKMs praised real-time visibility: "I can finally see what\'s happening"',
+                    'QR code check-in was the most-loved feature among drivers',
+                  ].map((finding) => (
+                    <li key={finding} className="flex items-start gap-2 text-sm text-foreground">
+                      <CircleCheck className="w-4 h-4 shrink-0 mt-0.5" style={{ color: KD_GREEN }} />
+                      {finding}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6">
+                <p className="font-bold text-primary mb-3">Iterations</p>
+                <div className="space-y-3">
+                  {[
+                    { before: 'Initial design had separate flows for K1 and K2', after: 'Combined into one flow with session type selection' },
+                    { before: 'Q&A required internet connection to submit', after: 'Added offline mode with sync when connection returns' },
+                    { before: 'Dashboard showed too many metrics at once', after: 'Progressive disclosure with customizable views' },
+                  ].map((it) => (
+                    <div key={it.before} className="text-sm">
+                      <p className="text-muted-foreground">
+                        <strong>Before:</strong> {it.before}
+                      </p>
+                      <p className="text-foreground">
+                        <strong>After:</strong> {it.after}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </Section>
         </Reveal>
 
         <Reveal>
-          <Section title="Results">
-            <h3 className="text-xl font-bold text-foreground">The Impact</h3>
-            <Prose>
-              <p>Measurable improvements across all key metrics</p>
-            </Prose>
-            <StatGrid
-              columns={4}
-              stats={[
-                { value: '85%', label: 'Reduction in manual tasks', sublabel: 'PKs save 12+ hours per month' },
-                { value: '3.2×', label: 'Increase in consistency', sublabel: 'Standardized metrics nationwide' },
-                { value: '94%', label: 'PK confidence score', sublabel: '"I feel more professional"' },
-                { value: '500+', label: 'Scaling readiness', sublabel: 'Platform ready for expansion' },
-              ]}
+          <Section title="">
+            <EyebrowHeading
+              icon={ChartColumn}
+              eyebrow="Results"
+              color={KD_GREEN}
+              title="The Impact"
+              highlight="Impact"
+              subtitle="Measurable improvements across all key metrics"
             />
-            <h3 className="text-xl font-bold text-foreground mt-6">Business Impact</h3>
-            <StatGrid
-              columns={2}
-              stats={[
-                { value: '2,400+', label: 'Sessions processed in 3 months' },
-                { value: '18,000+', label: 'Drivers engaged' },
-              ]}
-            />
-            <Prose>
-              <p>
+            <div className="mt-6">
+              <StatGrid
+                columns={4}
+                stats={[
+                  { value: '85%', label: 'Reduction in manual tasks', sublabel: 'PKs save 12+ hours per month', icon: TrendingDown, color: KD_GREEN },
+                  { value: '3.2×', label: 'Increase in consistency', sublabel: 'Standardized metrics nationwide', icon: TrendingUp, color: KD_ORANGE },
+                  { value: '94%', label: 'PK confidence score', sublabel: '"I feel more professional"', icon: Award, color: KD_TEAL },
+                  { value: '500+', label: 'Scaling readiness', sublabel: 'Platform ready for expansion', icon: Globe, color: KD_PURPLE },
+                ]}
+              />
+            </div>
+
+            <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: `color-mix(in srgb, ${KD_GREEN} 6%, transparent)` }}>
+              <h3 className="flex items-center gap-2 font-bold text-foreground mb-4">
+                <Target className="w-5 h-5" style={{ color: KD_GREEN }} />
+                Business Impact
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="rounded-lg bg-card p-4 text-center">
+                  <p className="text-3xl font-bold" style={{ color: KD_GREEN }}>2,400+</p>
+                  <p className="text-muted-foreground text-sm mt-1">Sessions processed in 3 months</p>
+                </div>
+                <div className="rounded-lg bg-card p-4 text-center">
+                  <p className="text-3xl font-bold" style={{ color: KD_GREEN }}>18,000+</p>
+                  <p className="text-muted-foreground text-sm mt-1">Drivers engaged</p>
+                </div>
+              </div>
+              <p className="text-foreground mt-4">
                 PKM supervisors reported that real-time insights helped them identify
                 and support struggling PKs 5× faster than before.
               </p>
-            </Prose>
-            <Quote attribution="PKM, Jakarta Region">
-              "This changed how we work. We're not just managing sessions anymore—we're
-              building a smarter, more connected community."
-            </Quote>
+              <div className="mt-4">
+                <Quote attribution="PKM, Jakarta Region">
+                  "This changed how we work. We're not just managing sessions
+                  anymore—we're building a smarter, more connected community."
+                </Quote>
+              </div>
+            </div>
           </Section>
         </Reveal>
 
         <Reveal>
           <Section title="Personal Takeaways">
-            <h3 className="text-xl font-bold text-foreground">Reflection</h3>
+            <h3 className="flex items-center gap-2 text-xl font-bold text-foreground">
+              <Lightbulb className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
+              Reflection
+            </h3>
             <Prose>
               <p>
                 This project pushed me to think beyond individual user flows and
@@ -307,7 +485,8 @@ function KopdarInitiativePage() {
                 prioritization.
               </p>
             </Prose>
-            <h3 className="text-xl font-bold text-foreground mt-6">
+            <h3 className="flex items-center gap-2 text-xl font-bold text-foreground mt-6">
+              <Lightbulb className="w-5 h-5" style={{ color: 'rgb(0, 200, 83)' }} />
               Designing for Real-World Constraints
             </h3>
             <Prose>
@@ -325,7 +504,8 @@ function KopdarInitiativePage() {
                 the value was undeniable—not because they were forced to.
               </p>
             </Prose>
-            <h3 className="text-xl font-bold text-foreground mt-6">
+            <h3 className="flex items-center gap-2 text-xl font-bold text-foreground mt-6">
+              <Target className="w-5 h-5" style={{ color: 'rgb(0, 200, 255)' }} />
               Impact Beyond Interfaces
             </h3>
             <Prose>

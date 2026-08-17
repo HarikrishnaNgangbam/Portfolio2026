@@ -1,17 +1,15 @@
 import {
   Smartphone,
   Bell,
-  Layers,
   Zap,
-  Waves,
-  Eye,
-  Ruler,
-  Users as UsersIcon,
-  MessageSquare,
-  Settings2,
-  Grid3x3,
-  Phone as PhoneIcon,
+  Clock,
+  Target,
+  TrendingUp,
+  PanelsTopLeft,
+  Monitor,
+  Shield,
   X,
+  ArrowRight,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
@@ -40,6 +38,11 @@ function PcToPhoneResumePage() {
         coverImage="/images/shared/project-pc-to-phone-cover.png"
         coverAlt="PC to Phone continuity - Desktop to mobile transition"
         workInProgress
+        iconFlow={[
+          { icon: Monitor, color: 'var(--icon-blue)' },
+          { icon: ArrowRight, color: 'var(--icon-orange)' },
+          { icon: Smartphone, color: 'var(--icon-teal)' },
+        ]}
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
@@ -132,40 +135,53 @@ function PcToPhoneResumePage() {
             <IconCardList
               items={[
                 {
-                  icon: Waves,
+                  icon: Clock,
+                  iconColor: 'var(--icon-blue)',
                   title: 'Work and life are mobile‑first after PC‑first',
                   description: 'Meetings end, commutes begin, context shifts demand mobility. Users expect seamless transitions without manual intervention',
                 },
                 {
-                  icon: Layers,
-                  iconColor: 'var(--icon-purple)',
+                  icon: Target,
+                  iconColor: 'var(--icon-teal)',
                   title: 'Competitors deliver system‑level continuity',
                   description: "Apple's Handoff, Universal Clipboard, and AirDrop set user expectations for seamless, invisible cross‑device experiences",
                 },
                 {
-                  icon: PhoneIcon,
+                  icon: Zap,
                   iconColor: 'var(--icon-orange)',
                   title: 'Windows felt like a one‑way ecosystem',
                   description: 'Without PC → Phone continuity, Windows was a destination, not a connected journey. This project aimed to close that loop',
                 },
               ]}
             />
+          </Section>
+        </Reveal>
+
+        <Reveal>
+          <Section title="Design Goal">
             <Prose callout>
-              <p className="font-semibold text-foreground mb-2">Design Goal</p>
-              Create a low‑friction, system‑level resume experience that preserves task
-              context across PC → Phone, works across multiple app categories, and
-              balances implicit intelligence with explicit user control.
+              Create a <strong>low‑friction, system‑level resume experience</strong> that:
+              <ul className="mt-3 space-y-1.5 list-disc list-inside">
+                <li>Preserves task context across PC → Phone</li>
+                <li>Works across multiple app categories</li>
+                <li>Balances implicit intelligence with explicit user control</li>
+              </ul>
             </Prose>
           </Section>
         </Reveal>
 
         <Reveal>
           <Section title="Users & Jobs‑to‑Be‑Done">
-            <Prose callout>
-              <p className="font-semibold text-foreground mb-1">Primary JTBD</p>
-              "When I step away from my PC, I want my active task to continue on my
-              phone, so I can stay productive without restarting."
-            </Prose>
+            <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6">
+              <p className="flex items-center gap-2 font-semibold text-foreground mb-1">
+                <Target className="w-4 h-4" style={{ color: 'var(--icon-blue)' }} />
+                Primary JTBD
+              </p>
+              <p className="text-foreground">
+                "When I step away from my PC, I want my active task to continue on my
+                phone, so I can stay productive without restarting."
+              </p>
+            </div>
             <div>
               <p className="font-semibold text-foreground mb-3">Secondary JTBDs</p>
               <ul className="space-y-1.5 text-muted-foreground">
@@ -182,10 +198,10 @@ function PcToPhoneResumePage() {
             <IconCardList
               columns={2}
               items={[
-                { icon: Zap, iconColor: 'var(--icon-orange)', title: 'Seamlessness', description: 'Transition tasks across devices with minimal steps. Resume should feel immediate and require no re‑learning.' },
-                { icon: Eye, iconColor: 'var(--icon-cyan)', title: 'Non‑Intrusiveness', description: "Surfaces should be ambient and contextual. Assist without interrupting the user's primary intent." },
-                { icon: Ruler, iconColor: 'var(--icon-green)', title: 'Context Awareness', description: 'Understand user intent and task relevance. Avoid noisy prompts and confusing residue after dismissal.' },
-                { icon: Grid3x3, iconColor: 'var(--icon-purple)', title: 'Scalability', description: 'Should support Android and iOS. Remain extensible to future multi‑device scenarios.' },
+                { icon: Zap, iconColor: 'var(--icon-blue)', title: 'Seamlessness', description: 'Transition tasks across devices with minimal steps. Resume should feel immediate and require no re‑learning.' },
+                { icon: Bell, iconColor: 'var(--icon-teal)', title: 'Non‑Intrusiveness', description: "Surfaces should be ambient and contextual. Assist without interrupting the user's primary intent." },
+                { icon: Target, iconColor: 'var(--icon-purple)', title: 'Context Awareness', description: 'Understand user intent and task relevance. Avoid noisy prompts and confusing residue after dismissal.' },
+                { icon: TrendingUp, iconColor: 'var(--icon-green)', title: 'Scalability', description: 'Should support Android and iOS. Remain extensible to future multi‑device scenarios.' },
               ]}
             />
           </Section>
@@ -193,22 +209,32 @@ function PcToPhoneResumePage() {
 
         <Reveal>
           <Section title="Design Strategy">
-            <IconCardList
-              items={[
-                { icon: Layers, title: 'Platform‑native capability', description: 'Built as a Windows‑owned system capability, not a single‑app feature; scalable across browser, productivity, and media.' },
-                { icon: Waves, iconColor: 'var(--icon-purple)', title: 'Bidirectional continuity', description: 'Tasks flow PC → Phone and Phone → PC, reinforcing trust in the ecosystem.' },
-                { icon: Bell, iconColor: 'var(--icon-orange)', title: 'Moment‑driven resume', description: 'Resume is triggered by user activity & transitions (active, lock, idle, leave, proximity, present, etc).' },
-              ]}
-            />
+            <div className="space-y-4">
+              {[
+                { title: 'Platform‑native capability', description: 'Built as a Windows‑owned system capability, not a single‑app feature; scalable across browser, productivity, and media.' },
+                { title: 'Bidirectional continuity', description: 'Tasks flow PC → Phone and Phone → PC, reinforcing trust in the ecosystem.' },
+                { title: 'Moment‑driven resume', description: 'Resume is triggered by user activity & transitions (active, lock, idle, leave, proximity, present, etc).' },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl border border-border bg-muted/30 p-5">
+                  <p className="font-semibold text-foreground">{item.title}</p>
+                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
+
+        <Reveal>
+          <Section title="Connected Experience Continuity Strategy">
             <Prose>
               <p>
-                PC → Phone Resume is part of a broader Connected Experience Continuity
-                strategy—designed to make Windows feel like a coherent ecosystem rather
-                than a collection of isolated devices.
+                PC → Phone Resume is part of a broader{' '}
+                <strong>Connected Experience Continuity strategy</strong>—designed to
+                make Windows feel like a coherent ecosystem rather than a collection of
+                isolated devices.
               </p>
             </Prose>
             <ImageBlock
-              heading="PC → Phone Continuity Map"
               src="/images/casestudy-1/xdr-platform-diagram.png"
               alt="Cross Device Resume (XDR) - Platform diagram"
             />
@@ -216,35 +242,49 @@ function PcToPhoneResumePage() {
         </Reveal>
 
         <Reveal>
+          <Section title="PC → Phone Continuity Map">
+            <ImageBlock
+              src="/images/casestudy-1/resume-map-flow.png"
+              alt="PC to Phone Resume Map - UX flow showing Active Task, Conflict, Means, Continue"
+            />
+          </Section>
+        </Reveal>
+
+        <Reveal>
           <Section title="Key Design Explorations">
             <h3 className="text-xl font-bold text-foreground">Mode of Continuity</h3>
-            <IconCardList
-              columns={2}
-              items={[
-                { icon: Zap, iconColor: 'var(--icon-orange)', title: 'Implicit Continuity', description: 'The system anticipates user intent and makes certain tasks available across devices automatically, enabling users to resume with minimal effort.' },
-                { icon: UsersIcon, iconColor: 'var(--icon-blue)', title: 'Explicit Continuity', description: 'The user explicitly provides intent or instruction to make a specific task available on a specific device.' },
-              ]}
-            />
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { title: 'Implicit Continuity', description: 'The system anticipates user intent and makes certain tasks available across devices automatically, enabling users to resume with minimal effort.' },
+                { title: 'Explicit Continuity', description: 'The user explicitly provides intent or instruction to make a specific task available on a specific device.' },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl border border-border bg-muted/30 p-5">
+                  <p className="font-semibold text-foreground">{item.title}</p>
+                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                </div>
+              ))}
+            </div>
+
             <h3 className="text-xl font-bold text-foreground mt-6">Key Entry Points</h3>
             <IconCardList
               columns={2}
               items={[
-                { icon: Bell, iconColor: 'var(--icon-purple)', title: 'One UI Now Bar', description: 'Ambient resume surface at glanceable moments' },
-                { icon: MessageSquare, iconColor: 'var(--icon-green)', title: 'Material UI Live Notification', description: 'Contextual, time‑sensitive resume prompt' },
-                { icon: Grid3x3, iconColor: 'var(--icon-orange)', title: 'App Switcher', description: 'Resume surfaced during active task switching' },
-                { icon: Settings2, iconColor: 'var(--icon-cyan)', title: 'App Widget', description: 'Persistent, user‑controlled entry to continue tasks' },
+                { icon: PanelsTopLeft, iconColor: 'var(--icon-blue)', title: 'One UI Now Bar', description: 'Ambient resume surface at glanceable moments' },
+                { icon: Bell, iconColor: 'var(--icon-teal)', title: 'Material UI Live Notification', description: 'Contextual, time‑sensitive resume prompt' },
+                { icon: Monitor, iconColor: 'var(--icon-purple)', title: 'App Switcher', description: 'Resume surfaced during active task switching' },
+                { icon: PanelsTopLeft, iconColor: 'var(--icon-green)', title: 'App Widget', description: 'Persistent, user‑controlled entry to continue tasks' },
               ]}
             />
 
             <h3 className="text-xl font-bold text-foreground mt-6">Proposed Experience</h3>
+            <VideoBlock
+              heading="Teams Call — Resume a call left on PC, continued seamlessly on phone"
+              src="/videos/pc-to-phone-teams-call.mp4"
+            />
             <ImageBlock
               heading="Teams Notification — Contextual resume prompt delivered at the right moment on your Phone"
               src="/images/casestudy-1/teams-notification.png"
               alt="PC to Phone Resume — Teams notification prompting the user to resume"
-            />
-            <VideoBlock
-              heading="Teams Call — Resume a call left on PC, continued seamlessly on phone"
-              src="/videos/pc-to-phone-teams-call.mp4"
             />
             <div className="grid sm:grid-cols-2 gap-4">
               <ImageBlock
@@ -264,12 +304,27 @@ function PcToPhoneResumePage() {
               alt="PC to Phone Resume — Status chip indicating multiple apps available to resume"
             />
 
-            <CalloutList
-              marker="✓"
-              items={['Leave a task on PC', 'Receive a timely, contextual resume entry on phone', 'Continue exactly where they left off']}
-            />
+            <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6">
+              <p className="font-semibold text-foreground mb-3">
+                PC → Phone Resume enables users to:
+              </p>
+              <ul className="space-y-1.5 text-foreground text-sm">
+                <li className="flex gap-2">
+                  <span className="text-primary" aria-hidden="true">•</span>
+                  Leave a task on PC
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary" aria-hidden="true">•</span>
+                  Receive a timely, contextual resume entry on phone
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-primary" aria-hidden="true">•</span>
+                  Continue exactly where they left off
+                </li>
+              </ul>
+            </div>
             <Prose>
-              <p>
+              <p className="italic">
                 The experience feels assistive, not interruptive—present when needed,
                 invisible otherwise.
               </p>
@@ -279,15 +334,21 @@ function PcToPhoneResumePage() {
 
         <Reveal>
           <Section title="Impact (Directional)">
-            <CalloutList
-              marker="✓"
-              tone="positive"
-              items={[
-                'Improved continuity perception across Windows ecosystem',
-                'Reduced task restart friction during PC → mobile transitions',
-                'Increased engagement with connected device experiences',
-              ]}
-            />
+            <div className="grid sm:grid-cols-3 gap-4">
+              {[
+                { icon: TrendingUp, iconColor: 'var(--icon-blue)', text: 'Improved continuity perception across Windows ecosystem' },
+                { icon: Zap, iconColor: 'var(--icon-green)', text: 'Reduced task restart friction during PC → mobile transitions' },
+                { icon: Target, iconColor: 'var(--icon-orange)', text: 'Increased engagement with connected device experiences' },
+              ].map((item) => (
+                <div
+                  key={item.text}
+                  className="rounded-xl border border-border bg-muted/30 p-6 text-center flex flex-col items-center"
+                >
+                  <item.icon className="w-7 h-7 mb-3" style={{ color: item.iconColor }} />
+                  <p className="text-muted-foreground text-sm">{item.text}</p>
+                </div>
+              ))}
+            </div>
             <Prose>
               <p className="text-sm italic">
                 (Exact metrics tracked internally; results informed iteration and
@@ -301,9 +362,9 @@ function PcToPhoneResumePage() {
           <Section title="What Made This Hard">
             <IconCardList
               items={[
-                { icon: Smartphone, title: 'Designing across two platforms with different affordances', description: 'Android and iOS have distinct interaction patterns and system constraints that required careful adaptation.' },
-                { icon: UsersIcon, iconColor: 'var(--icon-purple)', title: 'Aligning system, app, and partner expectations', description: 'Coordinating across Windows, first-party apps, and third-party partners required clear vision and flexible implementation.' },
-                { icon: Eye, iconColor: 'var(--icon-orange)', title: 'Balancing intelligence with user trust', description: 'Making the system feel smart without being creepy required careful sensitivity calibration and transparent user control.' },
+                { icon: Shield, iconColor: 'var(--icon-blue)', title: 'Designing across two platforms with different affordances', description: 'Android and iOS have distinct interaction patterns and system constraints that required careful adaptation.' },
+                { icon: Target, iconColor: 'var(--icon-teal)', title: 'Aligning system, app, and partner expectations', description: 'Coordinating across Windows, first-party apps, and third-party partners required clear vision and flexible implementation.' },
+                { icon: Shield, iconColor: 'var(--icon-purple)', title: 'Balancing intelligence with user trust', description: 'Making the system feel smart without being creepy required careful sensitivity calibration and transparent user control.' },
               ]}
             />
           </Section>
@@ -311,13 +372,18 @@ function PcToPhoneResumePage() {
 
         <Reveal>
           <Section title="Learnings">
-            <IconCardList
-              items={[
-                { icon: Zap, iconColor: 'var(--icon-orange)', title: 'Continuity succeeds when it feels inevitable, not impressive', description: 'The best continuity experiences disappear into the background, feeling like they were always there.' },
-                { icon: Layers, title: 'The best cross‑device UX minimizes decision‑making', description: 'Every choice point is an opportunity for drop-off. Implicit intelligence reduces friction dramatically.' },
-                { icon: Eye, iconColor: 'var(--icon-green)', title: 'Trust is as critical as speed in system‑level experiences', description: "Users must trust that the system respects their privacy and intent, or they won't engage at all." },
-              ]}
-            />
+            <div className="space-y-4">
+              {[
+                { title: 'Continuity succeeds when it feels inevitable, not impressive', description: 'The best continuity experiences disappear into the background, feeling like they were always there.' },
+                { title: 'The best cross‑device UX minimizes decision‑making', description: 'Every choice point is an opportunity for drop-off. Implicit intelligence reduces friction dramatically.' },
+                { title: 'Trust is as critical as speed in system‑level experiences', description: "Users must trust that the system respects their privacy and intent, or they won't engage at all." },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl border border-primary/20 bg-accent/10 p-5">
+                  <p className="font-semibold text-foreground">{item.title}</p>
+                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </Section>
         </Reveal>
 

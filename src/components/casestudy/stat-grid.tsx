@@ -1,9 +1,11 @@
-import { cn } from '@/lib/utils';
+import { cn, type IconComponent } from '@/lib/utils';
 
 export interface StatItem {
   value: string;
   label: string;
   sublabel?: string;
+  icon?: IconComponent;
+  color?: string;
 }
 
 const COLUMN_CLASSES: Record<2 | 3 | 4, string> = {
@@ -19,9 +21,19 @@ function StatGrid({ stats, columns = 3 }: { stats: StatItem[]; columns?: 2 | 3 |
       {stats.map((stat, i) => (
         <div
           key={i}
-          className="rounded-2xl border border-[var(--acrylic-border)] bg-[var(--acrylic-surface)] backdrop-blur-xl p-6 text-center"
+          className={cn(
+            'rounded-2xl border p-6',
+            stat.icon ? 'text-left' : 'text-center border-[var(--acrylic-border)] bg-[var(--acrylic-surface)] backdrop-blur-xl',
+          )}
+          style={stat.icon ? { borderColor: stat.color, backgroundColor: `color-mix(in srgb, ${stat.color} 8%, transparent)` } : undefined}
         >
-          <p className="text-4xl font-bold text-primary">{stat.value}</p>
+          {stat.icon && <stat.icon className="w-6 h-6 mb-3" style={{ color: stat.color }} />}
+          <p
+            className={cn('text-4xl font-bold', !stat.icon && 'text-primary')}
+            style={stat.icon ? { color: stat.color } : undefined}
+          >
+            {stat.value}
+          </p>
           <p className="text-foreground font-medium mt-2">{stat.label}</p>
           {stat.sublabel && (
             <p className="text-muted-foreground text-sm mt-1">{stat.sublabel}</p>

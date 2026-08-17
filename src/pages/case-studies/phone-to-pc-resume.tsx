@@ -10,6 +10,7 @@ import {
   Layers,
   TrendingUp,
   Shield,
+  ArrowRight,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
@@ -52,6 +53,11 @@ function PhoneToPcResumePage() {
         ]}
         coverImage="/images/shared/project-phone-to-pc-cover.png"
         coverAlt="Phone to PC Resume - Taskbar and system-level continuity"
+        iconFlow={[
+          { icon: Smartphone, color: 'var(--icon-teal)' },
+          { icon: ArrowRight, color: 'var(--icon-orange)' },
+          { icon: Monitor, color: 'var(--icon-blue)' },
+        ]}
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
