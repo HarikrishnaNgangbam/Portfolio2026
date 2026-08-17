@@ -11,6 +11,7 @@ import { FamilySafetyPage } from '@/pages/case-studies/family-safety';
 import { KopdarInitiativePage } from '@/pages/case-studies/kopdar-initiative';
 import { NotFoundPage } from '@/pages/not-found';
 import { DesignSystemPage } from '@/pages/design-system';
+import { CaseStudyGate } from '@/components/casestudy/case-study-gate';
 
 function App() {
   return (
@@ -22,10 +23,38 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/work/phone-to-pc-resume" element={<PhoneToPcResumePage />} />
-          <Route path="/work/pc-to-phone-resume" element={<PcToPhoneResumePage />} />
-          <Route path="/work/family-safety" element={<FamilySafetyPage />} />
-          <Route path="/work/kopdar-initiative" element={<KopdarInitiativePage />} />
+          <Route
+            path="/work/phone-to-pc-resume"
+            element={
+              <CaseStudyGate slug="phone-to-pc-resume">
+                <PhoneToPcResumePage />
+              </CaseStudyGate>
+            }
+          />
+          <Route
+            path="/work/pc-to-phone-resume"
+            element={
+              <CaseStudyGate slug="pc-to-phone-resume">
+                <PcToPhoneResumePage />
+              </CaseStudyGate>
+            }
+          />
+          <Route
+            path="/work/family-safety"
+            element={
+              <CaseStudyGate slug="family-safety">
+                <FamilySafetyPage />
+              </CaseStudyGate>
+            }
+          />
+          <Route
+            path="/work/kopdar-initiative"
+            element={
+              <CaseStudyGate slug="kopdar-initiative">
+                <KopdarInitiativePage />
+              </CaseStudyGate>
+            }
+          />
           <Route path="/design-system" element={<DesignSystemPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -6,10 +6,12 @@ import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { ContactSection } from '@/components/portfolio/contact-section';
 import { Reveal } from '@/components/reveal';
-import { PROJECTS } from '@/data/projects';
+import { useEffectiveProjects } from '@/lib/project-settings-store';
 import { HOME_EXPERIENCE } from '@/data/experience';
 
 function HomePage() {
+  const projects = useEffectiveProjects();
+
   return (
     <div>
       {/* Hero */}
@@ -64,12 +66,12 @@ function HomePage() {
               </p>
             </div>
             <span className="flex-shrink-0 px-3 py-1.5 text-sm rounded-full bg-accent text-primary font-medium">
-              {PROJECTS.length} Projects
+              {projects.length} Projects
             </span>
           </div>
         </Reveal>
         <div className="space-y-6">
-          {PROJECTS.map((project, i) => (
+          {projects.map((project, i) => (
             <Reveal key={project.slug} delay={i * 80}>
               <ProjectCard project={project} />
             </Reveal>

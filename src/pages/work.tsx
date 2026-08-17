@@ -1,9 +1,11 @@
 import { H1 } from '@/design-system/ui/h1';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { Reveal } from '@/components/reveal';
-import { PROJECTS } from '@/data/projects';
+import { useEffectiveProjects } from '@/lib/project-settings-store';
 
 function WorkPage() {
+  const projects = useEffectiveProjects();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
       <Reveal>
@@ -13,12 +15,12 @@ function WorkPage() {
         </p>
         <div className="mt-6">
           <span className="px-3 py-1.5 text-sm rounded-full bg-accent text-primary font-medium">
-            {PROJECTS.length} Projects
+            {projects.length} Projects
           </span>
         </div>
       </Reveal>
       <div className="space-y-6 mt-10">
-        {PROJECTS.map((project, i) => (
+        {projects.map((project, i) => (
           <Reveal key={project.slug} delay={i * 80}>
             <ProjectCard project={project} />
           </Reveal>
