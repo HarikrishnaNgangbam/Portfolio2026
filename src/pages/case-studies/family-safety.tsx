@@ -44,7 +44,7 @@ function FamilySafetyPage() {
           { label: 'Platform', value: 'Family Safety Portal' },
           { label: 'Status', value: 'Established & Adopted' },
         ]}
-        coverImage="/images/shared/project-family-safety-cover.png"
+        coverImage="/images/shared/project-family-safety-cover.webp"
         coverAlt="Family Safety app interface with collaborative team environment"
         iconFlow={[
           { icon: Lightbulb, color: 'var(--icon-orange)' },
@@ -180,7 +180,7 @@ function FamilySafetyPage() {
             </div>
             <ImageBlock
               heading="Design Office Hours in action"
-              src="/images/casestudy-2/design-office-hours.jpg"
+              src="/images/casestudy-2/design-office-hours.webp"
               alt="Team collaboration during Design Office Hours"
             />
           </Section>
@@ -214,22 +214,22 @@ function FamilySafetyPage() {
 
             <ImageBlock
               heading="System-correct prototype interfaces"
-              src="/images/casestudy-2/portal-overview.png"
+              src="/images/casestudy-2/portal-overview.webp"
               alt="Family Safety Portal overview interface"
             />
             <ImageBlock
               heading="Family Safety Portal — Master prototype"
-              src="/images/casestudy-2/portal-dashboard.png"
+              src="/images/casestudy-2/portal-dashboard.webp"
               alt="Portal dashboard interface with make a copy and share actions"
               caption="Make copy of prototype and start editing"
             />
             <ImageBlock
               heading="Prompt and output"
-              src="/images/casestudy-2/settings-edge-cases.png"
+              src="/images/casestudy-2/settings-edge-cases.webp"
               alt="Figma Make prompt panel and CAPTCHA modal output"
             />
             <ImageBlock
-              src="/images/casestudy-2/mobile-controls.png"
+              src="/images/casestudy-2/mobile-controls.webp"
               alt="Mobile app controls and settings interface"
             />
 

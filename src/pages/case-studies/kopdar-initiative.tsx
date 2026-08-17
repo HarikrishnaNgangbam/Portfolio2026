@@ -112,7 +112,7 @@ function KopdarInitiativePage() {
           { label: 'Team', value: 'Cross-functional', icon: UsersIcon, color: KD_TEAL, bg: tint(KD_TEAL, 8) },
         ]}
         metaVariant="cards"
-        coverImage="/images/shared/project-kopdar-cover.png"
+        coverImage="/images/shared/project-kopdar-cover.webp"
         coverAlt="Gojek motorcycle driver in green jacket representing driver community"
         imageBadge="Live from Jakarta"
       />
@@ -153,7 +153,7 @@ function KopdarInitiativePage() {
               </Prose>
               <div className="relative rounded-2xl overflow-hidden min-h-[180px]">
                 <ImageWithFallback
-                  src="/images/casestudy-3/indonesia-map.png"
+                  src="/images/casestudy-3/indonesia-map.webp"
                   alt="Map of Indonesia archipelago"
                   className="w-full h-full object-cover absolute inset-0"
                 />
@@ -270,7 +270,7 @@ function KopdarInitiativePage() {
               ))}
             </div>
             <ImageBlock
-              src="/images/casestudy-3/workflow-pain-points.png"
+              src="/images/casestudy-3/workflow-pain-points.webp"
               alt="Kopdar workflow diagram showing pain points across the lifecycle"
             />
             <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
@@ -316,7 +316,7 @@ function KopdarInitiativePage() {
               ))}
             </div>
             <ImageBlock
-              src="/images/casestudy-3/proposed-solution.png"
+              src="/images/casestudy-3/proposed-solution.webp"
               alt="Kopdar proposed solution diagram"
             />
 
@@ -333,7 +333,7 @@ function KopdarInitiativePage() {
               ]}
             />
             <ImageBlock
-              src="/images/casestudy-3/new-workflow.png"
+              src="/images/casestudy-3/new-workflow.webp"
               alt="Kopdar new workflow diagram"
             />
             <Prose>
@@ -361,7 +361,7 @@ function KopdarInitiativePage() {
                   title: 'Kopdar Dashboard',
                   description:
                     'PKs get an at-a-glance overview of their community: upcoming sessions, attendance trends, and pending action items—all surfaced without digging through menus.',
-                  img: '/images/casestudy-3/dashboard-screen.png',
+                  img: '/images/casestudy-3/dashboard-screen.webp',
                   alt: 'Kopdar Dashboard screen showing session overview and community',
                 },
                 {
@@ -370,7 +370,7 @@ function KopdarInitiativePage() {
                   title: 'Creating New Kopdar Session',
                   description:
                     'PKs can now create sessions in under 2 minutes—selecting drivers from their community, choosing templates, and scheduling both K1 and K2 in one unified flow.',
-                  img: '/images/casestudy-3/create-event-screens.png',
+                  img: '/images/casestudy-3/create-event-screens.webp',
                   alt: 'New Kopdar session creation flow showing driver selection',
                 },
                 {
@@ -379,7 +379,7 @@ function KopdarInitiativePage() {
                   title: 'Conducting Kopdar Session',
                   description:
                     'During the session, PKs manage attendance, capture notes, and field driver questions in real time—everything recorded in one place so nothing is lost after the meeting.',
-                  img: '/images/casestudy-3/conduct-event-screen.png',
+                  img: '/images/casestudy-3/conduct-event-screen.webp',
                   alt: 'Active Kopdar session screen showing attendance, notes',
                 },
               ].map((screen) => (
@@ -419,9 +419,9 @@ function KopdarInitiativePage() {
             />
             <div className="grid sm:grid-cols-3 gap-4 mt-6">
               {[
-                { img: '/images/casestudy-3/field-workshop-1.png', alt: 'Field research workshop', tag: 'UT, Jakarta, Oct 2019' },
-                { img: '/images/casestudy-3/field-workshop-2.png', alt: 'Team workshop in Jakarta', tag: 'UT, Jakarta, Jan 2020' },
-                { img: '/images/casestudy-3/research-session-1.jpg', alt: 'User research session', tag: 'UT, Makassar, Jan 2020' },
+                { img: '/images/casestudy-3/field-workshop-1.webp', alt: 'Field research workshop', tag: 'UT, Jakarta, Oct 2019' },
+                { img: '/images/casestudy-3/field-workshop-2.webp', alt: 'Team workshop in Jakarta', tag: 'UT, Jakarta, Jan 2020' },
+                { img: '/images/casestudy-3/research-session-1.webp', alt: 'User research session', tag: 'UT, Makassar, Jan 2020' },
               ].map((item) => (
                 <div key={item.img} className="rounded-xl overflow-hidden border border-border">
                   <ImageBlock src={item.img} alt={item.alt} />
@@ -430,8 +430,8 @@ function KopdarInitiativePage() {
               ))}
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
-              <ImageBlock src="/images/casestudy-3/research-session-2.jpg" alt="User testing session" />
-              <ImageBlock src="/images/casestudy-3/community-meeting.png" alt="Driver community meeting" />
+              <ImageBlock src="/images/casestudy-3/research-session-2.webp" alt="User testing session" />
+              <ImageBlock src="/images/casestudy-3/community-meeting.webp" alt="Driver community meeting" />
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">

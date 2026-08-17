@@ -49,7 +49,7 @@ function HomePage() {
           <Reveal delay={150}>
             <div className="aspect-square rounded-2xl overflow-hidden border border-[var(--acrylic-border)] shadow-[var(--shadow-lg)]">
               <ImageWithFallback
-                src="/images/shared/harikrishna-portrait.png"
+                src="/images/shared/harikrishna-portrait.webp"
                 alt="Harikrishna - Senior Product Designer"
                 className="w-full h-full object-cover"
                 loading="eager"

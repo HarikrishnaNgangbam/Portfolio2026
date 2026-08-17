@@ -40,7 +40,7 @@ function PcToPhoneResumePage() {
           { label: 'Platform', value: 'Windows 11, Android, iOS' },
           { label: 'Status', value: 'Work in Progress' },
         ]}
-        coverImage="/images/shared/project-pc-to-phone-cover.png"
+        coverImage="/images/shared/project-pc-to-phone-cover.webp"
         coverAlt="PC to Phone continuity - Desktop to mobile transition"
         workInProgress
         iconFlow={[
@@ -240,7 +240,7 @@ function PcToPhoneResumePage() {
               </p>
             </Prose>
             <ImageBlock
-              src="/images/casestudy-1/xdr-platform-diagram.png"
+              src="/images/casestudy-1/xdr-platform-diagram.webp"
               alt="Cross Device Resume (XDR) - Platform diagram"
             />
           </Section>
@@ -249,7 +249,7 @@ function PcToPhoneResumePage() {
         <Reveal>
           <Section title="PC → Phone Continuity Map">
             <ImageBlock
-              src="/images/casestudy-1/resume-map-flow.png"
+              src="/images/casestudy-1/resume-map-flow.webp"
               alt="PC to Phone Resume Map - UX flow showing Active Task, Conflict, Means, Continue"
             />
           </Section>
@@ -288,24 +288,24 @@ function PcToPhoneResumePage() {
             />
             <ImageBlock
               heading="Teams Notification — Contextual resume prompt delivered at the right moment on your Phone"
-              src="/images/casestudy-1/teams-notification.png"
+              src="/images/casestudy-1/teams-notification.webp"
               alt="PC to Phone Resume — Teams notification prompting the user to resume"
             />
             <div className="grid sm:grid-cols-2 gap-4">
               <ImageBlock
                 heading="Nowbar — Single app resume entry"
-                src="/images/casestudy-1/nowbar-single-app.png"
+                src="/images/casestudy-1/nowbar-single-app.webp"
                 alt="PC to Phone Resume — Nowbar showing a single active app ready to resume"
               />
               <ImageBlock
                 heading="Nowbar — Multiple apps available"
-                src="/images/casestudy-1/nowbar-multiple-app.png"
+                src="/images/casestudy-1/nowbar-multiple-app.webp"
                 alt="PC to Phone Resume — Nowbar showing multiple apps available to resume"
               />
             </div>
             <ImageBlock
               heading="Status Chip — Persistent multi-app resume indicator for ongoing cross-device sessions"
-              src="/images/casestudy-1/status-chip-multiple-app.png"
+              src="/images/casestudy-1/status-chip-multiple-app.webp"
               alt="PC to Phone Resume — Status chip indicating multiple apps available to resume"
             />
 

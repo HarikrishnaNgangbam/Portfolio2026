@@ -56,7 +56,7 @@ function PhoneToPcResumePage() {
           { label: 'Platform', value: 'Windows 11' },
           { label: 'Status', value: 'Shipped (GA - Jan 2026)' },
         ]}
-        coverImage="/images/shared/project-phone-to-pc-cover.png"
+        coverImage="/images/shared/project-phone-to-pc-cover.webp"
         coverAlt="Phone to PC Resume - Taskbar and system-level continuity"
         iconFlow={[
           { icon: Smartphone, color: 'var(--icon-teal)' },
@@ -170,7 +170,7 @@ function PhoneToPcResumePage() {
         <Reveal>
           <Section title="Why Now">
             <ImageBlock
-              src="/images/casestudy-0/churn-reason-chart.png"
+              src="/images/casestudy-0/churn-reason-chart.webp"
               alt="Connected Ecosystem: Top reason for churn - Lack of seamless continuity"
             />
             <IconCardList
@@ -286,15 +286,15 @@ function PhoneToPcResumePage() {
             </p>
             <VideoBlock src="/videos/phone-to-pc-spotify.mp4" />
             <ImageBlock
-              src="/images/casestudy-0/spotify-continuity-1.png"
+              src="/images/casestudy-0/spotify-continuity-1.webp"
               alt="Phone to PC Resume - Spotify continuity experience"
             />
             <ImageBlock
-              src="/images/casestudy-0/spotify-continuity-2.png"
+              src="/images/casestudy-0/spotify-continuity-2.webp"
               alt="Spotify Phone to PC continuity experience"
             />
             <ImageBlock
-              src="/images/casestudy-0/resume-variations.png"
+              src="/images/casestudy-0/resume-variations.webp"
               alt="Resume from phone continuity variations"
             />
 
@@ -315,12 +315,12 @@ function PhoneToPcResumePage() {
 
             <ImageBlock
               heading="Design Framework for Taskbar Resume notification"
-              src="/images/casestudy-0/taskbar-framework.png"
+              src="/images/casestudy-0/taskbar-framework.webp"
               alt="Taskbar Resume Design Framework"
             />
             <ImageBlock
               heading="Phone to PC Resume Ingress on Taskbar & Hovercard - Depending on Phone & PC App availability"
-              src="/images/casestudy-0/continuity-flow.png"
+              src="/images/casestudy-0/continuity-flow.webp"
               alt="Resume from phone continuity variations across app availability"
             />
 
@@ -442,14 +442,14 @@ function PhoneToPcResumePage() {
             <h3 className="text-xl font-bold text-foreground mt-4">Featured Coverage</h3>
             <PressGrid
               items={[
-                { src: '/images/casestudy-0/press-sammobile.png', alt: 'SAM MOBILE coverage' },
-                { src: '/images/casestudy-0/press-winbuzzer.png', alt: 'WinBuzzer coverage' },
-                { src: '/images/casestudy-0/press-techradar.png', alt: 'TechRadar coverage' },
-                { src: '/images/casestudy-0/press-windowscentral.png', alt: 'Windows Central coverage' },
-                { src: '/images/casestudy-0/press-androidpolice.png', alt: 'Android Police coverage' },
-                { src: '/images/casestudy-0/press-thurrott.png', alt: 'Thurrott coverage' },
-                { src: '/images/casestudy-0/press-theverge.png', alt: 'The Verge coverage' },
-                { src: '/images/casestudy-0/press-bgr.png', alt: 'BGR coverage' },
+                { src: '/images/casestudy-0/press-sammobile.webp', alt: 'SAM MOBILE coverage' },
+                { src: '/images/casestudy-0/press-winbuzzer.webp', alt: 'WinBuzzer coverage' },
+                { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
+                { src: '/images/casestudy-0/press-windowscentral.webp', alt: 'Windows Central coverage' },
+                { src: '/images/casestudy-0/press-androidpolice.webp', alt: 'Android Police coverage' },
+                { src: '/images/casestudy-0/press-thurrott.webp', alt: 'Thurrott coverage' },
+                { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
+                { src: '/images/casestudy-0/press-bgr.webp', alt: 'BGR coverage' },
               ]}
             />
             <h3 className="text-xl font-bold text-foreground mt-4">

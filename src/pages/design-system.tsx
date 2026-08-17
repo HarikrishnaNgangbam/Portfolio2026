@@ -320,7 +320,7 @@ function DesignSystemPage() {
           <ExperienceCard
             role="Senior Product Designer"
             company="Microsoft - Windows"
-            companyLogo="/images/logos/microsoft-windows.png"
+            companyLogo="/images/logos/microsoft-windows.webp"
             companyLogoAlt="Microsoft - Windows logo"
             dates="Aug 2024 - Present"
             location="Hyderabad, India"

@@ -20,7 +20,7 @@ export const PROJECTS: ProjectSummary[] = [
     description:
       'System-level capability enabling users to continue active tasks from phone to PC, turning Windows into an active continuation partner with 3.1M monthly alerts and 28% taskbar engagement.',
     tags: ['Phone to PC Continuity', 'Task Continuity', 'Cross Platform'],
-    coverImage: '/images/shared/project-phone-to-pc-cover.png',
+    coverImage: '/images/shared/project-phone-to-pc-cover.webp',
     coverAlt: 'Phone to PC Resume - Taskbar and system-level continuity',
   },
   {
@@ -32,7 +32,7 @@ export const PROJECTS: ProjectSummary[] = [
     description:
       'System-level capability enabling users to continue PC tasks on mobile when they step away, completing the bidirectional continuity loop and making Windows a connected journey.',
     tags: ['PC to Phone Continuity', 'Bi-directional Continuity', 'Connected Experience'],
-    coverImage: '/images/shared/project-pc-to-phone-cover.png',
+    coverImage: '/images/shared/project-pc-to-phone-cover.webp',
     coverAlt: 'PC to Phone continuity - Desktop to mobile transition',
   },
   {
@@ -44,7 +44,7 @@ export const PROJECTS: ProjectSummary[] = [
     description:
       'Democratizing early-stage design while maintaining system quality through a design-led governance model. Enabled PMs to ideate independently while Design retained quality ownership.',
     tags: ['AI Workflow', 'Vibe Coding', 'Design Operations'],
-    coverImage: '/images/shared/project-family-safety-cover.png',
+    coverImage: '/images/shared/project-family-safety-cover.webp',
     coverAlt: 'Family Safety app interface with collaborative team environment',
   },
   {
@@ -56,7 +56,7 @@ export const PROJECTS: ProjectSummary[] = [
     description:
       'Improving efficiency, consistency, and community connection across Indonesia. Transformed how thousands of drivers connect through face-to-face sessions, increasing attendance 3.2× and reducing admin time 65%.',
     tags: ['System Design', 'Community Engagement', 'Super App'],
-    coverImage: '/images/shared/project-kopdar-cover.png',
+    coverImage: '/images/shared/project-kopdar-cover.webp',
     coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
   },
 ];
