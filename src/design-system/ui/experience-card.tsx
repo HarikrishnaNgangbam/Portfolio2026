@@ -1,5 +1,6 @@
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { IconList } from '@/design-system/ui/icon-list';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 
 export interface ExperienceCardProps {
   role: string;
@@ -25,7 +26,7 @@ function ExperienceCard({
       <h3 className="font-bold text-2xl md:text-3xl text-foreground">{role}</h3>
       <p className="text-muted-foreground mt-1 flex items-center gap-2 text-lg md:text-xl">
         {companyLogo && (
-          <img
+          <ImageWithFallback
             src={companyLogo}
             alt={companyLogoAlt ?? ''}
             className="h-[1em] w-auto object-contain flex-shrink-0"

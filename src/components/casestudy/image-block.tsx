@@ -1,4 +1,5 @@
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
+import { assetUrl } from '@/lib/asset-url';
 
 export interface ImageBlockProps {
   src: string;
@@ -32,7 +33,7 @@ function VideoBlock({ src, heading, caption }: VideoBlockProps) {
       {heading && <p className="font-semibold text-foreground mb-3">{heading}</p>}
       <div className="rounded-2xl overflow-hidden border border-border">
         <video
-          src={src}
+          src={assetUrl(src)}
           controls
           muted
           loop

@@ -1,0 +1,25 @@
+<!doctype html>
+<!--
+  GitHub Pages has no server-side router — any URL that isn't a real file
+  (e.g. a deep link like /work/kopdar-initiative, or a hard refresh on one)
+  gets served this 404.html instead. It encodes the intended path into a
+  query string and redirects to the real index.html, which decodes it back
+  before React mounts (see the matching script in index.html) and hands off
+  to React Router. Standard pattern: https://github.com/rafgraph/spa-github-pages
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <script>
+      var basePath = '/Portfolio2026';
+      var path = location.pathname.slice(basePath.length);
+      var redirect =
+        basePath +
+        '/?redirect=' +
+        encodeURIComponent(path + location.search + location.hash);
+      location.replace(redirect);
+    </script>
+  </head>
+  <body></body>
+</html>

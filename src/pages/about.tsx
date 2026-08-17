@@ -4,6 +4,7 @@ import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { CardHeading } from '@/design-system/ui/card-heading';
 import { DotList } from '@/design-system/ui/dot-list';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { EXPERIENCE, SKILLS } from '@/data/experience';
@@ -57,7 +58,7 @@ function AboutPage() {
           </CardHeading>
           <h3 className="font-bold text-lg text-foreground">{CURRENT_ROLE.role}</h3>
           <p className="text-muted-foreground mt-1 flex items-center gap-2">
-            <img
+            <ImageWithFallback
               src={CURRENT_ROLE.companyLogo}
               alt={CURRENT_ROLE.companyLogoAlt}
               className="h-[1em] w-auto object-contain"

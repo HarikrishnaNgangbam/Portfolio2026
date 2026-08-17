@@ -5,8 +5,10 @@ import { buttonVariants } from '@/design-system/ui/button';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { ExperienceCard } from '@/design-system/ui/experience-card';
 import { DotList } from '@/design-system/ui/dot-list';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
+import { assetUrl } from '@/lib/asset-url';
 import { EXPERIENCE, EDUCATION, SKILLS } from '@/data/experience';
 
 const ALL_SKILLS = [...SKILLS.coreStrengths, ...SKILLS.capabilities];
@@ -25,7 +27,7 @@ function ResumePage() {
           across operating systems and diverse industries
         </LeadParagraph>
         <a
-          href="/documents/Harikrishna_Product_Designer_Resume.pdf"
+          href={assetUrl('/documents/Harikrishna_Product_Designer_Resume.pdf')}
           download
           className={buttonVariants({ className: 'mt-6' })}
         >
@@ -66,7 +68,7 @@ function ResumePage() {
               <h3 className="font-bold text-xl text-foreground">{edu.degree}</h3>
               <p className="text-muted-foreground mt-1 flex items-center gap-2">
                 {edu.logo && (
-                  <img
+                  <ImageWithFallback
                     src={edu.logo}
                     alt={edu.logoAlt}
                     className="h-[1em] w-auto object-contain"
