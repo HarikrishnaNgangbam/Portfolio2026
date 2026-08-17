@@ -26,7 +26,7 @@ function AboutPage() {
 
       <Reveal>
         <AcrylicCard variant="surface" interactive={false}>
-          <CardHeading icon={User} iconColor="var(--icon-purple)">
+          <CardHeading as="h2" icon={User} iconColor="var(--icon-purple)">
             Hello, I'm Harikrishna Ngangbam
           </CardHeading>
           <div className="space-y-4 text-muted-foreground leading-relaxed">
@@ -52,10 +52,10 @@ function AboutPage() {
 
       <Reveal>
         <AcrylicCard variant="surface" interactive={false}>
-          <CardHeading icon={Briefcase} iconColor="var(--icon-blue)">
+          <CardHeading as="h2" icon={Briefcase} iconColor="var(--icon-blue)">
             Current Role
           </CardHeading>
-          <h4 className="font-bold text-lg text-foreground">{CURRENT_ROLE.role}</h4>
+          <h3 className="font-bold text-lg text-foreground">{CURRENT_ROLE.role}</h3>
           <p className="text-muted-foreground mt-1 flex items-center gap-2">
             <img
               src={CURRENT_ROLE.companyLogo}
@@ -74,16 +74,16 @@ function AboutPage() {
 
       <Reveal>
         <AcrylicCard variant="surface" interactive={false}>
-          <CardHeading icon={Award} iconColor="var(--icon-blue)">
+          <CardHeading as="h2" icon={Award} iconColor="var(--icon-blue)">
             Skills & Expertise
           </CardHeading>
           <div className="grid sm:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-bold text-foreground mb-3">Core Strengths</h4>
+              <h3 className="font-bold text-foreground mb-3">Core Strengths</h3>
               <DotList items={SKILLS.coreStrengths} />
             </div>
             <div>
-              <h4 className="font-bold text-foreground mb-3">Capabilities</h4>
+              <h3 className="font-bold text-foreground mb-3">Capabilities</h3>
               <DotList items={SKILLS.capabilities} />
             </div>
           </div>
@@ -92,7 +92,7 @@ function AboutPage() {
 
       <Reveal>
         <AcrylicCard variant="surface" interactive={false}>
-          <CardHeading icon={Heart} iconColor="var(--icon-pink)">
+          <CardHeading as="h2" icon={Heart} iconColor="var(--icon-pink)">
             Design Philosophy
           </CardHeading>
           <p className="text-muted-foreground leading-relaxed">

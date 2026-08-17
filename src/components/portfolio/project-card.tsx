@@ -7,9 +7,15 @@ import type { ProjectSummary } from '@/data/projects';
 
 export interface ProjectCardProps {
   project: ProjectSummary;
+  /**
+   * Heading level for the project title, matching wherever the card sits in
+   * the page's outline: h3 on Home (nested under the "Featured Projects"
+   * h2), h2 on Work (the primary heading directly under the page's h1).
+   */
+  headingLevel?: 'h2' | 'h3';
 }
 
-function ProjectCard({ project }: ProjectCardProps) {
+function ProjectCard({ project, headingLevel: Heading = 'h3' }: ProjectCardProps) {
   return (
     <Link to={`/work/${project.slug}`} className="block">
       <AcrylicCard className="flex flex-col lg:flex-row gap-6">
@@ -28,9 +34,9 @@ function ProjectCard({ project }: ProjectCardProps) {
             <span aria-hidden="true">•</span>
             <span>{project.role}</span>
           </div>
-          <h3 className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors">
+          <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors">
             {project.title}
-          </h3>
+          </Heading>
           <p className="text-lg text-muted-foreground font-medium mt-1">
             {project.subtitle}
           </p>

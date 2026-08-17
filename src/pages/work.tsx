@@ -27,7 +27,7 @@ function WorkPage() {
       <div className="space-y-6 mt-10">
         {projects.map((project, i) => (
           <Reveal key={project.slug} delay={i * 80}>
-            <ProjectCard project={project} />
+            <ProjectCard project={project} headingLevel="h2" />
           </Reveal>
         ))}
       </div>

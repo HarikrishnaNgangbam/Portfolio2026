@@ -37,6 +37,7 @@ import { Quote } from '@/components/casestudy/quote';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
+import { tint } from '@/lib/color';
 
 // Kopdar's brand palette — distinct from the site's --icon-* tokens, sampled from the reference.
 const KD_GREEN = 'rgb(0, 170, 19)';
@@ -49,7 +50,7 @@ function Eyebrow({ icon: Icon, text, color }: { icon: LucideIcon; text: string; 
   return (
     <span
       className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border mb-4"
-      style={{ color, borderColor: color, backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)` }}
+      style={{ color, borderColor: color, backgroundColor: tint(color, 10) }}
     >
       <Icon className="w-3.5 h-3.5" />
       {text}
@@ -106,9 +107,9 @@ function KopdarInitiativePage() {
         titleHighlight="Driver Engagement"
         subtitle="Improving efficiency, consistency, and community connection across Indonesia"
         meta={[
-          { label: 'Role', value: 'Product Designer', icon: UsersIcon, color: KD_GREEN, bg: 'color-mix(in srgb, ' + KD_GREEN + ' 8%, transparent)' },
-          { label: 'Duration', value: 'Oct 2019 – Apr 2020', icon: Clock, color: KD_ORANGE, bg: 'color-mix(in srgb, ' + KD_ORANGE + ' 8%, transparent)' },
-          { label: 'Team', value: 'Cross-functional', icon: UsersIcon, color: KD_TEAL, bg: 'color-mix(in srgb, ' + KD_TEAL + ' 8%, transparent)' },
+          { label: 'Role', value: 'Product Designer', icon: UsersIcon, color: KD_GREEN, bg: tint(KD_GREEN, 8) },
+          { label: 'Duration', value: 'Oct 2019 – Apr 2020', icon: Clock, color: KD_ORANGE, bg: tint(KD_ORANGE, 8) },
+          { label: 'Team', value: 'Cross-functional', icon: UsersIcon, color: KD_TEAL, bg: tint(KD_TEAL, 8) },
         ]}
         metaVariant="cards"
         coverImage="/images/shared/project-kopdar-cover.png"
@@ -243,7 +244,7 @@ function KopdarInitiativePage() {
                 <div
                   key={stage.n}
                   className="rounded-xl border p-5"
-                  style={{ borderColor: stage.color, backgroundColor: `color-mix(in srgb, ${stage.color} 6%, transparent)` }}
+                  style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <span
@@ -272,7 +273,7 @@ function KopdarInitiativePage() {
               src="/images/casestudy-3/workflow-pain-points.png"
               alt="Kopdar workflow diagram showing pain points across the lifecycle"
             />
-            <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: `color-mix(in srgb, ${KD_RED} 6%, transparent)` }}>
+            <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
               <TriangleAlert className="w-5 h-5 shrink-0 mt-0.5" style={{ color: KD_RED }} />
               <p className="text-foreground">
                 Each Kopdar cycle generated <strong>15+ hours of manual work</strong>{' '}
@@ -304,7 +305,7 @@ function KopdarInitiativePage() {
                 <div
                   key={item.title}
                   className="rounded-xl border p-5"
-                  style={{ borderColor: item.color, backgroundColor: `color-mix(in srgb, ${item.color} 6%, transparent)` }}
+                  style={{ borderColor: item.color, backgroundColor: tint(item.color, 6) }}
                 >
                   <item.icon className="w-6 h-6 mb-3" style={{ color: item.color }} />
                   <p className="font-bold" style={{ color: item.color }}>
@@ -385,12 +386,12 @@ function KopdarInitiativePage() {
                 <div key={screen.n}>
                   <div
                     className="rounded-2xl border-2 p-6"
-                    style={{ borderColor: screen.color, backgroundColor: `color-mix(in srgb, ${screen.color} 6%, transparent)` }}
+                    style={{ borderColor: screen.color, backgroundColor: tint(screen.color, 6) }}
                   >
                     <div className="flex items-baseline gap-3">
                       <span
                         className="text-4xl font-bold"
-                        style={{ color: `color-mix(in srgb, ${screen.color} 35%, transparent)` }}
+                        style={{ color: tint(screen.color, 35) }}
                       >
                         {screen.n}
                       </span>
@@ -434,7 +435,7 @@ function KopdarInitiativePage() {
             </div>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: `color-mix(in srgb, ${KD_GREEN} 6%, transparent)` }}>
+              <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
                 <p className="font-bold mb-3" style={{ color: KD_GREEN }}>Key Findings</p>
                 <ul className="space-y-3">
                   {[
@@ -496,7 +497,7 @@ function KopdarInitiativePage() {
               />
             </div>
 
-            <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: `color-mix(in srgb, ${KD_GREEN} 6%, transparent)` }}>
+            <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
               <h3 className="flex items-center gap-2 font-bold text-foreground mb-4">
                 <Target className="w-5 h-5" style={{ color: KD_GREEN }} />
                 Business Impact

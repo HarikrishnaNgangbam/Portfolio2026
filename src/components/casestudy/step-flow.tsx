@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import type { IconComponent } from '@/lib/utils';
 import { cn } from '@/lib/utils';
+import { tint } from '@/lib/color';
 
 export interface StepFlowItem {
   icon: IconComponent;
@@ -58,7 +59,7 @@ function StepFlow({ steps, variant = 'default' }: StepFlowProps) {
         >
           <div
             className="w-10 h-10 rounded-full flex items-center justify-center mb-3"
-            style={{ backgroundColor: `color-mix(in srgb, ${step.iconColor ?? 'var(--icon-blue)'} 15%, transparent)` }}
+            style={{ backgroundColor: tint(step.iconColor ?? 'var(--icon-blue)', 15) }}
           >
             <step.icon className="w-5 h-5" style={{ color: step.iconColor ?? 'var(--icon-blue)' }} />
           </div>

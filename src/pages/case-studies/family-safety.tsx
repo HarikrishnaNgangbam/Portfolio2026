@@ -197,10 +197,10 @@ function FamilySafetyPage() {
             </Prose>
 
             <div className="rounded-2xl border border-border bg-muted/30 p-6">
-              <h4 className="flex items-center gap-3 font-bold text-foreground mb-4">
+              <h3 className="flex items-center gap-3 font-bold text-foreground mb-4">
                 <FileText className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
                 Master Prototype as Single Source of Truth
-              </h4>
+              </h3>
               <div className="rounded-xl border border-primary/30 bg-card p-5">
                 <p className="font-semibold text-foreground mb-2">Key Requirements</p>
                 <ul className="space-y-1.5 text-muted-foreground text-sm">
@@ -255,10 +255,10 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="Strategy 2: Design Office Hours (DOH) as Quality Backbone">
             <div className="rounded-2xl border border-border bg-muted/30 p-6">
-              <h4 className="flex items-center gap-3 font-bold text-foreground mb-2">
+              <h3 className="flex items-center gap-3 font-bold text-foreground mb-2">
                 <CircleCheckBig className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
                 Operating Model
-              </h4>
+              </h3>
               <p className="text-muted-foreground mb-4">
                 DOH became the quality backbone of the system. Each session:
               </p>
@@ -320,10 +320,10 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="Impact (Directional)">
             <div className="rounded-2xl border border-border bg-muted/30 p-6">
-              <h4 className="flex items-center gap-3 font-bold text-foreground mb-4">
+              <h3 className="flex items-center gap-3 font-bold text-foreground mb-4">
                 <Lightbulb className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
                 PM-Led Exploration
-              </h4>
+              </h3>
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <p className="text-3xl font-bold text-primary">Earlier</p>
@@ -341,10 +341,10 @@ function FamilySafetyPage() {
             </div>
 
             <div className="rounded-2xl border border-border bg-muted/30 p-6">
-              <h4 className="flex items-center gap-3 font-bold text-foreground mb-3">
+              <h3 className="flex items-center gap-3 font-bold text-foreground mb-3">
                 <Shield className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
                 Pre-Engineering Quality
-              </h4>
+              </h3>
               <p className="text-3xl font-bold text-primary">Improved</p>
               <p className="text-muted-foreground text-sm">Design quality before engineering engagement</p>
               <div className="rounded-lg border border-border bg-card p-4 mt-4 text-sm text-foreground">

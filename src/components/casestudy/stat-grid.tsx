@@ -1,4 +1,5 @@
 import { cn, type IconComponent } from '@/lib/utils';
+import { tint } from '@/lib/color';
 
 export interface StatItem {
   value: string;
@@ -25,7 +26,11 @@ function StatGrid({ stats, columns = 3 }: { stats: StatItem[]; columns?: 2 | 3 |
             'rounded-2xl border p-6',
             stat.icon ? 'text-left' : 'text-center border-[var(--acrylic-border)] bg-[var(--acrylic-surface)] backdrop-blur-xl',
           )}
-          style={stat.icon ? { borderColor: stat.color, backgroundColor: `color-mix(in srgb, ${stat.color} 8%, transparent)` } : undefined}
+          style={
+            stat.icon
+              ? { borderColor: stat.color, backgroundColor: tint(stat.color ?? 'var(--icon-blue)', 8) }
+              : undefined
+          }
         >
           {stat.icon && <stat.icon className="w-6 h-6 mb-3" style={{ color: stat.color }} />}
           <p

@@ -179,13 +179,13 @@ function DesignSystemPage() {
           <h3 className="font-bold text-foreground mb-3">Typography</h3>
           <div className="space-y-4">
             <div>
-              <H1 size="hero">Hero H1 — 72px</H1>
+              <H1 as="p" size="hero">Hero H1 — 72px</H1>
               <p className="text-xs text-muted-foreground font-mono mt-1">
                 text-5xl md:text-7xl · font-bold · tracking-tight
               </p>
             </div>
             <div>
-              <H1 size="page">Page H1 — 60px</H1>
+              <H1 as="p" size="page">Page H1 — 60px</H1>
               <p className="text-xs text-muted-foreground font-mono mt-1">
                 text-4xl md:text-6xl · font-bold · tracking-tight
               </p>
