@@ -333,24 +333,56 @@ function KopdarInitiativePage() {
               title="Key Screens"
             />
             <div className="space-y-8 mt-6">
-              <ImageBlock
-                heading="01 — Kopdar Dashboard"
-                src="/images/casestudy-3/dashboard-screen.png"
-                alt="Kopdar Dashboard screen showing session overview and community"
-                caption="PKs get an at-a-glance overview of their community: upcoming sessions, attendance trends, and pending action items—all surfaced without digging through menus."
-              />
-              <ImageBlock
-                heading="02 — Creating New Kopdar Session"
-                src="/images/casestudy-3/create-event-screens.png"
-                alt="New Kopdar session creation flow showing driver selection"
-                caption="PKs can now create sessions in under 2 minutes—selecting drivers from their community, choosing templates, and scheduling both K1 and K2 in one unified flow."
-              />
-              <ImageBlock
-                heading="03 — Conducting Kopdar Session"
-                src="/images/casestudy-3/conduct-event-screen.png"
-                alt="Active Kopdar session screen showing attendance, notes"
-                caption="During the session, PKs manage attendance, capture notes, and field driver questions in real time—everything recorded in one place so nothing is lost after the meeting."
-              />
+              {[
+                {
+                  n: '01',
+                  color: KD_GREEN,
+                  title: 'Kopdar Dashboard',
+                  description:
+                    'PKs get an at-a-glance overview of their community: upcoming sessions, attendance trends, and pending action items—all surfaced without digging through menus.',
+                  img: '/images/casestudy-3/dashboard-screen.png',
+                  alt: 'Kopdar Dashboard screen showing session overview and community',
+                },
+                {
+                  n: '02',
+                  color: KD_ORANGE,
+                  title: 'Creating New Kopdar Session',
+                  description:
+                    'PKs can now create sessions in under 2 minutes—selecting drivers from their community, choosing templates, and scheduling both K1 and K2 in one unified flow.',
+                  img: '/images/casestudy-3/create-event-screens.png',
+                  alt: 'New Kopdar session creation flow showing driver selection',
+                },
+                {
+                  n: '03',
+                  color: KD_TEAL,
+                  title: 'Conducting Kopdar Session',
+                  description:
+                    'During the session, PKs manage attendance, capture notes, and field driver questions in real time—everything recorded in one place so nothing is lost after the meeting.',
+                  img: '/images/casestudy-3/conduct-event-screen.png',
+                  alt: 'Active Kopdar session screen showing attendance, notes',
+                },
+              ].map((screen) => (
+                <div key={screen.n}>
+                  <div
+                    className="rounded-2xl border-2 p-6"
+                    style={{ borderColor: screen.color, backgroundColor: `color-mix(in srgb, ${screen.color} 6%, transparent)` }}
+                  >
+                    <div className="flex items-baseline gap-3">
+                      <span
+                        className="text-4xl font-bold"
+                        style={{ color: `color-mix(in srgb, ${screen.color} 35%, transparent)` }}
+                      >
+                        {screen.n}
+                      </span>
+                      <p className="text-xl font-bold text-foreground">{screen.title}</p>
+                    </div>
+                    <p className="text-muted-foreground mt-2">{screen.description}</p>
+                  </div>
+                  <div className="mt-4">
+                    <ImageBlock src={screen.img} alt={screen.alt} />
+                  </div>
+                </div>
+              ))}
             </div>
           </Section>
         </Reveal>
