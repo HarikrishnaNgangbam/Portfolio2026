@@ -13,6 +13,7 @@ const CONTACT_PAGE_METHODS = [
     label: 'Email',
     value: 'ngangbam.harikrishna@gmail.com',
     href: 'mailto:ngangbam.harikrishna@gmail.com',
+    copyOnClick: true,
   },
   {
     icon: Linkedin,
@@ -20,6 +21,7 @@ const CONTACT_PAGE_METHODS = [
     label: 'LinkedIn',
     value: 'Connect on LinkedIn',
     href: 'http://linkedin.com/in/harikrishna-ngangbam',
+    external: true,
   },
   {
     icon: Phone,
@@ -27,6 +29,7 @@ const CONTACT_PAGE_METHODS = [
     label: 'Phone',
     value: '+91 999 89 567 28',
     href: 'tel:+919998956728',
+    copyOnClick: true,
   },
   {
     icon: MapPin,

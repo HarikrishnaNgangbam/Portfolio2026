@@ -1,7 +1,6 @@
 import {
   Smartphone,
   Monitor,
-  ArrowRight as ArrowRightIcon,
   Bell,
   LayoutPanelLeft,
   Target,
@@ -24,6 +23,17 @@ import { ImageBlock, VideoBlock } from '@/components/casestudy/image-block';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { PressGrid } from '@/components/casestudy/press-grid';
 import { ChecklistSection } from '@/components/casestudy/checklist-section';
+import { LinkList } from '@/components/casestudy/link-list';
+import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
+import {
+  SpotifyIcon,
+  SamsungBrowserIcon,
+  Microsoft365Icon,
+  WhatsAppIcon,
+  ChromeIcon,
+  EdgeIcon,
+  SamsungNotesIcon,
+} from '@/design-system/ui/icons/brands';
 import { Reveal } from '@/components/reveal';
 
 function PhoneToPcResumePage() {
@@ -260,12 +270,22 @@ function PhoneToPcResumePage() {
                 fastest.
               </p>
             </Prose>
+            <p className="font-semibold text-foreground">
+              Phone to PC Resume Experience - Resume ingress appears on Taskbar
+            </p>
+            <VideoBlock src="/videos/phone-to-pc-spotify.mp4" />
             <ImageBlock
-              heading="Phone to PC Resume Experience - Resume ingress appears on Taskbar"
               src="/images/casestudy-0/spotify-continuity-1.png"
               alt="Phone to PC Resume - Spotify continuity experience"
             />
-            <VideoBlock src="/videos/phone-to-pc-spotify.mp4" />
+            <ImageBlock
+              src="/images/casestudy-0/spotify-continuity-2.png"
+              alt="Spotify Phone to PC continuity experience"
+            />
+            <ImageBlock
+              src="/images/casestudy-0/resume-variations.png"
+              alt="Resume from phone continuity variations"
+            />
 
             <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6">
               <h4 className="flex items-center gap-3 text-lg font-bold text-foreground mb-4">
@@ -289,35 +309,48 @@ function PhoneToPcResumePage() {
             />
             <ImageBlock
               heading="Phone to PC Resume Ingress on Taskbar & Hovercard - Depending on Phone & PC App availability"
-              src="/images/casestudy-0/resume-variations.png"
-              alt="Resume from phone continuity variations"
+              src="/images/casestudy-0/continuity-flow.png"
+              alt="Resume from phone continuity variations across app availability"
             />
 
             <h3 className="text-2xl font-bold text-foreground mt-4">
               Shipped Continuity Scenarios (till Jan 2026)
             </h3>
-            <IconCardList
-              columns={3}
-              items={[
-                { icon: Zap, iconColor: 'var(--icon-green)', title: 'Spotify', description: 'Continue playback from phone to PC' },
-                { icon: ArrowRightIcon, iconColor: 'var(--icon-blue)', title: 'Browser', description: "Resume browsing session on PC's default browser" },
-                { icon: Layers, iconColor: 'var(--icon-purple)', title: 'Microsoft 365', description: 'Open Word, Excel, or PowerPoint files (desktop app or web)' },
-              ]}
-            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <AppScenarioCard
+                icon={SpotifyIcon}
+                title="Spotify"
+                description="Continue playback from phone to PC"
+              />
+              <AppScenarioCard
+                icon={SamsungBrowserIcon}
+                title="Browser"
+                description="Resume browsing session on PC's default browser"
+              />
+              <AppScenarioCard
+                icon={Microsoft365Icon}
+                title="Microsoft 365"
+                description="Open Word, Excel, or PowerPoint files (desktop app or web)"
+              />
+            </div>
             <Prose>
               <p>
                 These represent high-frequency, everyday transitions with unambiguous
                 intent.
               </p>
             </Prose>
-            <CalloutList
-              title="Coming Soon — Additional continuity scenarios in active development"
-              items={['WhatsApp', 'Chrome', 'Edge', 'Samsung Note', 'Samsung Browser']}
-            />
-            <ImageBlock
-              src="/images/casestudy-0/continuity-flow.png"
-              alt="Cross-Device Continuity Flow"
-            />
+
+            <h3 className="text-xl font-bold text-foreground mt-4">Coming Soon</h3>
+            <Prose>
+              <p>Additional continuity scenarios in active development</p>
+            </Prose>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              <AppScenarioCard icon={WhatsAppIcon} title="WhatsApp" />
+              <AppScenarioCard icon={ChromeIcon} title="Chrome" />
+              <AppScenarioCard icon={EdgeIcon} title="Edge" />
+              <AppScenarioCard icon={SamsungNotesIcon} title="Samsung Note" />
+              <AppScenarioCard icon={SamsungBrowserIcon} title="Samsung Browser" />
+            </div>
           </Section>
         </Reveal>
 
@@ -416,19 +449,41 @@ function PhoneToPcResumePage() {
                 <p className="font-semibold text-foreground mb-2">
                   Official Microsoft Documentation
                 </p>
-                <ul className="space-y-1.5 text-muted-foreground text-sm">
-                  <li>• Cross-device Resume support page</li>
-                  <li>• Windows Insider Blog – Release Preview update (Jan 27, 2026)</li>
-                </ul>
+                <LinkList
+                  links={[
+                    {
+                      label: 'Cross-device Resume support page',
+                      href: 'https://support.microsoft.com/en-us/windows/cross-device-resume-feature-9ada0c0b-f70f-4806-abac-b7126fa6a053',
+                    },
+                    {
+                      label: 'Windows Insider Blog – Release Preview update (Jan 27, 2026)',
+                      href: 'https://blogs.windows.com/windows-insider/2026/01/27/releasing-windows-11-builds-26100-7701-and-26200-7701-to-the-release-preview-channel/',
+                    },
+                  ]}
+                />
               </div>
               <div>
                 <p className="font-semibold text-foreground mb-2">Independent Media Coverage</p>
-                <ul className="space-y-1.5 text-muted-foreground text-sm">
-                  <li>• The Verge – Windows 11's ability to resume Android apps like Apple Handoff</li>
-                  <li>• Android Authority – Windows 11 expands Cross-Device Resume</li>
-                  <li>• TechRepublic – New Windows 11 features arrive</li>
-                  <li>• Windows Latest – Microsoft uses the Windows 11 taskbar to resume Android activities</li>
-                </ul>
+                <LinkList
+                  links={[
+                    {
+                      label: "The Verge – Windows 11's ability to resume Android apps like Apple Handoff",
+                      href: 'https://www.theverge.com/news/869161/microsoft-windows-11-android-app-resume-feature-release-preview',
+                    },
+                    {
+                      label: 'Android Authority – Windows 11 expands Cross-Device Resume',
+                      href: 'https://www.androidauthority.com/windows-11-cross-device-resume-preview-channel-3636114/',
+                    },
+                    {
+                      label: 'TechRepublic – New Windows 11 features arrive',
+                      href: 'https://www.techrepublic.com/article/news-windows-11-february-2026-update-cross-device-resume/',
+                    },
+                    {
+                      label: 'Windows Latest – Microsoft uses the Windows 11 taskbar to resume Android activities',
+                      href: 'https://www.windowslatest.com/2025/11/25/microsoft-is-using-windows-11-taskbar-to-resume-your-android-activities/',
+                    },
+                  ]}
+                />
               </div>
             </div>
           </Section>

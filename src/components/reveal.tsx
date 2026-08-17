@@ -18,9 +18,12 @@ function Reveal({ className, delay = 0, children, ...props }: RevealProps) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Positive bottom margin triggers the reveal before the section is
+    // actually in view, so content is already visible by the time it
+    // scrolls into frame instead of popping in late.
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.15, rootMargin: '0px 0px -80px 0px' },
+      { threshold: 0, rootMargin: '0px 0px 300px 0px' },
     );
     observer.observe(el);
     return () => observer.disconnect();

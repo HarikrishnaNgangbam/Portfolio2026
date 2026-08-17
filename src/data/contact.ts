@@ -9,6 +9,7 @@ export const CONTACT_METHODS: ContactInfoCardProps[] = [
     label: 'Email',
     value: 'ngangbam.harikrishna@gmail.com',
     href: 'mailto:ngangbam.harikrishna@gmail.com',
+    copyOnClick: true,
   },
   {
     icon: Linkedin,
@@ -16,6 +17,7 @@ export const CONTACT_METHODS: ContactInfoCardProps[] = [
     label: 'LinkedIn',
     value: 'linkedin.com/in/harikrishna-ngangbam',
     href: 'http://linkedin.com/in/harikrishna-ngangbam',
+    external: true,
   },
   {
     icon: MapPin,
@@ -30,5 +32,6 @@ export const CONTACT_METHODS: ContactInfoCardProps[] = [
     label: 'Phone',
     value: '+91 999 89 567 28',
     href: 'tel:+919998956728',
+    copyOnClick: true,
   },
 ];
