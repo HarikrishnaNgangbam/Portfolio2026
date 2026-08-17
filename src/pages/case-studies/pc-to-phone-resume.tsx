@@ -244,7 +244,7 @@ function PcToPhoneResumePage() {
             />
             <VideoBlock
               heading="Teams Call — Resume a call left on PC, continued seamlessly on phone"
-              src="/videos/pc-to-phone-teams-call.m4v"
+              src="/videos/pc-to-phone-teams-call.mp4"
             />
             <div className="grid sm:grid-cols-2 gap-4">
               <ImageBlock
