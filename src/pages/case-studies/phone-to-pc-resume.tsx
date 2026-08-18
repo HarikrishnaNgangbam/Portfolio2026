@@ -33,12 +33,13 @@ import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import {
   SpotifyIcon,
-  SamsungBrowserIcon,
+  BrowserIcon,
   Microsoft365Icon,
   WhatsAppIcon,
   ChromeIcon,
   EdgeIcon,
   SamsungNotesIcon,
+  SamsungBrowserIcon,
 } from '@/design-system/ui/icons/brands';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
@@ -428,7 +429,7 @@ function PhoneToPcResumePage() {
               <div>
                 <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Web</p>
                 <AppScenarioCard
-                  icon={SamsungBrowserIcon}
+                  icon={BrowserIcon}
                   title="Browser"
                   description="Resume the browsing session where the user left off."
                 />
@@ -567,7 +568,10 @@ function PhoneToPcResumePage() {
                 Resume as part of a broader Windows continuity experience.
               </p>
             </Prose>
-            <PressGrid items={showMorePress ? [...PRESS_FEATURED, ...PRESS_MORE] : PRESS_FEATURED} />
+            <PressGrid
+              items={showMorePress ? [...PRESS_FEATURED, ...PRESS_MORE] : PRESS_FEATURED}
+              columns={2}
+            />
             {!showMorePress && (
               <button
                 type="button"
