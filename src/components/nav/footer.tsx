@@ -5,7 +5,7 @@ function Footer() {
         <p className="text-sm text-muted-foreground">
           This portfolio took passion to imagine and prompt to bring it to life.
         </p>
-        <p className="text-sm text-muted-foreground">Entirly vibe coded on Figma make.</p>
+        <p className="text-sm text-muted-foreground">Entirely vibe coded on Figma make.</p>
       </div>
     </footer>
   );

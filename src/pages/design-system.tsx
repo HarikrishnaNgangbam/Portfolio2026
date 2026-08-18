@@ -20,6 +20,10 @@ import { DotList } from '@/design-system/ui/dot-list';
 import { CardHeading } from '@/design-system/ui/card-heading';
 import { ContactInfoCard } from '@/design-system/ui/contact-info-card';
 import { ExperienceCard } from '@/design-system/ui/experience-card';
+import { NarrativeSection } from '@/design-system/ui/narrative-section';
+import { EditorialColumn } from '@/design-system/ui/editorial-column';
+import { PrincipleBlock } from '@/design-system/ui/principle-block';
+import { CareerNarrative } from '@/design-system/ui/career-narrative';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
 import { RoleSection } from '@/components/casestudy/role-section';
@@ -308,12 +312,48 @@ function DesignSystemPage() {
             <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Hyderabad, India" />
           </div>
         </ComponentDemo>
+
+        <ComponentDemo name="NarrativeSection" purpose="Heading + optional supporting paragraph — the editorial section shape used throughout Home and About.">
+          <NarrativeSection
+            heading="Complexity comes in different forms."
+            supportingText="I've spent my career learning to design not just for the person using a product, but for the systems, teams and organizations that make the experience possible."
+          >
+            <p className="text-sm text-muted-foreground">Section content renders here.</p>
+          </NarrativeSection>
+        </ComponentDemo>
+
+        <ComponentDemo name="EditorialColumn" purpose="Plain heading + short paragraph, no card — used for Home's Complexity/Problems sections and About's closing Philosophy.">
+          <div className="grid sm:grid-cols-2 gap-8">
+            <EditorialColumn heading="People" hook="Some users are easy to overlook.">
+              At Gojek, I spent years designing for drivers, agents and merchants.
+            </EditorialColumn>
+            <EditorialColumn heading="Clarity">
+              Make complexity visible so teams can make better decisions.
+            </EditorialColumn>
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="PrincipleBlock" purpose="Numbered principle card — Home's 'How I lead' section.">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <PrincipleBlock number={1} title="Make complexity visible" iconColor="var(--icon-blue)">
+              I use systems maps, prototypes and clear narratives to turn ambiguity into
+              something teams can reason about together.
+            </PrincipleBlock>
+            <PrincipleBlock number={2} title="Design for the system" iconColor="var(--icon-purple)">
+              I look beyond the primary user to understand the operators and constraints
+              behind the experience.
+            </PrincipleBlock>
+          </div>
+        </ComponentDemo>
       </ShowcaseSection>
 
       {/* PORTFOLIO */}
       <ShowcaseSection id="portfolio" title="Portfolio" description="Project listing components.">
-        <ComponentDemo name="ProjectCard" purpose="Featured/Work project card — links to its case study.">
-          <ProjectCard project={PROJECTS[0]} />
+        <ComponentDemo name="ProjectCard" purpose="Featured/Work project card — links to its case study. `work` variant (default, used on /work) vs `narrative` variant (Home's Selected Work framing).">
+          <div className="space-y-4">
+            <ProjectCard project={PROJECTS[0]} />
+            <ProjectCard project={PROJECTS[0]} variant="narrative" number={1} />
+          </div>
         </ComponentDemo>
 
         <ComponentDemo name="ExperienceCard" purpose="Work-history card with logo, dates, and bullets.">
@@ -326,6 +366,19 @@ function DesignSystemPage() {
             location="Hyderabad, India"
             bullets={['Lead UX strategy for Windows cross-device continuity']}
           />
+        </ComponentDemo>
+
+        <ComponentDemo name="CareerNarrative" purpose="Condensed career-chapter card — Home's 'Career across scale and systems' section.">
+          <CareerNarrative
+            company="Microsoft"
+            companyLogo="/images/logos/microsoft-windows.webp"
+            companyLogoAlt="Microsoft - Windows logo"
+            role="Senior Product Designer, Microsoft"
+            dates="Aug 2024 - Present"
+          >
+            Designing cross-device experiences across Windows, phones and connected
+            ecosystems.
+          </CareerNarrative>
         </ComponentDemo>
       </ShowcaseSection>
 

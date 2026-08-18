@@ -5,6 +5,8 @@ export interface SeoProps {
   description: string;
   /** Internal/dev-only pages (e.g. /design-system) opt out of indexing. */
   noindex?: boolean;
+  /** Use `title` verbatim as the document title instead of appending " | SITE_NAME". */
+  raw?: boolean;
 }
 
 /**
@@ -12,8 +14,8 @@ export interface SeoProps {
  * rendered anywhere in the tree into <head> automatically, so this needs no
  * portal, effect, or extra dependency — just render it once per page.
  */
-function Seo({ title, description, noindex }: SeoProps) {
-  const fullTitle = `${title} | ${SITE_NAME}`;
+function Seo({ title, description, noindex, raw }: SeoProps) {
+  const fullTitle = raw ? title : `${title} | ${SITE_NAME}`;
   const canonical = typeof window !== 'undefined' ? window.location.href : undefined;
 
   return (

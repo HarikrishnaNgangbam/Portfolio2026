@@ -9,13 +9,29 @@ export interface ProjectCardProps {
   project: ProjectSummary;
   /**
    * Heading level for the project title, matching wherever the card sits in
-   * the page's outline: h3 on Home (nested under the "Featured Projects"
-   * h2), h2 on Work (the primary heading directly under the page's h1).
+   * the page's outline: h3 on Home (nested under the "Selected Work" h2),
+   * h2 on Work (the primary heading directly under the page's h1).
    */
   headingLevel?: 'h2' | 'h3';
+  /**
+   * `work` (default) = case-study framing (title/subtitle/description/tags),
+   * used on /work and the /design-system showcase. `narrative` = Home's
+   * "Selected Work" framing (project.narrative), numbered and editorial.
+   * Falls back to `work` fields if `project.narrative` is absent.
+   */
+  variant?: 'work' | 'narrative';
+  /** 1-based position, shown as a numeral badge in `narrative` variant. */
+  number?: number;
 }
 
-function ProjectCard({ project, headingLevel: Heading = 'h3' }: ProjectCardProps) {
+function ProjectCard({
+  project,
+  headingLevel: Heading = 'h3',
+  variant = 'work',
+  number,
+}: ProjectCardProps) {
+  const narrative = variant === 'narrative' ? project.narrative : undefined;
+
   return (
     <Link to={`/work/${project.slug}`} className="block">
       <AcrylicCard className="flex flex-col lg:flex-row gap-6">
@@ -29,23 +45,52 @@ function ProjectCard({ project, headingLevel: Heading = 'h3' }: ProjectCardProps
           </div>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-            <span>{project.period}</span>
-            <span aria-hidden="true">•</span>
-            <span>{project.role}</span>
-          </div>
-          <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors">
-            {project.title}
-          </Heading>
-          <p className="text-lg text-muted-foreground font-medium mt-1">
-            {project.subtitle}
-          </p>
-          <p className="text-muted-foreground mt-4 leading-relaxed">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            {project.tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
-            ))}
-          </div>
+          {narrative ? (
+            <>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                {number != null && (
+                  <span className="text-sm font-mono text-muted-foreground">
+                    {String(number).padStart(2, '0')}
+                  </span>
+                )}
+                {narrative.capabilities.map((cap) => (
+                  <Badge key={cap}>{cap}</Badge>
+                ))}
+              </div>
+              <p className="text-sm font-medium text-primary italic">{narrative.label}</p>
+              <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors mt-1">
+                {narrative.title}
+              </Heading>
+              <p className="text-muted-foreground mt-4 leading-relaxed">
+                {narrative.description}
+              </p>
+              {narrative.evidence && (
+                <p className="text-sm text-muted-foreground mt-3">{narrative.evidence}</p>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                <span>{project.period}</span>
+                <span aria-hidden="true">•</span>
+                <span>{project.role}</span>
+              </div>
+              <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors">
+                {project.title}
+              </Heading>
+              <p className="text-lg text-muted-foreground font-medium mt-1">
+                {project.subtitle}
+              </p>
+              <p className="text-muted-foreground mt-4 leading-relaxed">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {project.tags.map((tag) => (
+                  <Badge key={tag}>{tag}</Badge>
+                ))}
+              </div>
+            </>
+          )}
           <div className="flex items-center gap-2 text-primary font-medium mt-6 group-hover:gap-3 transition-all">
             View Case Study
             <ArrowRight className="w-4 h-4" />

@@ -8,6 +8,21 @@ export interface ProjectSummary {
   tags: string[];
   coverImage: string;
   coverAlt: string;
+  /**
+   * Homepage-only narrative framing for the "Selected Work" section. Falls
+   * back to the case-study fields above (used on /work and the case-study
+   * page itself) when absent.
+   */
+  narrative?: {
+    title: string;
+    /** Short editorial hook, e.g. "When the system spans devices". */
+    label: string;
+    description: string;
+    /** Homepage badge labels — distinct from `tags`, which stays on /work. */
+    capabilities: string[];
+    /** Optional supporting metric line, only shown when backed by verified case-study data. */
+    evidence?: string;
+  };
 }
 
 export const PROJECTS: ProjectSummary[] = [
@@ -22,6 +37,14 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['Phone to PC Continuity', 'Task Continuity', 'Cross Platform'],
     coverImage: '/images/shared/project-phone-to-pc-cover.webp',
     coverAlt: 'Phone to PC Resume - Taskbar and system-level continuity',
+    narrative: {
+      title: 'Windows Phone → PC Continuity',
+      label: 'When the system spans devices',
+      description:
+        'Designing a cross-device experience that helps people resume work across phone and PC, without turning continuity into another task.',
+      capabilities: ['Systems', 'Platform', 'Shipped'],
+      evidence: '3.1M monthly alerts · 290K+ engaged users · 8.5% conversion',
+    },
   },
   {
     slug: 'pc-to-phone-resume',
@@ -34,6 +57,13 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['PC to Phone Continuity', 'Bi-directional Continuity', 'Connected Experience'],
     coverImage: '/images/shared/project-pc-to-phone-cover.webp',
     coverAlt: 'PC to Phone continuity - Desktop to mobile transition',
+    narrative: {
+      title: 'PC → Phone Continuity',
+      label: "When the system doesn't exist yet",
+      description:
+        'Exploring what continuity should look like when the user leaves the PC rather than arrives at it.',
+      capabilities: ['0→1', 'Vision', 'Cross-platform'],
+    },
   },
   {
     slug: 'family-safety',
@@ -46,6 +76,13 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['AI Workflow', 'Vibe Coding', 'Design Operations'],
     coverImage: '/images/shared/project-family-safety-cover.webp',
     coverAlt: 'Family Safety app interface with collaborative team environment',
+    narrative: {
+      title: 'Family Safety',
+      label: 'When the system includes the design team',
+      description:
+        'Exploring how AI-assisted prototyping, design governance and new collaboration models could expand product exploration without creating a design bottleneck.',
+      capabilities: ['Leadership', 'AI', 'Design Operations'],
+    },
   },
   {
     slug: 'kopdar-initiative',
@@ -58,5 +95,20 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['System Design', 'Community Engagement', 'Super App'],
     coverImage: '/images/shared/project-kopdar-cover.webp',
     coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
+    narrative: {
+      title: 'GoAgent / Kopdar',
+      label: 'When the system spans an organization',
+      description:
+        "Turning fragmented field operations into a product ecosystem that could evolve with Gojek's rapidly growing network.",
+      capabilities: ['Ecosystem', 'Operations', 'Scale'],
+    },
   },
+];
+
+/** Default homepage display order (independent of /work, which follows Settings > Project Management order). */
+export const HOME_PROJECT_ORDER = [
+  'phone-to-pc-resume',
+  'kopdar-initiative',
+  'family-safety',
+  'pc-to-phone-resume',
 ];

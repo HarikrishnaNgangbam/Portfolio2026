@@ -5,8 +5,8 @@ export interface ExperienceEntry {
   companyLogoAlt?: string;
   dates: string;
   location?: string;
-  /** Short 2-bullet summary shown on the Home page. */
-  homeBullets?: string[];
+  /** One-paragraph narrative summary for Home's "Career across scale and systems" section. */
+  narrativeSummary?: string;
   /** Full bullet list shown on the Resume page. */
   resumeBullets: string[];
 }
@@ -19,10 +19,8 @@ export const EXPERIENCE: ExperienceEntry[] = [
     companyLogoAlt: 'Microsoft - Windows logo',
     dates: 'Aug 2024 - Present',
     location: 'Hyderabad, India',
-    homeBullets: [
-      'Lead UX strategy for Windows cross-device continuity, shaping how users seamlessly move, resume, and complete tasks across PCs, phones, and connected devices',
-      'Spearheaded multiple AI-Lead Design exploration sprints and workshops',
-    ],
+    narrativeSummary:
+      'Designing cross-device experiences across Windows, phones and connected ecosystems, while exploring how AI can make those experiences more adaptive and intelligent.',
     resumeBullets: [
       "Connected Experience & Ecosystem: Lead UX strategy for Windows cross-device continuity, shaping how users seamlessly move, resume, and complete tasks across PCs, phones, and connected devices.",
       'AI-Driven Experience Innovation: Spearheaded multiple AI-Lead Design exploration sprints and workshops.',
@@ -34,10 +32,6 @@ export const EXPERIENCE: ExperienceEntry[] = [
     companyLogo: '/images/logos/red-health.webp',
     companyLogoAlt: 'RED.HEALTH logo',
     dates: 'Jun 2024 - Aug 2024',
-    homeBullets: [
-      'Led company-wide design strategy for next-generation emergency medical service products',
-      'Designed the Emergency Medical Service App & 5G-Ambulance Command Center',
-    ],
     resumeBullets: [
       'Head of Design: Led the company-wide design strategy for next-generation emergency medical service products.',
       'Designed the Emergency Medical Service App & 5G-Ambulance Command Center, enabling faster response, streamlined triage, and intuitive user flows for critical situations.',
@@ -59,10 +53,8 @@ export const EXPERIENCE: ExperienceEntry[] = [
     companyLogo: '/images/logos/gojek-tech.webp',
     companyLogoAlt: 'Gojek Tech logo',
     dates: 'Nov 2017 - Nov 2022',
-    homeBullets: [
-      "Led a team of four Product Designer. Owned product and experience vision for Gojek's Care Platform and Communication Platform",
-      "Designed and scaled the entire Gojek's Customer Support Ecosystem. Built the GoAgent - SuperApp for agents",
-    ],
+    narrativeSummary:
+      'Designing products for drivers, agents, merchants and customers during a period of extraordinary growth, and leading teams as the design organization scaled.',
     resumeBullets: [
       "Leadership & Ownership: Led a team of four Product Designer. Owned product and experience vision for Gojek's Care Platform and Communication Platform.",
       "Designed and scaled the entire Gojek's Customer Support Ecosystem. Built the GoAgent - SuperApp for agents.",
@@ -91,11 +83,8 @@ export const EXPERIENCE: ExperienceEntry[] = [
   },
 ];
 
-/** The 3 roles shown in the Home page's abbreviated Work Experience section. */
-export const HOME_EXPERIENCE = EXPERIENCE.filter((e) => e.homeBullets).map((e) => ({
-  ...e,
-  bullets: e.homeBullets!,
-}));
+/** Companies grouped under Home's "Earlier" career-narrative card, in reverse-chronological order. */
+export const EARLIER_COMPANIES = ['Samsung', 'Godrej & Boyce', 'Funding Societies', 'RED.HEALTH'];
 
 export interface EducationEntry {
   degree: string;
