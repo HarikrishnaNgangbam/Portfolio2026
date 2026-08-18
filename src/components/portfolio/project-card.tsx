@@ -31,6 +31,8 @@ function ProjectCard({
   number,
 }: ProjectCardProps) {
   const narrative = variant === 'narrative' ? project.narrative : undefined;
+  /** First capability doubles as the project's "problem type" label on /work — e.g. "Systems", "Ecosystem". */
+  const problemType = variant === 'work' ? project.narrative?.capabilities[0] : undefined;
 
   return (
     <Link to={`/work/${project.slug}`} className="block">
@@ -71,6 +73,12 @@ function ProjectCard({
           ) : (
             <>
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                {problemType && (
+                  <>
+                    <Badge className="text-xs px-2.5 py-1">{problemType}</Badge>
+                    <span aria-hidden="true">•</span>
+                  </>
+                )}
                 <span>{project.period}</span>
                 <span aria-hidden="true">•</span>
                 <span>{project.role}</span>
@@ -84,6 +92,9 @@ function ProjectCard({
               <p className="text-muted-foreground mt-4 leading-relaxed">
                 {project.description}
               </p>
+              {project.narrative?.evidence && (
+                <p className="text-sm text-muted-foreground mt-3">{project.narrative.evidence}</p>
+              )}
               <div className="flex flex-wrap gap-2 mt-4">
                 {project.tags.map((tag) => (
                   <Badge key={tag}>{tag}</Badge>

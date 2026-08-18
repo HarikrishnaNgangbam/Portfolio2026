@@ -15,6 +15,7 @@ import { Reveal } from '@/components/reveal';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
 import { EXPERIENCE, EARLIER_COMPANIES } from '@/data/experience';
 import { HOME_PROJECT_ORDER, type ProjectSummary } from '@/data/projects';
+import { LOCATION } from '@/data/contact';
 
 const MICROSOFT = EXPERIENCE.find((e) => e.company === 'Microsoft - Windows')!;
 const GOJEK = EXPERIENCE.find((e) => e.company === 'Gojek Tech')!;
@@ -104,7 +105,7 @@ function HomePage() {
             </LeadParagraph>
             <div className="flex items-center gap-3 pt-4 text-muted-foreground">
               <MapPin className="w-4 h-4" style={{ color: 'var(--icon-orange)' }} />
-              Imphal, India
+              {LOCATION}
             </div>
             <a href="#selected-work" className={buttonVariants({ variant: 'outline', className: 'mt-6' })}>
               Explore my work

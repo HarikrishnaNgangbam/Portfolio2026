@@ -306,10 +306,10 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Home and Contact.">
+        <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Contact.">
           <div className="grid sm:grid-cols-2 gap-4">
             <ContactInfoCard icon={Mail} iconColor="var(--icon-orange)" label="Email" value="hello@example.com" />
-            <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Hyderabad, India" />
+            <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Imphal, India" />
           </div>
         </ComponentDemo>
 

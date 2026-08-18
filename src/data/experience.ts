@@ -109,14 +109,15 @@ export const EDUCATION: EducationEntry[] = [
 ];
 
 export const SKILLS = {
-  coreStrengths: [
-    'Design Leadership & Strategy',
-    'Systems & Experience Architecture',
-    'Execution Excellence',
+  Product: ['Product Strategy', 'Product Design', '0→1 Product Development', 'Experience Strategy'],
+  Systems: ['Systems Thinking', 'Platform Design', 'Cross-Device Experiences', 'Ecosystem Design'],
+  Leadership: [
+    'Design Leadership',
+    'Team Development',
+    'Stakeholder Management',
+    'Design Operations',
+    'Design Governance',
   ],
-  capabilities: [
-    'Cross-Functional Influence',
-    'Team Leadership & Mentorship',
-    'AI & Future-Forward Craft',
-  ],
+  Craft: ['Interaction Design', 'Prototyping', 'Design Systems', 'User Research'],
+  Emerging: ['AI-Assisted Product Design', 'AI Prototyping', 'AI-Native Product Exploration'],
 };
