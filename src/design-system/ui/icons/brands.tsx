@@ -281,6 +281,39 @@ function SamsungBrowserIcon({ className }: BrandIconProps) {
   );
 }
 
+function GoogleSheetsIcon({ className }: BrandIconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path d="M14 2H6.5A1.5 1.5 0 0 0 5 3.5v17A1.5 1.5 0 0 0 6.5 22h11a1.5 1.5 0 0 0 1.5-1.5V8l-5-6Z" fill="#0F9D58" />
+      <path d="M14 2v4.5A1.5 1.5 0 0 0 15.5 8H19l-5-6Z" fill="#87CEAC" />
+      <rect x="8" y="11" width="8" height="7" rx="0.5" fill="white" />
+      <path d="M8 13.3h8M8 15.6h8M11.3 11v7" stroke="#0F9D58" strokeWidth="0.7" />
+    </svg>
+  );
+}
+
+function GoogleFormsIcon({ className }: BrandIconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path d="M14 2H6.5A1.5 1.5 0 0 0 5 3.5v17A1.5 1.5 0 0 0 6.5 22h11a1.5 1.5 0 0 0 1.5-1.5V8l-5-6Z" fill="#673AB7" />
+      <path d="M14 2v4.5A1.5 1.5 0 0 0 15.5 8H19l-5-6Z" fill="#C6B6E2" />
+      <path d="M8 11.5h1.6M8 14.5h1.6M8 17.5h1.6" stroke="#673AB7" strokeWidth="1.1" strokeLinecap="round" />
+      <path d="M11.3 11.5H16M11.3 14.5H16M11.3 17.5H14.3" stroke="#673AB7" strokeWidth="1.1" strokeLinecap="round" opacity="0.55" />
+    </svg>
+  );
+}
+
+function GoogleSlidesIcon({ className }: BrandIconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
+      <path d="M14 2H6.5A1.5 1.5 0 0 0 5 3.5v17A1.5 1.5 0 0 0 6.5 22h11a1.5 1.5 0 0 0 1.5-1.5V8l-5-6Z" fill="#F4B400" />
+      <path d="M14 2v4.5A1.5 1.5 0 0 0 15.5 8H19l-5-6Z" fill="#FBDE9C" />
+      <rect x="8" y="11" width="8" height="6" rx="0.5" fill="white" />
+      <path d="M8 13.3h8" stroke="#F4B400" strokeWidth="0.7" />
+    </svg>
+  );
+}
+
 export {
   SpotifyIcon,
   BrowserIcon,
@@ -290,4 +323,7 @@ export {
   EdgeIcon,
   SamsungNotesIcon,
   SamsungBrowserIcon,
+  GoogleSheetsIcon,
+  GoogleFormsIcon,
+  GoogleSlidesIcon,
 };

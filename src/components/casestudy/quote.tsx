@@ -11,7 +11,7 @@ function Quote({ children, attribution }: QuoteProps) {
       <QuoteIcon className="w-6 h-6 text-primary mb-3" />
       <p className="text-lg text-foreground italic leading-relaxed">{children}</p>
       {attribution && (
-        <footer className="text-sm text-muted-foreground mt-3">— {attribution}</footer>
+        <footer className="text-sm text-muted-foreground mt-3">{attribution}</footer>
       )}
     </blockquote>
   );
