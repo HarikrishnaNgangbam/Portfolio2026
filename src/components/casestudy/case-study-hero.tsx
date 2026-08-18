@@ -14,6 +14,8 @@ export interface CaseStudyMetaItem {
 }
 
 export interface CaseStudyHeroProps {
+  /** Small uppercase label above the badges, e.g. "Microsoft · Windows Connected Experience & Ecosystem". */
+  eyebrow?: string;
   breadcrumbLabel: string;
   badges: string[];
   title: string;
@@ -34,6 +36,7 @@ export interface CaseStudyHeroProps {
 }
 
 function CaseStudyHero({
+  eyebrow,
   breadcrumbLabel,
   badges,
   title,
@@ -74,6 +77,12 @@ function CaseStudyHero({
             </p>
           </div>
         </div>
+      )}
+
+      {eyebrow && (
+        <p className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">
+          {eyebrow}
+        </p>
       )}
 
       <div className="flex flex-wrap gap-2 mb-4">

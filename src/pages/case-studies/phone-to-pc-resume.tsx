@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import {
   Smartphone,
   Monitor,
-  Bell,
   LayoutPanelLeft,
   Target,
   Zap,
@@ -11,10 +11,14 @@ import {
   TrendingUp,
   Shield,
   ArrowRight,
+  ArrowLeftRight,
+  HelpCircle,
+  Search,
+  Users,
+  Check,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
-import { RoleSection } from '@/components/casestudy/role-section';
 import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
@@ -23,9 +27,10 @@ import { StepFlow } from '@/components/casestudy/step-flow';
 import { ImageBlock, VideoBlock } from '@/components/casestudy/image-block';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { PressGrid } from '@/components/casestudy/press-grid';
-import { ChecklistSection } from '@/components/casestudy/checklist-section';
 import { LinkList } from '@/components/casestudy/link-list';
 import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
+import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
+import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import {
   SpotifyIcon,
   SamsungBrowserIcon,
@@ -38,23 +43,40 @@ import {
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 
+const PRESS_FEATURED = [
+  { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
+  { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
+  { src: '/images/casestudy-0/press-windowscentral.webp', alt: 'Windows Central coverage' },
+  { src: '/images/casestudy-0/press-androidpolice.webp', alt: 'Android Police coverage' },
+];
+
+const PRESS_MORE = [
+  { src: '/images/casestudy-0/press-sammobile.webp', alt: 'SAM MOBILE coverage' },
+  { src: '/images/casestudy-0/press-winbuzzer.webp', alt: 'WinBuzzer coverage' },
+  { src: '/images/casestudy-0/press-thurrott.webp', alt: 'Thurrott coverage' },
+  { src: '/images/casestudy-0/press-bgr.webp', alt: 'BGR coverage' },
+];
+
 function PhoneToPcResumePage() {
+  const [showMorePress, setShowMorePress] = useState(false);
+
   return (
     <div className="pb-20">
       <Seo
-        title="Phone to PC Resume"
-        description="Enabling users to seamlessly continue their task across Connected Devices."
+        title="Phone to PC Continuity"
+        description="How Windows learned to anticipate where work should continue: a confidence-driven approach to cross-device resume across phone and PC."
       />
       <CaseStudyHero
-        breadcrumbLabel="Cross Device Resume"
+        eyebrow="Microsoft · Windows Connected Experience & Ecosystem"
+        breadcrumbLabel="Phone → PC Continuity"
         badges={['Phone → PC Continuity']}
-        title="Phone to PC Resume: Designing Windows Cross Device Continuity Experience"
-        subtitle="Enabling users to seamlessly continue their task across Connected Devices"
+        title="Phone → PC Continuity"
+        subtitle="When Windows learned to anticipate where work should continue."
         meta={[
           { label: 'Role', value: 'Lead UX Designer' },
           { label: 'Timeline', value: 'Sep 2025 - Jan 2026' },
           { label: 'Platform', value: 'Windows 11' },
-          { label: 'Status', value: 'Shipped (GA - Jan 2026)' },
+          { label: 'Status', value: 'Shipped · GA Jan 2026' },
         ]}
         coverImage="/images/shared/project-phone-to-pc-cover.webp"
         coverAlt="Phone to PC Resume - Taskbar and system-level continuity"
@@ -66,73 +88,47 @@ function PhoneToPcResumePage() {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
+        {/* The Human Moment */}
         <Reveal>
-          <Section title="Overview">
+          <Section title="The moment is simple. The system isn't.">
             <Prose>
               <p>
-                Often modern work often starts on a phone, reading an email, browsing
-                the web, listening to music, or opening a document and naturally
-                continues on a PC when the need for focus, speed, or screen real estate
-                increases.
+                You start something on your phone. Maybe it's a song, a document, a
+                webpage or a message. Later, you're sitting at your PC.
               </p>
               <p>
-                Before Windows <strong>"Cross Device Resume"</strong> (Phone to PC
-                Resume/Continuity), this transition was fragile. Users manually shared
-                links, reopened apps, searched for the right context, and mentally
-                re-oriented after switching devices. Friction appeared precisely when
-                user intent was highest.
+                You shouldn't have to remember what you were doing, find the right app,
+                send yourself a link, or reconstruct your context. You should simply be
+                able to continue.
               </p>
             </Prose>
             <Prose callout>
-              <strong>Cross Device Phone to PC Resume (Phone to PC Continuity)</strong>{' '}
-              is a <strong>system-level</strong> capability in Windows that enables
-              users to <strong>continue an active task</strong> from their{' '}
-              <strong>phone</strong> directly on their <strong>PC</strong>, without
-              restarting or hunting for context, turning Windows into an{' '}
-              <strong>active continuation partner</strong> rather than a{' '}
-              <em>passive destination</em>.
+              The challenge was making Windows understand that transition without
+              becoming another interruption.
             </Prose>
             <MetaGrid
               items={[
                 { label: 'Platform', value: 'Windows', pillColor: 'blue' },
-                {
-                  label: 'Domain',
-                  value: 'Connected Experience & Ecosystem',
-                  pillColor: 'purple',
-                },
+                { label: 'Domain', value: 'Connected Experience & Ecosystem', pillColor: 'purple' },
                 { label: 'Experience Pillar', value: 'Continuity', pillColor: 'blue' },
-                {
-                  label: 'Capability',
-                  value: 'Cross‑Device Resume (Phone to PC)',
-                  pillColor: 'green',
-                },
+                { label: 'Capability', value: 'Cross-Device Resume (Phone to PC)', pillColor: 'green' },
               ]}
             />
           </Section>
         </Reveal>
 
+        {/* The Problem */}
         <Reveal>
-          <RoleSection
-            title="Lead UX Designer"
-            bullets={[
-              <>Defined the Windows's <strong>Continuity Experience Stretegy</strong></>,
-              <>Drove system-level UX strategy for <strong>Phone to PC continuity</strong> on Windows</>,
-              <><strong>Designed primary entry points for Phone to PC Resume</strong> (Taskbar-first, progressive disclosure)</>,
-              <>Led design alignment across PM, Engineering, Platform Teams and{' '}
-                <strong>external partners (including Samsung, Spotify, WhatsApp, etc.)</strong></>,
-              <>Authored narrative for long term <strong>Windows Connected Intelligence Continuity strategy</strong></>,
-              <>Shaped the shipped experience for <strong>High Value Scenarios</strong> of Media
-                (<strong>Spotify</strong>), Browser(<strong>Vivo</strong>) &amp; Online files{' '}
-                (<strong>M365</strong>) Continuity)</>,
-            ]}
-          />
-        </Reveal>
-
-        <Reveal>
-          <Section title="Problem">
-            <Prose>
-              <p>Phone to PC transitions required manual effort:</p>
-            </Prose>
+          <Section title="The old model treated continuity as a notification problem.">
+            <StepFlow
+              steps={[
+                { icon: Smartphone, title: 'Start on phone', description: 'Activity begins' },
+                { icon: ArrowLeftRight, iconColor: 'var(--icon-orange)', title: 'Switch devices', description: 'Move to the PC' },
+                { icon: HelpCircle, iconColor: 'var(--icon-red)', title: 'Where was I?', description: 'Context is lost' },
+                { icon: Search, iconColor: 'var(--icon-purple)', title: 'Find context', description: 'Manually search or reopen' },
+                { icon: Check, iconColor: 'var(--icon-green)', title: 'Continue', description: 'Finally resume, if at all' },
+              ]}
+            />
             <IconCardList
               items={[
                 {
@@ -164,66 +160,140 @@ function PhoneToPcResumePage() {
                 "A perception of Windows as disconnected from the user's flow",
               ]}
             />
+            <Prose callout>
+              The real problem wasn't that users couldn't move between devices. It was
+              that the device transition broke their mental model of the task.
+            </Prose>
           </Section>
         </Reveal>
 
+        {/* Why This Was a Systems Problem */}
         <Reveal>
-          <Section title="Why Now">
-            <ImageBlock
-              src="/images/casestudy-0/churn-reason-chart.webp"
-              alt="Connected Ecosystem: Top reason for churn - Lack of seamless continuity"
+          <Section title="Continuity couldn't belong to an app.">
+            <Prose>
+              <p>The experience needed to work across:</p>
+            </Prose>
+            <CalloutList
+              marker="•"
+              items={[
+                'First-party and third-party apps',
+                'Different phone manufacturers',
+                'Apps with and without a native PC counterpart',
+                'Different time gaps between phone and PC activity',
+                "Different levels of user intent",
+                'Different PC states',
+              ]}
             />
+            <Prose callout>
+              The design challenge wasn't simply creating a Resume action. It was
+              defining how Windows should behave when it knows something might be worth
+              continuing.
+            </Prose>
+
+            <div className="grid sm:grid-cols-3 gap-3 items-center">
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <Smartphone className="w-6 h-6 mb-2" style={{ color: 'var(--icon-teal)' }} />
+                <p className="font-semibold text-foreground">Phone</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Spotify, browser, other activity
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90 sm:rotate-0" />
+              </div>
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <Shield className="w-6 h-6 mb-2 text-primary" />
+                <p className="font-semibold text-foreground">Windows continuity system</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Taskbar, hovercard, Resume
+                </p>
+              </div>
+            </div>
+
             <IconCardList
+              columns={2}
               items={[
                 {
                   icon: Clock,
-                  title: 'Continuity is a baseline expectation, not a differentiator',
-                  bullets: [
-                    'Apple has normalized OS‑level continuity (Handoff, Universal Clipboard, AirDrop) across iPhone – iPad – Mac, setting user expectations for seamless task continuation across devices',
-                    'These experiences are system-owned, always on, and require no app‑level setup, shaping daily workflows for hundreds of millions of users',
-                  ],
+                  title: 'Continuity was already a baseline expectation',
+                  description:
+                    'Apple normalized OS-level continuity (Handoff, Universal Clipboard) across iPhone, iPad and Mac, setting user expectations for seamless task continuation.',
                 },
                 {
                   icon: Layers,
                   iconColor: '#c2410c',
-                  title: 'Windows lacked a clear, system-owned continuity model',
-                  bullets: [
-                    'Continuity signals on Windows existed as fragmented app integrations and passive notifications, not as a reliable OS behavior',
-                    "This created a visible experience gap: users couldn't predict where or how to resume tasks, reducing trust in cross‑device workflows",
-                  ],
+                  title: 'Windows lacked a system-owned model',
+                  description:
+                    "Continuity signals existed as fragmented app integrations, not a reliable OS behavior. Users couldn't predict where or how to resume a task.",
                 },
                 {
                   icon: TrendingUp,
                   iconColor: 'var(--icon-green)',
-                  title: 'The gap has measurable ecosystem impact',
-                  bullets: [
-                    'Cross‑device experiences are directly linked to retention and platform stickiness; internal data shows Phone Link usage correlates with a +5pt lift in Windows retention (reduced churn to competing platforms)',
-                    'Without first‑class continuity, Windows risked losing multi‑device users to ecosystems where continuity is implicit',
-                  ],
+                  title: 'The gap had ecosystem consequences',
+                  description:
+                    'Cross-device experiences are directly linked to retention and platform stickiness, not just individual task completion.',
                 },
                 {
                   icon: Target,
-                  title: 'Phone → PC Resume is a strategic response, not a feature',
-                  bullets: [
-                    'Reframes continuity from app‑level convenience to an OS‑level capability, owned and orchestrated by Windows',
-                    'Designed to scale across 1P + 3P apps, including apps without native PC counterpart, something closed ecosystems cannot do at scale',
-                  ],
+                  title: 'This called for a strategic response, not a feature',
+                  description:
+                    'Reframing continuity as an OS-level capability designed to scale across first- and third-party apps, including apps without a native PC counterpart.',
                 },
               ]}
             />
           </Section>
         </Reveal>
 
+        {/* My Role */}
+        <Reveal>
+          <Section title="My role">
+            <Prose>
+              <p>
+                I led the UX strategy for Phone → PC Continuity, from defining the
+                experience model to shaping the primary entry points and aligning the
+                system across Product, Engineering, Platform teams and external
+                partners, including Samsung, Spotify and WhatsApp.
+              </p>
+            </Prose>
+            <IconCardList
+              columns={2}
+              items={[
+                { icon: Target, title: 'Strategy', description: 'Defined the Windows Continuity experience strategy.' },
+                { icon: Layers, iconColor: 'var(--icon-purple)', title: 'System design', description: 'Established the interaction model for Phone → PC Resume.' },
+                { icon: LayoutPanelLeft, iconColor: 'var(--icon-green)', title: 'Experience', description: 'Designed the primary Taskbar-first entry point and progressive disclosure model.' },
+                { icon: Users, iconColor: 'var(--icon-orange)', title: 'Alignment', description: 'Worked across Product, Engineering, Platform teams and external partners.' },
+              ]}
+            />
+          </Section>
+        </Reveal>
+
+        {/* The Design Question */}
+        <Reveal>
+          <Section title="So how proactive should Windows be?">
+            <Prose>
+              <p>
+                Too passive, and users have to search for continuity themselves. Too
+                proactive, and Windows interrupts them with activity they may not care
+                about.
+              </p>
+            </Prose>
+            <Prose callout>
+              The more confident Windows is about a user's intent, the more proactive it
+              can be.
+            </Prose>
+          </Section>
+        </Reveal>
+
+        {/* Confidence-Driven Continuity */}
         <Reveal>
           <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6 space-y-6">
             <div>
-              <h3 className="flex items-center gap-3 text-xl md:text-2xl font-bold text-foreground mb-2">
-                <Shield className="w-6 h-6 text-primary" />
-                Design Principle: Confidence-Driven Continuity
-              </h3>
+              <h2 className="flex items-center gap-3 text-3xl md:text-4xl font-bold text-foreground mb-2">
+                <Shield className="w-7 h-7 text-primary" />
+                Confidence-Driven Continuity
+              </h2>
               <p className="text-foreground">
-                Instead of treating Resume as a generic notification, we reframed
-                continuity as a confidence-based system behavior.
+                Continuity should respond to confidence, not simply activity.
               </p>
             </div>
             <IconCardList
@@ -232,143 +302,204 @@ function PhoneToPcResumePage() {
                 {
                   icon: Zap,
                   iconColor: 'var(--icon-orange)',
-                  title: 'Sync Continuity (Synchronous)',
+                  title: 'High confidence: act',
                   bullets: [
-                    'High confidence of user intent',
-                    'Short time gap between phone activity and PC presence',
-                    <>Windows acts <strong>proactively and prominently</strong></>,
+                    'Recent activity, a clear task',
+                    'User is at the PC, destination is known',
+                    <>Experience: <strong>proactive surfacing</strong> via Taskbar and Resume</>,
                   ],
                 },
                 {
                   icon: Clock,
                   iconColor: 'var(--icon-cyan)',
-                  title: 'Async Continuity (Asynchronous)',
+                  title: 'Low confidence: stay discoverable',
                   bullets: [
-                    'Lower confidence or longer time gap',
-                    'Windows avoids interruption',
-                    <>Continuation remains <strong>discoverable and calm</strong></>,
+                    'Older activity, unclear intent',
+                    'Ambiguous destination',
+                    <>Experience: <strong>stay quiet</strong> and remain discoverable</>,
                   ],
                 },
               ]}
             />
-            <CalloutList
-              title="This model helped Windows:"
-              marker="✓"
-              items={['Act decisively when intent is clear', 'Stay respectful and quiet when intent is uncertain']}
-            />
+            <div className="rounded-xl border border-primary/30 bg-card p-5 text-center">
+              <p className="font-semibold text-lg text-foreground">
+                Continuity should feel like Windows understands the user's intent, not
+                like Windows is reporting everything the phone did.
+              </p>
+            </div>
           </div>
         </Reveal>
 
+        {/* Key Design Decisions */}
         <Reveal>
-          <Section title="Experience Design">
-            <h3 className="text-2xl font-bold text-foreground">UX Flow</h3>
-            <StepFlow
-              steps={[
-                { icon: Smartphone, title: 'Phone activity detected', description: 'User performs an action on their phone' },
-                { icon: Bell, iconColor: 'var(--icon-purple)', title: 'Taskbar alert appears (ambient)', description: 'Non-intrusive notification in Windows Taskbar' },
-                { icon: LayoutPanelLeft, iconColor: 'var(--icon-green)', title: 'Hovercard clarifies origin & action', description: 'Context on what will open and where it came from' },
-                { icon: Target, iconColor: 'var(--icon-orange)', title: 'User clicks Resume alert', description: 'Single tap to continue the task' },
-                { icon: Monitor, iconColor: 'var(--icon-pink)', title: 'Destination app opens on PC', description: 'Seamless transition to the PC environment' },
-              ]}
-            />
-
-            <h3 className="text-2xl font-bold text-foreground mt-4">
-              Primary Mode: Sync Continuity (Phone to PC Resume)
-            </h3>
-            <Prose>
-              <p>
-                When confidence is high, Windows surfaces Resume ingress where action is
-                fastest.
-              </p>
-            </Prose>
-            <p className="font-semibold text-foreground">
-              Phone to PC Resume Experience - Resume ingress appears on Taskbar
-            </p>
-            <VideoBlock src="/videos/phone-to-pc-spotify.mp4" />
-            <ImageBlock
-              src="/images/casestudy-0/spotify-continuity-1.webp"
-              alt="Phone to PC Resume - Spotify continuity experience"
-            />
-            <ImageBlock
-              src="/images/casestudy-0/spotify-continuity-2.webp"
-              alt="Spotify Phone to PC continuity experience"
-            />
-            <ImageBlock
-              src="/images/casestudy-0/resume-variations.webp"
-              alt="Resume from phone continuity variations"
-            />
-
-            <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6">
-              <h4 className="flex items-center gap-3 text-lg font-bold text-foreground mb-4">
-                <LayoutPanelLeft className="w-5 h-5 text-primary" />
-                Primary Entry Point
-              </h4>
-              <div className="rounded-xl border border-primary/30 bg-card p-5">
-                <p className="font-semibold text-foreground">Taskbar Resume</p>
-                <ul className="mt-2 space-y-1.5 text-muted-foreground text-sm">
-                  <li>• Appears inline with active work</li>
-                  <li>• Single-click continuation</li>
-                  <li>• Reinforces continuity as a system capability, not a one-off alert</li>
-                </ul>
+          <Section title="Turning the principle into an experience">
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-foreground">
+                  01. Taskbar became the primary surface.
+                </h3>
+                <Prose>
+                  <p>
+                    Rather than introducing another notification destination, we placed
+                    Resume where ongoing work already lives: close to the existing
+                    Windows mental model, near active work, with system-owned
+                    interaction and lower cognitive overhead.
+                  </p>
+                </Prose>
+                <ImageBlock
+                  heading="Design framework for Taskbar Resume"
+                  src="/images/casestudy-0/taskbar-framework.webp"
+                  alt="Taskbar Resume design framework"
+                />
               </div>
-            </div>
 
-            <ImageBlock
-              heading="Design Framework for Taskbar Resume notification"
-              src="/images/casestudy-0/taskbar-framework.webp"
-              alt="Taskbar Resume Design Framework"
-            />
-            <ImageBlock
-              heading="Phone to PC Resume Ingress on Taskbar & Hovercard - Depending on Phone & PC App availability"
-              src="/images/casestudy-0/continuity-flow.webp"
-              alt="Resume from phone continuity variations across app availability"
-            />
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-foreground">
+                  02. Progressive disclosure instead of immediate interruption.
+                </h3>
+                <Prose>
+                  <p>Users get more context only when they ask for it.</p>
+                </Prose>
+                <StepFlow
+                  variant="numbered"
+                  steps={[
+                    { icon: Smartphone, iconColor: 'var(--icon-teal)', title: 'Signal', description: 'Ambient Taskbar indicator' },
+                    { icon: LayoutPanelLeft, iconColor: 'var(--icon-purple)', title: 'Context', description: 'Hovercard shows origin and action' },
+                    { icon: Target, iconColor: 'var(--icon-orange)', title: 'Action', description: 'Single click to Resume' },
+                  ]}
+                />
+                <VideoBlock
+                  heading="Signal to Resume, demonstrated with Spotify"
+                  src="/videos/phone-to-pc-spotify.mp4"
+                />
+                <ImageBlock
+                  heading="Resume ingress on Taskbar and hovercard, by app availability"
+                  src="/images/casestudy-0/continuity-flow.webp"
+                  alt="Resume continuity variations across app availability"
+                />
+              </div>
 
-            <h3 className="text-2xl font-bold text-foreground mt-4">
-              Shipped Continuity Scenarios (till Jan 2026)
-            </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <AppScenarioCard
-                icon={SpotifyIcon}
-                title="Spotify"
-                description="Continue playback from phone to PC"
-              />
-              <AppScenarioCard
-                icon={SamsungBrowserIcon}
-                title="Browser"
-                description="Resume browsing session on PC's default browser"
-              />
-              <AppScenarioCard
-                icon={Microsoft365Icon}
-                title="Microsoft 365"
-                description="Open Word, Excel, or PowerPoint files (desktop app or web)"
-              />
-            </div>
-            <Prose>
-              <p>
-                These represent high-frequency, everyday transitions with unambiguous
-                intent.
-              </p>
-            </Prose>
-
-            <h3 className="text-xl font-bold text-foreground mt-4">Coming Soon</h3>
-            <Prose>
-              <p>Additional continuity scenarios in active development</p>
-            </Prose>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              <AppScenarioCard icon={WhatsAppIcon} title="WhatsApp" />
-              <AppScenarioCard icon={ChromeIcon} title="Chrome" />
-              <AppScenarioCard icon={EdgeIcon} title="Edge" />
-              <AppScenarioCard icon={SamsungNotesIcon} title="Samsung Note" />
-              <AppScenarioCard icon={SamsungBrowserIcon} title="Samsung Browser" />
+              <div className="space-y-4">
+                <h3 className="text-2xl font-bold text-foreground">
+                  03. Make the destination predictable.
+                </h3>
+                <Prose>
+                  <p>
+                    One of the biggest anxieties in continuity is not knowing what will
+                    happen after selecting Resume. The hovercard needed to answer what
+                    is being resumed, where it will open, and what to expect.
+                  </p>
+                </Prose>
+                <Prose callout>
+                  The user should understand the consequence before committing to it.
+                </Prose>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <ImageBlock
+                    src="/images/casestudy-0/spotify-continuity-1.webp"
+                    alt="Spotify continuity hovercard state"
+                  />
+                  <ImageBlock
+                    src="/images/casestudy-0/spotify-continuity-2.webp"
+                    alt="Spotify continuity hovercard state, expanded"
+                  />
+                </div>
+                <ImageBlock
+                  heading="Resume variations communicating what will happen next"
+                  src="/images/casestudy-0/resume-variations.webp"
+                  alt="Resume from phone continuity variations"
+                />
+              </div>
             </div>
           </Section>
         </Reveal>
 
+        {/* Designing for Different Kinds of Work */}
         <Reveal>
-          <Section title="Metrics & Impact">
+          <Section title="One continuity model. Different kinds of work.">
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Media</p>
+                <AppScenarioCard
+                  icon={SpotifyIcon}
+                  title="Spotify"
+                  description="Continue playback without rebuilding the context."
+                />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Web</p>
+                <AppScenarioCard
+                  icon={SamsungBrowserIcon}
+                  title="Browser"
+                  description="Resume the browsing session where the user left off."
+                />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Productivity</p>
+                <AppScenarioCard
+                  icon={Microsoft365Icon}
+                  title="Microsoft 365"
+                  description="Reopen the relevant work and continue from the appropriate context."
+                />
+              </div>
+            </div>
+            <Prose>
+              <p>
+                The interaction model remained consistent even though the underlying
+                task and destination differed.
+              </p>
+            </Prose>
+
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-1">Coming soon</h3>
+              <p className="text-muted-foreground text-sm mb-4">
+                Additional continuity scenarios in active development
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <AppScenarioCard icon={WhatsAppIcon} title="WhatsApp" />
+                <AppScenarioCard icon={ChromeIcon} title="Chrome" />
+                <AppScenarioCard icon={EdgeIcon} title="Edge" />
+                <AppScenarioCard icon={SamsungNotesIcon} title="Samsung Notes" />
+                <AppScenarioCard icon={SamsungBrowserIcon} title="Samsung Browser" />
+              </div>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* Scaling the Pattern */}
+        <Reveal>
+          <Section title="One pattern. Many destinations.">
+            <div className="grid sm:grid-cols-3 gap-3 items-center">
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <Smartphone className="w-6 h-6 mb-2" style={{ color: 'var(--icon-teal)' }} />
+                <p className="font-semibold text-foreground">Phone activity</p>
+                <p className="text-muted-foreground text-sm mt-1">Continuity signal</p>
+              </div>
+              <div className="flex justify-center">
+                <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90 sm:rotate-0" />
+              </div>
+              <div className="rounded-xl border border-border bg-muted/30 p-5">
+                <Layers className="w-6 h-6 mb-2 text-primary" />
+                <p className="font-semibold text-foreground">Windows</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Spotify, browser, Microsoft 365, and more
+                </p>
+              </div>
+            </div>
+            <Prose>
+              <p>
+                The experience needed to remain coherent even when the destination
+                experience differed. This is what made it a platform behavior rather
+                than a feature tuned for a single app.
+              </p>
+            </Prose>
+          </Section>
+        </Reveal>
+
+        {/* Measured Impact */}
+        <Reveal>
+          <Section title="Did the model work?">
             <h3 className="text-xl font-bold text-foreground">
-              Phone → PC Resume (Retail – May 2025)
+              Phone → PC Resume (Retail, May 2025)
             </h3>
             <StatGrid
               columns={3}
@@ -384,13 +515,13 @@ function PhoneToPcResumePage() {
             />
             <Prose>
               <p>
-                Intent-based continuity significantly outperforms generic notifications
-                (4.2× baseline)
+                Resume toasts converted at roughly 4.2× the baseline of standard Windows
+                toasts.
               </p>
             </Prose>
 
             <h3 className="text-xl font-bold text-foreground mt-6">
-              Taskbar Resume (GA – Jan 2026)
+              Taskbar Resume (early GA / WIP data, GA Jan 2026)
             </h3>
             <StatGrid
               columns={2}
@@ -398,68 +529,58 @@ function PhoneToPcResumePage() {
                 {
                   value: '~28%',
                   label: 'Engagement on Taskbar Resume surfaces',
-                  sublabel: 'Early GA / WIP Data',
+                  sublabel: 'Early GA / WIP data',
                 },
                 {
                   value: '3.3×',
-                  label: 'improvement over toasts',
+                  label: 'Improvement over toasts',
                   sublabel: 'Spotify, Browser, and Microsoft 365 online files',
                 },
               ]}
             />
             <Prose>
-              <p>This validated Taskbar as the strongest Sync Continuity surface.</p>
-            </Prose>
-
-            <h3 className="text-xl font-bold text-foreground mt-6">Ecosystem Impact</h3>
-            <Prose callout>
-              Cross-device capability is a top driver of Windows purchase intent. Phone
-              Link usage shows a <strong>+5pt correlation with Windows retention</strong>,
-              reinforcing continuity as an ecosystem lever.
+              <p>This validated Taskbar as the strongest surface for high-confidence continuity.</p>
             </Prose>
           </Section>
         </Reveal>
 
+        {/* Ecosystem Signal */}
         <Reveal>
-          <Section title="Media Coverage & External Reactions">
+          <Section title="An ecosystem signal">
+            <div className="rounded-xl border border-border bg-muted/20 p-5 max-w-md">
+              <p className="text-2xl font-bold text-foreground">+5pt correlation</p>
+              <p className="text-muted-foreground text-sm mt-1">
+                Between Phone Link usage and Windows retention, reinforcing the
+                strategic value of cross-device experiences. Correlation, not a measured
+                causal effect of Resume itself.
+              </p>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* External Validation */}
+        <Reveal>
+          <Section title="The experience also resonated externally.">
             <Prose>
               <p>
-                Phone → PC Continuity (Cross-Device Resume) received broad visibility
-                across Microsoft channels and independent tech media, validating both
-                the user need and the design direction.
+                Coverage highlighted the Taskbar as a natural entry point and positioned
+                Resume as part of a broader Windows continuity experience.
               </p>
             </Prose>
-            <CalloutList
-              title="Common Themes in Coverage"
-              marker="✓"
-              tone="positive"
-              items={[
-                'Resume via the Taskbar feels natural and fast',
-                'High-frequency scenarios (Spotify, browser, Office files) resonate immediately',
-                'Positioned as a platform capability, not a novelty feature',
-              ]}
-            />
-            <h3 className="text-xl font-bold text-foreground mt-4">Featured Coverage</h3>
-            <PressGrid
-              items={[
-                { src: '/images/casestudy-0/press-sammobile.webp', alt: 'SAM MOBILE coverage' },
-                { src: '/images/casestudy-0/press-winbuzzer.webp', alt: 'WinBuzzer coverage' },
-                { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
-                { src: '/images/casestudy-0/press-windowscentral.webp', alt: 'Windows Central coverage' },
-                { src: '/images/casestudy-0/press-androidpolice.webp', alt: 'Android Police coverage' },
-                { src: '/images/casestudy-0/press-thurrott.webp', alt: 'Thurrott coverage' },
-                { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
-                { src: '/images/casestudy-0/press-bgr.webp', alt: 'BGR coverage' },
-              ]}
-            />
-            <h3 className="text-xl font-bold text-foreground mt-4">
-              Publicly Available Links
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <PressGrid items={showMorePress ? [...PRESS_FEATURED, ...PRESS_MORE] : PRESS_FEATURED} />
+            {!showMorePress && (
+              <button
+                type="button"
+                onClick={() => setShowMorePress(true)}
+                className="text-primary font-medium text-sm hover:underline"
+              >
+                View more coverage
+              </button>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-6 mt-6">
               <div>
-                <p className="font-semibold text-foreground mb-2">
-                  Official Microsoft Documentation
-                </p>
+                <p className="font-semibold text-foreground mb-2">Official Microsoft documentation</p>
                 <LinkList
                   links={[
                     {
@@ -467,30 +588,30 @@ function PhoneToPcResumePage() {
                       href: 'https://support.microsoft.com/en-us/windows/cross-device-resume-feature-9ada0c0b-f70f-4806-abac-b7126fa6a053',
                     },
                     {
-                      label: 'Windows Insider Blog – Release Preview update (Jan 27, 2026)',
+                      label: 'Windows Insider Blog: Release Preview update (Jan 27, 2026)',
                       href: 'https://blogs.windows.com/windows-insider/2026/01/27/releasing-windows-11-builds-26100-7701-and-26200-7701-to-the-release-preview-channel/',
                     },
                   ]}
                 />
               </div>
               <div>
-                <p className="font-semibold text-foreground mb-2">Independent Media Coverage</p>
+                <p className="font-semibold text-foreground mb-2">Independent media coverage</p>
                 <LinkList
                   links={[
                     {
-                      label: "The Verge – Windows 11's ability to resume Android apps like Apple Handoff",
+                      label: "The Verge: Windows 11's ability to resume Android apps like Apple Handoff",
                       href: 'https://www.theverge.com/news/869161/microsoft-windows-11-android-app-resume-feature-release-preview',
                     },
                     {
-                      label: 'Android Authority – Windows 11 expands Cross-Device Resume',
+                      label: 'Android Authority: Windows 11 expands Cross-Device Resume',
                       href: 'https://www.androidauthority.com/windows-11-cross-device-resume-preview-channel-3636114/',
                     },
                     {
-                      label: 'TechRepublic – New Windows 11 features arrive',
+                      label: 'TechRepublic: New Windows 11 features arrive',
                       href: 'https://www.techrepublic.com/article/news-windows-11-february-2026-update-cross-device-resume/',
                     },
                     {
-                      label: 'Windows Latest – Microsoft uses the Windows 11 taskbar to resume Android activities',
+                      label: 'Windows Latest: Microsoft uses the Windows 11 taskbar to resume Android activities',
                       href: 'https://www.windowslatest.com/2025/11/25/microsoft-is-using-windows-11-taskbar-to-resume-your-android-activities/',
                     },
                   ]}
@@ -500,18 +621,84 @@ function PhoneToPcResumePage() {
           </Section>
         </Reveal>
 
+        {/* What Changed */}
         <Reveal>
-          <Section title="Outcome">
-            <ChecklistSection
-              intro="Phone → PC Continuity established a durable, scalable continuity pattern on Windows:"
-              items={[
-                'Users move from phone to PC without restarting work',
-                "Windows acts when intent is clear and stays respectful when it's not",
-                'Sync & Async Continuity form the foundation for bidirectional continuity (PC → Phone) and future Connected Intelligence investments',
-              ]}
-              closingStatement="This work repositioned Windows from a collection of devices to a system that moves with the user."
-            />
+          <Section title="What changed">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-border p-5">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Before</p>
+                <p className="font-semibold text-foreground">Connected devices</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Users had to reconstruct context between them.
+                </p>
+              </div>
+              <div className="rounded-xl border border-primary/30 bg-accent/10 p-5">
+                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">After</p>
+                <p className="font-semibold text-foreground">A system that moves with the user</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                  Windows can help users pick up where they left off.
+                </p>
+              </div>
+            </div>
+            <Prose>
+              <p>
+                Phone → PC Resume established a system-level continuity pattern that can
+                extend across devices, apps and future directions such as bidirectional
+                continuity.
+              </p>
+            </Prose>
+            <div className="rounded-xl border border-primary/30 p-5 text-center">
+              <p className="font-semibold text-lg text-foreground">
+                Windows moved from a collection of connected devices to a system that
+                moves with the user.
+              </p>
+            </div>
           </Section>
+        </Reveal>
+
+        {/* What I Learned */}
+        <Reveal>
+          <Section title="What this taught me">
+            <div className="grid sm:grid-cols-1 gap-4">
+              <PrincipleBlock number={1} title="Systems design is often about behavior" iconColor="var(--icon-blue)">
+                The important design decision wasn't the appearance of the Resume
+                surface. It was deciding when Windows should act.
+              </PrincipleBlock>
+              <PrincipleBlock number={2} title="Good platform experiences create rules that scale" iconColor="var(--icon-purple)">
+                A clear interaction model made it possible to support very different
+                scenarios without reinventing the experience each time.
+              </PrincipleBlock>
+              <PrincipleBlock number={3} title="Proactivity needs restraint" iconColor="var(--icon-orange)">
+                The more intelligent a system becomes, the more important it is to know
+                when not to interrupt.
+              </PrincipleBlock>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* My Contribution */}
+        <Reveal>
+          <Section title="My contribution">
+            <Prose callout>
+              I helped define the experience model, align cross-functional teams around
+              it, and turn an ambiguous continuity problem into a scalable system
+              pattern that shipped across Windows.
+            </Prose>
+          </Section>
+        </Reveal>
+
+        {/* Closing */}
+        <Reveal>
+          <div className="text-center py-6">
+            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
+              Windows doesn't need to ask where you want to work next. It can help you
+              pick up where you left off.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <CaseStudyNav slug="phone-to-pc-resume" />
         </Reveal>
       </div>
     </div>
