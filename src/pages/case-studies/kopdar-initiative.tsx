@@ -29,6 +29,9 @@ import {
   ArrowRight,
   ArrowDown,
   Zap,
+  Mic,
+  Clipboard,
+  TriangleAlert,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
@@ -42,6 +45,7 @@ import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
 import { DotList } from '@/design-system/ui/dot-list';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { WhatsAppIcon, GoogleSheetsIcon, GoogleFormsIcon, GoogleSlidesIcon } from '@/design-system/ui/icons/brands';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { tint } from '@/lib/color';
@@ -193,7 +197,7 @@ function KopdarInitiativePage() {
         imageBadge="Live from Jakarta"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-14">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
         {/* Kopdar was about people */}
         <Reveal>
           <Section title="Kopdar was about people.">
@@ -215,6 +219,13 @@ function KopdarInitiativePage() {
             <p className="text-sm font-semibold text-muted-foreground">
               Trust · Feedback · Community
             </p>
+            <Prose>
+              <p>
+                Kopdar (Kopi Darat, "face-to-face meeting") is Gojek's driver community
+                program, run by Performance Katalysts (PKs) and supervised by
+                Performance Katalyst Managers (PKMs) across Indonesia.
+              </p>
+            </Prose>
             <Prose callout>
               The challenge was scaling the system around the conversation without
               losing the conversation itself.
@@ -225,6 +236,20 @@ function KopdarInitiativePage() {
         {/* Scale */}
         <Reveal>
           <Section title="">
+            <div className="relative rounded-2xl overflow-hidden min-h-[200px]">
+              <ImageWithFallback
+                src="/images/casestudy-3/indonesia-map.webp"
+                alt="Map of Indonesia archipelago"
+                className="w-full h-full object-cover absolute inset-0"
+              />
+              <div className="relative z-10 h-full flex flex-col items-center justify-end text-center p-6 bg-gradient-to-t from-black/50 via-black/10 to-transparent">
+                <MapPin className="w-6 h-6 text-white mb-1" />
+                <p className="font-bold text-white">Indonesia-wide program</p>
+                <p className="text-white/90 text-sm">
+                  Spanning Jakarta, Surabaya, Makassar, and beyond
+                </p>
+              </div>
+            </div>
             <StatGrid
               columns={3}
               stats={[
@@ -275,6 +300,49 @@ function KopdarInitiativePage() {
             <div className="rounded-xl border p-5 flex items-center gap-4" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
               <p className="text-3xl font-bold" style={{ color: KD_RED }}>15+ hrs</p>
               <p className="text-foreground">manual work per Kopdar cycle</p>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* Workflow pain points */}
+        <Reveal>
+          <Section title="The fragmentation followed PKs through the entire cycle.">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { n: 1, icon: Calendar, color: KD_GREEN, title: 'Pre-Kopdar', items: ['No content database', 'Manual event coordination', 'No RSVP tracking'] },
+                { n: 2, icon: Mic, color: KD_ORANGE, title: 'During Kopdar', items: ['Unplanned Kopdar go unreported', 'Constant app switching', 'Separate form links'] },
+                { n: 3, icon: BarChart3, color: KD_PURPLE, title: 'Post Kopdar', items: ['No attendance accountability', 'Manual finance reconciliation', 'Manual performance tracking'] },
+                { n: 4, icon: Clipboard, color: KD_RED, title: 'Between sessions', items: ['Hours of copy-pasting', 'Screenshots only', 'No data insights'] },
+              ].map((stage) => (
+                <div key={stage.n} className="rounded-xl border p-5" style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-bold" style={{ backgroundColor: stage.color }}>
+                      {stage.n}
+                    </span>
+                    <stage.icon className="w-4 h-4" style={{ color: stage.color }} />
+                  </div>
+                  <p className="font-bold mb-2" style={{ color: stage.color }}>{stage.title}</p>
+                  <ul className="space-y-1.5 text-sm text-muted-foreground">
+                    {stage.items.map((it) => (
+                      <li key={it} className="flex gap-1.5">
+                        <span aria-hidden="true">→</span>
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <ImageBlock
+              src="/images/casestudy-3/workflow-pain-points.webp"
+              alt="Kopdar workflow diagram showing pain points across the lifecycle"
+            />
+            <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
+              <TriangleAlert className="w-5 h-5 shrink-0 mt-0.5" style={{ color: KD_RED }} />
+              <p className="text-foreground">
+                Zero visibility for supervisors until reports were manually compiled,
+                days later.
+              </p>
             </div>
           </Section>
         </Reveal>
