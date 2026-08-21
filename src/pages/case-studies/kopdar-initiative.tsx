@@ -12,7 +12,6 @@ import {
   Calendar,
   MessageCircle,
   MessageSquare,
-  RefreshCw,
   Cog,
   CalendarPlus,
   Send,
@@ -28,20 +27,17 @@ import {
   GitCompare,
   ArrowRight,
   ArrowDown,
+  ArrowUp,
   Zap,
   Mic,
   Clipboard,
-  TriangleAlert,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
-import { IconCardList } from '@/components/casestudy/icon-card-list';
-import { StatGrid } from '@/components/casestudy/stat-grid';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Quote } from '@/components/casestudy/quote';
-import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
 import { DotList } from '@/design-system/ui/dot-list';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { WhatsAppIcon, GoogleSheetsIcon, GoogleFormsIcon, GoogleSlidesIcon } from '@/design-system/ui/icons/brands';
@@ -49,55 +45,241 @@ import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { tint } from '@/lib/color';
+import type { IconComponent } from '@/lib/utils';
 
-// Kopdar's brand palette, distinct from the site's --icon-* tokens, sampled from the reference.
+// Kopdar's brand palette, used semantically rather than as decoration:
+// green = people/community, orange = engagement, teal = system, purple = insight/supervision, red = friction.
 const KD_GREEN = 'rgb(0, 170, 19)';
 const KD_ORANGE = 'rgb(255, 107, 0)';
 const KD_TEAL = 'rgb(0, 129, 160)';
 const KD_PURPLE = 'rgb(147, 50, 142)';
 const KD_RED = 'rgb(238, 39, 55)';
 
-/** Adapts a lucide icon to AppScenarioCard's brand-icon signature for non-brand tool cards (Screenshots, Manual reports). */
-function lucideAsBrandIcon(Icon: typeof UsersIcon) {
+/** Adapts a lucide icon to the brand-icon signature used by tool nodes (Screenshots, Manual reports have no brand mark). */
+function lucideAsBrandIcon(Icon: IconComponent) {
   return function BrandIconAdapter({ className }: { className?: string }) {
     return <Icon className={className} />;
   };
 }
 
-function FlowNode({ icon: Icon, label, sublabel, color }: { icon: typeof UsersIcon; label: string; sublabel: string; color: string }) {
+/* ---------------------------------------------------------------------- */
+/* Eyebrow + takeaway headline, the two-tier heading used before every    */
+/* major beat of the story.                                               */
+/* ---------------------------------------------------------------------- */
+function Beat({
+  eyebrow,
+  color,
+  children,
+}: {
+  eyebrow: string;
+  color: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="rounded-xl border bg-card p-5 text-center" style={{ borderColor: color }}>
-      <Icon className="w-6 h-6 mx-auto mb-2" style={{ color }} />
-      <p className="font-bold text-foreground">{label}</p>
-      <p className="text-muted-foreground text-sm mt-1">{sublabel}</p>
+    <div>
+      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color }}>
+        {eyebrow}
+      </p>
+      <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+        {children}
+      </h2>
     </div>
   );
 }
 
-function LifecycleStep({
-  number,
-  icon: Icon,
-  title,
-  words,
-  color,
+/** A single node in a relationship chain: icon + label, connected to its neighbors by the parent. */
+function ChainNode({ icon: Icon, label, sublabel, color }: { icon: IconComponent; label: string; sublabel?: string; color: string }) {
+  return (
+    <div className="rounded-xl border-2 bg-card px-5 py-4 text-center min-w-[9rem]" style={{ borderColor: color }}>
+      <Icon className="w-6 h-6 mx-auto mb-1.5" style={{ color }} />
+      <p className="font-bold text-foreground text-sm">{label}</p>
+      {sublabel && <p className="text-muted-foreground text-xs mt-0.5">{sublabel}</p>}
+    </div>
+  );
+}
+
+/** Vertical (mobile) / horizontal (desktop) chain of relationship nodes, connected by arrows of a given kind. */
+function RelationshipChain({
+  nodes,
+  connector = 'single',
 }: {
-  number: number;
-  icon: typeof UsersIcon;
+  nodes: { icon: IconComponent; label: string; sublabel?: string; color: string }[];
+  connector?: 'single' | 'bidirectional';
+}) {
+  const Connector = () => (
+    <div className="flex sm:flex-col items-center justify-center shrink-0 text-muted-foreground">
+      {connector === 'bidirectional' ? (
+        <span className="text-lg leading-none rotate-90 sm:rotate-0">↕</span>
+      ) : (
+        <ArrowDown className="w-4 h-4 rotate-[-90deg] sm:rotate-0" />
+      )}
+    </div>
+  );
+  return (
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      {nodes.map((node, i) => (
+        <div key={node.label} className="contents">
+          {i > 0 && <Connector />}
+          <ChainNode {...node} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** PK at the centre, tools pulling outward in different directions, PKM compiling manually beneath. Desktop-only; mobile gets a simpler stacked variant. */
+function FragmentedToolMap() {
+  const tools: { icon: IconComponent; label: string; x: number; y: number }[] = [
+    { icon: WhatsAppIcon, label: 'WhatsApp', x: 28, y: 8 },
+    { icon: GoogleSheetsIcon, label: 'Google Sheets', x: 4, y: 46 },
+    { icon: GoogleFormsIcon, label: 'Google Forms', x: 94, y: 40 },
+    { icon: GoogleSlidesIcon, label: 'Google Slides', x: 72, y: 6 },
+    { icon: lucideAsBrandIcon(ImageIcon), label: 'Screenshots', x: 14, y: 88 },
+    { icon: lucideAsBrandIcon(FileText), label: 'Manual reports', x: 84, y: 90 },
+  ];
+  return (
+    <div>
+      {/* Desktop: radial composition */}
+      <div className="hidden md:block relative w-full aspect-square max-w-xl mx-auto">
+        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" aria-hidden="true">
+          {tools.map((t) => (
+            <line
+              key={t.label}
+              x1={50}
+              y1={50}
+              x2={t.x}
+              y2={t.y}
+              stroke={KD_RED}
+              strokeWidth="0.5"
+              strokeDasharray="2 2"
+              opacity="0.45"
+            />
+          ))}
+        </svg>
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 bg-card px-6 py-5 text-center shadow-[var(--shadow-md)] z-10"
+          style={{ borderColor: KD_GREEN }}
+        >
+          <UsersIcon className="w-7 h-7 mx-auto mb-1.5" style={{ color: KD_GREEN }} />
+          <p className="font-bold text-foreground">PK</p>
+          <p className="text-muted-foreground text-xs">Field agent</p>
+        </div>
+        {tools.map((t) => (
+          <div
+            key={t.label}
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-card px-3 py-2.5 text-center shadow-[var(--shadow-sm)]"
+            style={{ left: `${t.x}%`, top: `${t.y}%` }}
+          >
+            <t.icon className="w-6 h-6 mx-auto mb-1" />
+            <p className="text-foreground text-xs font-medium whitespace-nowrap">{t.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile: PK, connected tool cluster, PKM */}
+      <div className="md:hidden space-y-3">
+        <div className="max-w-[10rem] mx-auto">
+          <ChainNode icon={UsersIcon} label="PK" sublabel="Field agent" color={KD_GREEN} />
+        </div>
+        <div className="flex justify-center">
+          <ArrowDown className="w-5 h-5 text-muted-foreground" />
+        </div>
+        <div className="grid grid-cols-3 gap-2 max-w-sm mx-auto">
+          {tools.map((t) => (
+            <div key={t.label} className="rounded-lg border border-border bg-card p-2.5 text-center">
+              <t.icon className="w-6 h-6 mx-auto mb-1" />
+              <p className="text-foreground text-[11px] font-medium leading-tight">{t.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-center mt-4">
+        <ArrowDown className="w-5 h-5 text-muted-foreground" />
+      </div>
+      <div className="max-w-[10rem] mx-auto">
+        <ChainNode icon={UsersIcon} label="PKM" sublabel="Compiled manually" color={KD_ORANGE} />
+      </div>
+    </div>
+  );
+}
+
+export interface LoopStageProps {
+  icon: IconComponent;
   title: string;
   words: string[];
   color: string;
-}) {
+}
+
+/**
+ * A sequence of stages that loops back to the first, communicating a recurring
+ * system rather than a one-off flow. `tone="debt"` frames it as an
+ * administrative loop (old lifecycle); `tone="system"` frames it as a
+ * healthy operating loop (new system flow).
+ */
+function LoopFlow({ stages, tone }: { stages: LoopStageProps[]; tone: 'debt' | 'system' }) {
+  const loopColor = tone === 'debt' ? KD_RED : KD_TEAL;
   return (
-    <div className="rounded-xl border p-4 text-center" style={{ borderColor: color, backgroundColor: tint(color, 6) }}>
-      <span
-        className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-xs font-bold mb-2"
-        style={{ backgroundColor: color }}
+    <div className="relative pb-10">
+      <div
+        className="grid gap-3"
+        style={{ gridTemplateColumns: `repeat(${Math.min(stages.length, 2)}, minmax(0, 1fr))` }}
       >
-        {number}
-      </span>
-      <Icon className="w-6 h-6 mx-auto mb-2" style={{ color }} />
-      <p className="font-bold text-foreground text-sm">{title}</p>
-      <p className="text-muted-foreground text-xs mt-1">{words.join(' · ')}</p>
+        <div className={`contents md:grid md:gap-3`} style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}>
+          {stages.map((stage, i) => (
+            <div key={stage.title} className="relative rounded-xl border p-4 text-center" style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}>
+              <span
+                className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-xs font-bold mb-2"
+                style={{ backgroundColor: stage.color }}
+              >
+                {i + 1}
+              </span>
+              <stage.icon className="w-6 h-6 mx-auto mb-2" style={{ color: stage.color }} />
+              <p className="font-bold text-foreground text-sm">{stage.title}</p>
+              <p className="text-muted-foreground text-xs mt-1">{stage.words.join(' · ')}</p>
+              {i < stages.length - 1 && (
+                <ArrowRight
+                  className="hidden md:block absolute top-1/2 -right-3 -translate-y-1/2 w-4 h-4 z-10"
+                  style={{ color: loopColor }}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Return-to-start bracket, spanning under the row (desktop only: needs the full horizontal row to bracket) */}
+      <div
+        className="hidden md:block absolute bottom-0 border-l-2 border-r-2 border-b-2 rounded-b-lg"
+        style={{
+          left: `calc(50% / ${stages.length})`,
+          right: `calc(50% / ${stages.length})`,
+          height: '1.75rem',
+          borderColor: loopColor,
+        }}
+      />
+      <ArrowUp
+        className="hidden md:block absolute bottom-7 w-4 h-4"
+        style={{ left: `calc(50% / ${stages.length} - 0.5rem)`, color: loopColor }}
+      />
+      {/* Mobile: stages stack in a grid with no room for a bracket, so state the loop explicitly instead */}
+      <div className="md:hidden flex items-center justify-center gap-2 mt-4 font-semibold text-sm" style={{ color: loopColor }}>
+        <ArrowUp className="w-4 h-4 rotate-[-135deg]" />
+        Loops back to {stages[0].title}
+      </div>
+    </div>
+  );
+}
+
+/** A value transforming into a better value: "8 min" becoming "45 sec". More memorable than a bar chart. */
+function MetricTransition({ from, to, label, color }: { from: string; to: string; label: string; color: string }) {
+  return (
+    <div className="rounded-xl border border-border p-5 text-center">
+      <div className="flex items-center justify-center gap-4">
+        <span className="text-2xl font-bold text-muted-foreground line-through decoration-2">{from}</span>
+        <ArrowRight className="w-5 h-5 shrink-0" style={{ color }} />
+        <span className="text-3xl font-bold" style={{ color }}>{to}</span>
+      </div>
+      <p className="text-muted-foreground text-sm mt-2">{label}</p>
     </div>
   );
 }
@@ -111,15 +293,17 @@ function DecisionBlock({
   color,
   image,
   alt,
+  children,
 }: {
   number: string;
-  icon: typeof UsersIcon;
+  icon: IconComponent;
   title: string;
   copy: string;
   evidence?: string;
   color: string;
   image: string;
   alt: string;
+  children?: React.ReactNode;
 }) {
   return (
     <div className="space-y-4">
@@ -130,7 +314,7 @@ function DecisionBlock({
         >
           {number}
         </span>
-        <div>
+        <div className="flex-1">
           <h3 className="flex items-center gap-2 text-xl font-bold text-foreground">
             <Icon className="w-5 h-5" style={{ color }} />
             {title}
@@ -146,49 +330,60 @@ function DecisionBlock({
           )}
         </div>
       </div>
+      {children}
       <ImageBlock src={image} alt={alt} />
     </div>
   );
 }
 
-function BeforeAfter({
-  icon: Icon,
-  before,
-  after,
-  color,
-}: {
-  icon: typeof UsersIcon;
-  before: string;
-  after: string;
-  color: string;
-}) {
+function BeforeAfterCompact({ icon: Icon, before, after, color }: { icon: IconComponent; before: string; after: string; color: string }) {
   return (
     <div className="rounded-xl border border-border p-5">
       <Icon className="w-5 h-5 mb-3" style={{ color }} />
       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Before</p>
       <p className="font-medium text-foreground">{before}</p>
-      <p className="text-xs font-semibold uppercase tracking-wide mt-3" style={{ color }}>After</p>
+      <div className="flex items-center gap-2 my-2">
+        <ArrowDown className="w-4 h-4" style={{ color }} />
+      </div>
+      <p className="text-xs font-semibold uppercase tracking-wide" style={{ color }}>After</p>
       <p className="font-medium text-foreground">{after}</p>
     </div>
   );
 }
+
+const LIFECYCLE_LOOP_STAGES: LoopStageProps[] = [
+  { icon: Calendar, title: 'Prepare', words: ['Manual coordination', 'No RSVP tracking'], color: KD_RED },
+  { icon: Mic, title: 'Conduct', words: ['App switching', 'Separate forms'], color: KD_RED },
+  { icon: Clipboard, title: 'Report', words: ['Manual reconciliation', 'Copy-pasting'], color: KD_RED },
+  { icon: BarChart3, title: 'Insights', words: ['Delayed days later', 'Screenshots only'], color: KD_RED },
+];
+
+const NEW_SYSTEM_LOOP_STAGES: LoopStageProps[] = [
+  { icon: CalendarPlus, title: 'Create', words: ['PK sets up session'], color: KD_TEAL },
+  { icon: Send, title: 'Invite', words: ['Drivers notified'], color: KD_TEAL },
+  { icon: CircleCheck, title: 'RSVP', words: ['Drivers confirm'], color: KD_TEAL },
+  { icon: MessageCircle, title: 'Kopdar', words: ['Session happens'], color: KD_TEAL },
+  { icon: UserCheck, title: 'Capture', words: ['Attendance, feedback'], color: KD_TEAL },
+  { icon: Eye, title: 'See', words: ['PKM visibility'], color: KD_TEAL },
+  { icon: TrendingUp, title: 'Learn', words: ['Insights inform next'], color: KD_TEAL },
+];
 
 function KopdarInitiativePage() {
   return (
     <div className="pb-20">
       <Seo
         title="Kopdar Initiative"
-        description="Automate the work, protect the relationship: designing a scalable system around Gojek's face-to-face driver community program."
+        description="A human relationship had to scale: designing the system around Gojek's face-to-face driver community program without making it feel transactional."
       />
       <CaseStudyHero
+        eyebrow="Kopdar Initiative"
         breadcrumbLabel="Kopdar"
         badges={['● Case Study']}
-        title="Kopdar Initiative: Scaling Driver Engagement for Gojek"
-        titleHighlight="Driver Engagement"
-        subtitle="Automate the work. Protect the relationship."
+        title="From community ritual to scalable system."
+        subtitle="Kopdar was one of Gojek's most important ways of staying connected with drivers. I helped redesign the system around those conversations so it could scale without losing sight of the people at its centre."
         meta={[
           { label: 'Role', value: 'Product Designer', icon: UsersIcon, color: KD_GREEN, bg: tint(KD_GREEN, 8) },
-          { label: 'Duration', value: 'Oct 2019 - Apr 2020', icon: Clock, color: KD_ORANGE, bg: tint(KD_ORANGE, 8) },
+          { label: 'Duration', value: 'Oct 2019 to Apr 2020', icon: Clock, color: KD_ORANGE, bg: tint(KD_ORANGE, 8) },
           { label: 'Team', value: 'Cross-functional', icon: UsersIcon, color: KD_TEAL, bg: tint(KD_TEAL, 8) },
         ]}
         metaVariant="cards"
@@ -197,300 +392,311 @@ function KopdarInitiativePage() {
         imageBadge="Live from Jakarta"
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
-        {/* Kopdar was about people */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-20">
+        {/* 01 PEOPLE */}
         <Reveal>
-          <Section title="Kopdar was about people.">
-            <div className="grid sm:grid-cols-2 gap-6 items-center">
-              <div className="rounded-2xl overflow-hidden border border-border">
-                <ImageBlock src="/images/casestudy-3/community-meeting.webp" alt="Gojek drivers gathered face to face at a Kopdar session" />
-              </div>
-              <div className="space-y-3">
-                <FlowNode icon={UsersIcon} label="Gojek" sublabel="Platform" color={KD_GREEN} />
-                <div className="flex justify-center">
-                  <ArrowDown className="w-5 h-5 text-muted-foreground" />
-                </div>
-                <FlowNode icon={UsersIcon} label="Driver" sublabel="Community" color={KD_ORANGE} />
-              </div>
+          <Section title="">
+            <Beat eyebrow="The human side" color={KD_GREEN}>Kopdar was about people.</Beat>
+            <div className="rounded-2xl overflow-hidden border border-border mt-6">
+              <ImageBlock src="/images/casestudy-3/community-meeting.webp" alt="Gojek drivers and the design team gathered face to face at a Kopdar session" />
             </div>
-            <p className="text-lg font-medium text-foreground">
-              A face-to-face conversation between Gojek and drivers.
-            </p>
-            <p className="text-sm font-semibold text-muted-foreground">
+            <div className="mt-6">
+              <RelationshipChain
+                connector="bidirectional"
+                nodes={[
+                  { icon: UsersIcon, label: 'Gojek', sublabel: 'Platform', color: KD_GREEN },
+                  { icon: UsersIcon, label: 'Driver', sublabel: 'Community', color: KD_ORANGE },
+                ]}
+              />
+            </div>
+            <p className="text-center text-sm font-semibold text-muted-foreground mt-4">
               Trust · Feedback · Community
             </p>
             <Prose>
-              <p>
-                Kopdar (Kopi Darat, "face-to-face meeting") is Gojek's driver community
-                program, run by Performance Katalysts (PKs) and supervised by
-                Performance Katalyst Managers (PKMs) across Indonesia.
+              <p className="text-center max-w-xl mx-auto">
+                Kopdar, or "Kopi Darat" ("face-to-face meeting"), was Gojek's face-to-face
+                driver community program, run by Performance Katalysts (PKs) and
+                supervised by Performance Katalyst Managers (PKMs).
               </p>
             </Prose>
-            <Prose callout>
-              The challenge was scaling the system around the conversation without
-              losing the conversation itself.
-            </Prose>
+            <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6 mt-6 text-center">
+              <p className="text-xl font-semibold text-foreground max-w-xl mx-auto">
+                The challenge was scaling the system around the conversation without
+                losing the conversation itself.
+              </p>
+            </div>
           </Section>
         </Reveal>
 
-        {/* Scale */}
+        {/* 02 SCALE */}
         <Reveal>
           <Section title="">
-            <div className="relative rounded-2xl overflow-hidden min-h-[200px]">
+            <Beat eyebrow="The scale" color={KD_GREEN}>A human conversation happening at operational scale.</Beat>
+            <div className="relative rounded-2xl overflow-hidden min-h-[260px] md:min-h-[340px] mt-6">
               <ImageWithFallback
                 src="/images/casestudy-3/indonesia-map.webp"
-                alt="Map of Indonesia archipelago"
+                alt="Map of the Indonesian archipelago, spanning Jakarta, Surabaya and Makassar"
                 className="w-full h-full object-cover absolute inset-0"
               />
-              <div className="relative z-10 h-full flex flex-col items-center justify-end text-center p-6 bg-gradient-to-t from-black/50 via-black/10 to-transparent">
-                <MapPin className="w-6 h-6 text-white mb-1" />
-                <p className="font-bold text-white">Indonesia-wide program</p>
-                <p className="text-white/90 text-sm">
-                  Spanning Jakarta, Surabaya, Makassar, and beyond
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <p className="text-white/90 text-sm font-medium mb-3">
+                  Spanning Jakarta, Surabaya, Makassar and beyond
                 </p>
+                <div className="grid grid-cols-3 gap-3 max-w-lg">
+                  {[
+                    { value: '170', label: 'PKs' },
+                    { value: '75', label: 'PKMs' },
+                    { value: '2,700', label: 'Drivers' },
+                  ].map((stat) => (
+                    <div key={stat.label} className="rounded-xl bg-white/15 backdrop-blur-md border border-white/20 px-3 py-3 text-center">
+                      <p className="text-2xl md:text-3xl font-bold text-white">{stat.value}</p>
+                      <p className="text-white/80 text-xs mt-0.5">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-            <StatGrid
-              columns={3}
-              stats={[
-                { value: '170', label: 'PKs' },
-                { value: '75', label: 'PKMs' },
-                { value: '2,700', label: 'Drivers' },
-              ]}
-            />
-            <p className="text-foreground font-medium">
-              A human conversation happening at operational scale.
-            </p>
-            <p className="text-muted-foreground text-sm">
-              Across regions, thousands of drivers depended on these recurring
-              interactions.
+            <p className="text-foreground font-medium mt-6 max-w-xl">
+              What works through personal relationships becomes much harder to
+              coordinate at this scale.
             </p>
           </Section>
         </Reveal>
 
-        {/* Too many tools */}
+        {/* 03 THE PROBLEM: fragmentation */}
         <Reveal>
-          <Section title="Too many tools. Too much invisible work.">
-            <div className="max-w-xs mx-auto">
-              <FlowNode icon={UsersIcon} label="PK" sublabel="Field agent" color={KD_GREEN} />
+          <Section title="">
+            <Beat eyebrow="The friction" color={KD_RED}>The conversation was simple. Everything around it wasn't.</Beat>
+            <p className="text-center text-xs font-bold uppercase tracking-widest text-muted-foreground mt-6">
+              One Kopdar session
+            </p>
+            <div className="mt-6">
+              <FragmentedToolMap />
             </div>
-            <div className="flex justify-center">
-              <ArrowDown className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <AppScenarioCard icon={WhatsAppIcon} title="WhatsApp" />
-              <AppScenarioCard icon={GoogleSheetsIcon} title="Google Sheets" />
-              <AppScenarioCard icon={GoogleFormsIcon} title="Google Forms" />
-              <AppScenarioCard icon={GoogleSlidesIcon} title="Google Slides" />
-              <AppScenarioCard icon={lucideAsBrandIcon(ImageIcon)} title="Screenshots" />
-              <AppScenarioCard icon={lucideAsBrandIcon(FileText)} title="Manual reports" />
-            </div>
-            <div className="flex justify-center">
-              <ArrowDown className="w-5 h-5 text-muted-foreground" />
-            </div>
-            <div className="max-w-xs mx-auto">
-              <FlowNode icon={UsersIcon} label="PKM" sublabel="Supervisor" color={KD_ORANGE} />
-            </div>
+            <p className="text-center text-2xl md:text-3xl font-bold text-foreground mt-8">
+              One job. Six places to do it.
+            </p>
             <Prose>
-              <p>
+              <p className="text-center max-w-xl mx-auto">
                 Every session required PKs to stitch together multiple tools before the
                 actual conversation could begin.
               </p>
             </Prose>
-            <div className="rounded-xl border p-5 flex items-center gap-4" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
-              <p className="text-3xl font-bold" style={{ color: KD_RED }}>15+ hrs</p>
+            <div className="rounded-xl border p-6 flex items-center justify-center gap-4 mt-6" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
+              <p className="text-4xl font-bold" style={{ color: KD_RED }}>15+ hrs</p>
               <p className="text-foreground">manual work per Kopdar cycle</p>
             </div>
           </Section>
         </Reveal>
 
-        {/* Workflow pain points */}
+        {/* 04 FRICTION EVERYWHERE: old lifecycle loop */}
         <Reveal>
-          <Section title="The fragmentation followed PKs through the entire cycle.">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                { n: 1, icon: Calendar, color: KD_GREEN, title: 'Pre-Kopdar', items: ['No content database', 'Manual event coordination', 'No RSVP tracking'] },
-                { n: 2, icon: Mic, color: KD_ORANGE, title: 'During Kopdar', items: ['Unplanned Kopdar go unreported', 'Constant app switching', 'Separate form links'] },
-                { n: 3, icon: BarChart3, color: KD_PURPLE, title: 'Post Kopdar', items: ['No attendance accountability', 'Manual finance reconciliation', 'Manual performance tracking'] },
-                { n: 4, icon: Clipboard, color: KD_RED, title: 'Between sessions', items: ['Hours of copy-pasting', 'Screenshots only', 'No data insights'] },
-              ].map((stage) => (
-                <div key={stage.n} className="rounded-xl border p-5" style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-sm font-bold" style={{ backgroundColor: stage.color }}>
-                      {stage.n}
-                    </span>
-                    <stage.icon className="w-4 h-4" style={{ color: stage.color }} />
-                  </div>
-                  <p className="font-bold mb-2" style={{ color: stage.color }}>{stage.title}</p>
-                  <ul className="space-y-1.5 text-sm text-muted-foreground">
-                    {stage.items.map((it) => (
-                      <li key={it} className="flex gap-1.5">
-                        <span aria-hidden="true">→</span>
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          <Section title="">
+            <Beat eyebrow="The old workflow" color={KD_RED}>The fragmentation followed PKs through the entire cycle.</Beat>
+            <div className="mt-8">
+              <LoopFlow tone="debt" stages={LIFECYCLE_LOOP_STAGES} />
             </div>
             <ImageBlock
               src="/images/casestudy-3/workflow-pain-points.webp"
               alt="Kopdar workflow diagram showing pain points across the lifecycle"
             />
-            <div className="rounded-xl border p-5 flex items-start gap-3" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
-              <TriangleAlert className="w-5 h-5 shrink-0 mt-0.5" style={{ color: KD_RED }} />
-              <p className="text-foreground">
-                Zero visibility for supervisors until reports were manually compiled,
-                days later.
-              </p>
-            </div>
-          </Section>
-        </Reveal>
-
-        {/* My Role */}
-        <Reveal>
-          <Section title="My role">
-            <IconCardList
-              columns={2}
-              items={[
-                { icon: Compass, iconColor: KD_GREEN, title: 'Field research', description: 'Understand how Kopdar actually happened on the ground.' },
-                { icon: Workflow, iconColor: KD_ORANGE, title: 'Service design', description: 'Map the full lifecycle, not just the session.' },
-                { icon: MousePointerClick, iconColor: KD_TEAL, title: 'Product design', description: 'Turn fragmented workflows into a coherent system.' },
-                { icon: UsersIcon, iconColor: KD_PURPLE, title: 'Cross-functional alignment', description: 'Balance driver needs, operational realities and delivery constraints.' },
-              ]}
-            />
-          </Section>
-        </Reveal>
-
-        {/* Discovery */}
-        <Reveal>
-          <Section title="The field changed the problem.">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-border p-5 flex items-center gap-3">
-                <MapPin className="w-5 h-5 shrink-0" style={{ color: KD_GREEN }} />
-                <div>
-                  <p className="font-bold text-foreground">Jakarta</p>
-                  <p className="text-muted-foreground text-sm">Oct 2019</p>
-                </div>
-              </div>
-              <div className="rounded-xl border border-border p-5 flex items-center gap-3">
-                <MapPin className="w-5 h-5 shrink-0" style={{ color: KD_ORANGE }} />
-                <div>
-                  <p className="font-bold text-foreground">Makassar</p>
-                  <p className="text-muted-foreground text-sm">Jan 2020</p>
-                </div>
-              </div>
-            </div>
-            <Prose>
-              <p>170 PKs and 75 PKM supervisors, across two regions.</p>
-            </Prose>
-          </Section>
-        </Reveal>
-
-        {/* Research insights */}
-        <Reveal>
-          <Section title="">
-            <IconCardList
-              columns={2}
-              items={[
-                { icon: Wrench, iconColor: KD_GREEN, title: 'PKs were managing tools instead of people.', description: '40% of session time was spent managing tools.' },
-                { icon: Eye, iconColor: KD_ORANGE, title: 'Drivers needed transparency.', description: 'Attendance visibility mattered beyond administration.' },
-                { icon: BarChart3, iconColor: KD_TEAL, title: 'PKMs needed signals, not spreadsheets.', description: 'Supervisors needed to know where to act.' },
-                { icon: CloudOff, iconColor: KD_PURPLE, title: 'The product had to survive the field.', description: '89% of PKs ran sessions from phones while on the road.' },
-              ]}
-            />
-          </Section>
-        </Reveal>
-
-        {/* Lifecycle */}
-        <Reveal>
-          <Section title="The real product was the lifecycle.">
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 items-center">
-              <LifecycleStep number={1} icon={Calendar} title="Prepare" words={['Plan', 'Invite', 'Organise']} color={KD_GREEN} />
-              <LifecycleStep number={2} icon={UsersIcon} title="Gather" words={['Invite', 'RSVP', 'Confirm']} color={KD_ORANGE} />
-              <LifecycleStep number={3} icon={MessageCircle} title="Conduct" words={['Attend', 'Discuss', 'Capture']} color={KD_TEAL} />
-              <LifecycleStep number={4} icon={MessageSquare} title="Learn" words={['Feedback', 'Insights', 'Follow-up']} color={KD_PURPLE} />
-              <LifecycleStep number={5} icon={RefreshCw} title="Prepare again" words={['Improve', 'Repeat', 'Scale']} color={KD_RED} />
-            </div>
-            <p className="text-center text-muted-foreground text-sm">
-              ↺ Every session became part of a continuous feedback loop.
+            <p className="text-center text-2xl md:text-3xl font-bold text-foreground mt-6 max-w-2xl mx-auto leading-snug">
+              The people were connected. The system wasn't.
             </p>
           </Section>
         </Reveal>
 
-        {/* Design Principle */}
+        {/* 05 MY ROLE */}
         <Reveal>
-          <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6 space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center">
-              Automate the work.
-              <br />
-              Protect the relationship.
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border p-5" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
-                <Cog className="w-6 h-6 mb-2" style={{ color: KD_TEAL }} />
-                <p className="font-bold uppercase tracking-wide text-sm mb-3" style={{ color: KD_TEAL }}>Automate</p>
-                <DotList items={['Coordination', 'Attendance', 'Reporting', 'Data entry', 'Reconciliation']} />
+          <Section title="">
+            <Beat eyebrow="My role" color={KD_TEAL}>I designed the system around the session, not just the screens inside it.</Beat>
+            <div className="grid sm:grid-cols-2 gap-4 mt-6">
+              {[
+                { icon: Compass, title: 'Field research', description: 'Understand how Kopdar actually happened on the ground.', color: KD_GREEN },
+                { icon: Workflow, title: 'Service design', description: 'Map the full lifecycle, not just the session.', color: KD_ORANGE },
+                { icon: MousePointerClick, title: 'Product design', description: 'Turn fragmented workflows into a coherent system.', color: KD_TEAL },
+                { icon: UsersIcon, title: 'Cross-functional alignment', description: 'Balance driver needs, operational realities and delivery constraints.', color: KD_PURPLE },
+              ].map((role) => (
+                <div key={role.title} className="rounded-xl border border-border p-5">
+                  <role.icon className="w-6 h-6 mb-3" style={{ color: role.color }} />
+                  <p className="font-bold text-foreground">{role.title}</p>
+                  <p className="text-muted-foreground text-sm mt-1">{role.description}</p>
+                </div>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* 06 FIELD RESEARCH */}
+        <Reveal>
+          <Section title="">
+            <Beat eyebrow="Discovery" color={KD_PURPLE}>The field changed the problem.</Beat>
+            <div className="flex flex-wrap gap-4 mt-6">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" style={{ color: KD_GREEN }} />
+                <span className="font-semibold text-foreground">Jakarta</span>
+                <span className="text-muted-foreground text-sm">Oct 2019</span>
               </div>
-              <div className="rounded-xl border p-5" style={{ borderColor: KD_ORANGE, backgroundColor: tint(KD_ORANGE, 6) }}>
-                <MessageCircle className="w-6 h-6 mb-2" style={{ color: KD_ORANGE }} />
-                <p className="font-bold uppercase tracking-wide text-sm mb-3" style={{ color: KD_ORANGE }}>Protect</p>
-                <DotList items={['Conversation', 'Trust', 'Feedback', 'Context', 'Human judgement']} />
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" style={{ color: KD_ORANGE }} />
+                <span className="font-semibold text-foreground">Makassar</span>
+                <span className="text-muted-foreground text-sm">Jan 2020</span>
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground text-sm">
+                170 PKs · 75 PKMs interviewed
+              </div>
+            </div>
+            {/* Editorial collage: one large image, two smaller */}
+            <div className="grid sm:grid-cols-2 gap-4 mt-6">
+              <div className="sm:row-span-2">
+                <ImageBlock src="/images/casestudy-3/field-workshop-1.webp" alt="Field research workshop observing PKs run a Kopdar session" />
+                <p className="text-sm text-muted-foreground mt-2">Observed a live session</p>
+              </div>
+              <div>
+                <ImageBlock src="/images/casestudy-3/field-workshop-2.webp" alt="Team testing the redesigned Kopdar workflow with PKs in Jakarta" />
+                <p className="text-sm text-muted-foreground mt-2">Tested the new workflow</p>
+              </div>
+              <div>
+                <ImageBlock src="/images/casestudy-3/research-session-1.webp" alt="User research session validating the attendance flow" />
+                <p className="text-sm text-muted-foreground mt-2">Validated attendance</p>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <Beat eyebrow="Field notes" color={KD_PURPLE}>What we found wasn't what we expected.</Beat>
+              <div className="grid sm:grid-cols-2 gap-4 mt-6">
+                {[
+                  { icon: Wrench, headline: 'PKs were managing tools instead of people.', stat: '40%', statLabel: 'of session time spent managing tools', color: KD_RED },
+                  { icon: Eye, headline: 'Drivers needed transparency.', stat: null, statLabel: 'Attendance visibility mattered beyond administration', color: KD_ORANGE },
+                  { icon: BarChart3, headline: 'PKMs needed signals, not spreadsheets.', stat: null, statLabel: 'They needed to know where to act', color: KD_TEAL },
+                  { icon: CloudOff, headline: 'The product had to survive the field.', stat: '89%', statLabel: 'of PKs ran sessions from phones, on the road', color: KD_PURPLE },
+                ].map((insight) => (
+                  <div key={insight.headline} className="rounded-xl border border-border p-5">
+                    <insight.icon className="w-5 h-5 mb-3" style={{ color: insight.color }} />
+                    <p className="font-bold text-foreground">{insight.headline}</p>
+                    {insight.stat && (
+                      <p className="text-3xl font-bold mt-2" style={{ color: insight.color }}>{insight.stat}</p>
+                    )}
+                    <p className="text-muted-foreground text-sm mt-1">{insight.statLabel}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* 07 REFRAME */}
+        <Reveal>
+          <Section title="">
+            <div className="text-center space-y-1">
+              <p className="text-2xl md:text-3xl font-bold text-muted-foreground">
+                We weren't designing an event tool.
+              </p>
+              <p className="text-3xl md:text-4xl font-bold text-foreground">
+                We were designing the system around the event.
+              </p>
+            </div>
+            <div className="mt-8 overflow-x-auto">
+              <div className="min-w-[560px] sm:min-w-0">
+                <RelationshipChain
+                  nodes={[
+                    { icon: UsersIcon, label: 'Driver', color: KD_ORANGE },
+                    { icon: MessageCircle, label: 'Kopdar', color: KD_GREEN },
+                    { icon: Compass, label: 'PK', color: KD_TEAL },
+                    { icon: Eye, label: 'PKM', color: KD_PURPLE },
+                    { icon: Network, label: 'Operations', color: KD_RED },
+                  ]}
+                />
+              </div>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* 08 DESIGN QUESTION */}
+        <Reveal>
+          <div className="py-8 text-center max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground leading-snug">
+              How might we remove the administrative work without removing the human
+              interaction?
+            </h2>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-8">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: KD_RED }}>Administrative work</p>
+                <p className="text-lg font-bold text-foreground mt-1">Reduce</p>
+              </div>
+              <div className="text-muted-foreground">+</div>
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: KD_GREEN }}>Human connection</p>
+                <p className="text-lg font-bold text-foreground mt-1">Protect</p>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* Solution */}
+        {/* 09 DESIGN PRINCIPLE */}
         <Reveal>
-          <Section title="One system around the entire Kopdar lifecycle.">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-center leading-tight">
+              Automate the work.
+              <br />
+              Protect the relationship.
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4 mt-8">
+              <div className="rounded-2xl border-2 p-6" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
+                <Cog className="w-8 h-8 mb-3" style={{ color: KD_TEAL }} />
+                <p className="font-bold uppercase tracking-wide mb-4" style={{ color: KD_TEAL }}>Automate</p>
+                <DotList items={['Coordination', 'Attendance', 'Reporting', 'Data entry', 'Reconciliation']} />
+              </div>
+              <div className="rounded-2xl border-2 p-6" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
+                <MessageCircle className="w-8 h-8 mb-3" style={{ color: KD_GREEN }} />
+                <p className="font-bold uppercase tracking-wide mb-4" style={{ color: KD_GREEN }}>Protect</p>
+                <DotList items={['Conversation', 'Trust', 'Feedback', 'Context', 'Human judgement', 'Community']} />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* 10 THE NEW SYSTEM */}
+        <Reveal>
+          <Section title="">
+            <Beat eyebrow="The solution" color={KD_TEAL}>One system. One continuous loop.</Beat>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-6">
               {[
-                { icon: UsersIcon, color: KD_GREEN, title: 'Community', description: 'Profiles · Groups' },
-                { icon: Calendar, color: KD_ORANGE, title: 'Event setup', description: 'Planning · Scheduling' },
-                { icon: MessageCircle, color: KD_TEAL, title: 'Live session', description: 'Attendance · Participation' },
-                { icon: MessageSquare, color: KD_PURPLE, title: 'Evaluation', description: 'Feedback · Follow-up' },
-                { icon: BarChart3, color: KD_RED, title: 'Reporting', description: 'Analytics · Visibility' },
+                { icon: UsersIcon, title: 'Community', color: KD_GREEN },
+                { icon: Calendar, title: 'Event setup', color: KD_ORANGE },
+                { icon: MessageCircle, title: 'Live session', color: KD_TEAL },
+                { icon: MessageSquare, title: 'Evaluation', color: KD_PURPLE },
+                { icon: BarChart3, title: 'Reporting', color: KD_TEAL },
               ].map((item) => (
-                <div key={item.title} className="rounded-xl border p-5" style={{ borderColor: item.color, backgroundColor: tint(item.color, 6) }}>
-                  <item.icon className="w-6 h-6 mb-3" style={{ color: item.color }} />
-                  <p className="font-bold" style={{ color: item.color }}>{item.title}</p>
-                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                <div key={item.title} className="rounded-xl border p-4 text-center" style={{ borderColor: item.color, backgroundColor: tint(item.color, 6) }}>
+                  <item.icon className="w-6 h-6 mx-auto mb-2" style={{ color: item.color }} />
+                  <p className="font-bold text-sm" style={{ color: item.color }}>{item.title}</p>
                 </div>
               ))}
             </div>
+            <p className="text-center text-foreground font-medium mt-4">
+              Every part of Kopdar now belonged to the same system.
+            </p>
             <ImageBlock src="/images/casestudy-3/proposed-solution.webp" alt="Kopdar proposed solution diagram" />
 
-            <h3 className="text-xl font-bold text-foreground mt-8">New system flow</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { icon: CalendarPlus, title: 'Create', color: KD_GREEN },
-                { icon: Send, title: 'Invitation', color: KD_ORANGE },
-                { icon: CircleCheck, title: 'RSVP', color: KD_TEAL },
-                { icon: MessageCircle, title: 'Kopdar happens', color: KD_PURPLE },
-                { icon: UserCheck, title: 'Attendance + feedback', color: KD_RED },
-                { icon: BarChart3, title: 'PKM visibility', color: KD_GREEN },
-                { icon: TrendingUp, title: 'Insights inform next', color: KD_ORANGE },
-              ].map((step, i) => (
-                <div key={step.title} className="rounded-xl border border-border bg-muted/30 p-4 text-center relative">
-                  <span className="text-xs font-semibold text-muted-foreground">Step {i + 1}</span>
-                  <step.icon className="w-5 h-5 mx-auto my-2" style={{ color: step.color }} />
-                  <p className="font-semibold text-foreground text-sm">{step.title}</p>
-                </div>
-              ))}
+            <div className="mt-10">
+              <h3 className="text-xl font-bold text-foreground mb-6 text-center">The new system flow</h3>
+              <LoopFlow tone="system" stages={NEW_SYSTEM_LOOP_STAGES} />
             </div>
-            <ImageBlock src="/images/casestudy-3/new-workflow.webp" alt="Kopdar new workflow diagram" />
+            <ImageBlock src="/images/casestudy-3/new-workflow.webp" alt="Kopdar new workflow diagram showing automated sync to PKM" />
           </Section>
         </Reveal>
 
-        {/* Design Decisions */}
+        {/* 11 DESIGN DECISIONS */}
         <Reveal>
-          <Section title="Design decisions">
-            <div className="space-y-10">
+          <Section title="">
+            <Beat eyebrow="Design decisions" color={KD_TEAL}>Four decisions made the system work.</Beat>
+            <div className="space-y-12 mt-8">
               <DecisionBlock
                 number="01"
                 icon={Zap}
-                title="Make the next Kopdar easier than the last one."
+                title="Make the next Kopdar easier than the last."
                 copy="Reusable groups, templates and session history reduced repetitive setup work."
                 evidence="Under 2 minutes to create a session"
                 color={KD_GREEN}
@@ -506,7 +712,9 @@ function KopdarInitiativePage() {
                 color={KD_ORANGE}
                 image="/images/casestudy-3/conduct-event-screen.webp"
                 alt="Active Kopdar session screen showing real-time attendance"
-              />
+              >
+                <MetricTransition from="8 min" to="45 sec" label="Average attendance recording time" color={KD_ORANGE} />
+              </DecisionBlock>
               <DecisionBlock
                 number="03"
                 icon={Activity}
@@ -515,12 +723,30 @@ function KopdarInitiativePage() {
                 color={KD_TEAL}
                 image="/images/casestudy-3/dashboard-screen.webp"
                 alt="Kopdar dashboard screen showing session overview and community signals"
-              />
+              >
+                <div className="grid sm:grid-cols-3 gap-3 text-sm">
+                  <div className="rounded-lg border border-border p-3 text-center">
+                    <p className="text-muted-foreground">Session struggling</p>
+                    <ArrowDown className="w-4 h-4 mx-auto my-1" style={{ color: KD_TEAL }} />
+                    <p className="font-semibold text-foreground">Needs attention</p>
+                  </div>
+                  <div className="rounded-lg border border-border p-3 text-center">
+                    <p className="text-muted-foreground">PK needs support</p>
+                    <ArrowDown className="w-4 h-4 mx-auto my-1" style={{ color: KD_TEAL }} />
+                    <p className="font-semibold text-foreground">Intervene</p>
+                  </div>
+                  <div className="rounded-lg border border-border p-3 text-center">
+                    <p className="text-muted-foreground">Driver feedback</p>
+                    <ArrowDown className="w-4 h-4 mx-auto my-1" style={{ color: KD_TEAL }} />
+                    <p className="font-semibold text-foreground">Understand</p>
+                  </div>
+                </div>
+              </DecisionBlock>
               <DecisionBlock
                 number="04"
                 icon={CloudOff}
                 title="Design for the conditions, not the ideal environment."
-                copy="Offline capture allowed the workflow to continue when connectivity couldn't be guaranteed."
+                copy="Connectivity wasn't an edge case. It was part of the product."
                 color={KD_PURPLE}
                 image="/images/casestudy-3/new-workflow.webp"
                 alt="Kopdar workflow diagram showing offline capture and sync to PKM"
@@ -529,10 +755,11 @@ function KopdarInitiativePage() {
           </Section>
         </Reveal>
 
-        {/* Validation */}
+        {/* 12 VALIDATION */}
         <Reveal>
-          <Section title="The field was part of the design process.">
-            <div className="flex flex-wrap gap-3">
+          <Section title="">
+            <Beat eyebrow="Validation" color={KD_GREEN}>The field was part of the product.</Beat>
+            <div className="flex flex-wrap gap-3 mt-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border" style={{ borderColor: KD_GREEN, color: KD_GREEN }}>
                 <MapPin className="w-3.5 h-3.5" /> Jakarta
               </span>
@@ -540,90 +767,81 @@ function KopdarInitiativePage() {
                 <MapPin className="w-3.5 h-3.5" /> Makassar
               </span>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <ImageBlock src="/images/casestudy-3/field-workshop-1.webp" alt="Field research workshop with PKs" />
-                <p className="text-center text-sm text-muted-foreground mt-2">Observed session</p>
+            <div className="grid sm:grid-cols-2 gap-4 mt-6">
+              <ImageBlock src="/images/casestudy-3/research-session-2.webp" alt="User testing session capturing field constraints in Makassar" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-xl border border-border p-4 text-center flex flex-col justify-center">
+                  <p className="text-3xl font-bold" style={{ color: KD_GREEN }}>92%</p>
+                  <p className="text-muted-foreground text-xs mt-1">Completed session creation without assistance</p>
+                </div>
+                <div className="rounded-xl border border-border p-4 text-center flex flex-col justify-center">
+                  <p className="text-2xl font-bold" style={{ color: KD_ORANGE }}>8 min → 45 sec</p>
+                  <p className="text-muted-foreground text-xs mt-1">Attendance recording time</p>
+                </div>
+                <div className="rounded-xl border border-border p-4 text-center flex flex-col justify-center">
+                  <p className="font-bold text-foreground">PKMs</p>
+                  <p className="text-muted-foreground text-xs mt-1">Praised real-time visibility</p>
+                </div>
+                <div className="rounded-xl border border-border p-4 text-center flex flex-col justify-center">
+                  <p className="font-bold text-foreground">Drivers</p>
+                  <p className="text-muted-foreground text-xs mt-1">Preferred QR check-in</p>
+                </div>
               </div>
-              <div>
-                <ImageBlock src="/images/casestudy-3/field-workshop-2.webp" alt="Team testing the Kopdar workflow in Jakarta" />
-                <p className="text-center text-sm text-muted-foreground mt-2">Tested workflow</p>
-              </div>
-              <div>
-                <ImageBlock src="/images/casestudy-3/research-session-1.webp" alt="User research session validating attendance flow" />
-                <p className="text-center text-sm text-muted-foreground mt-2">Validated attendance</p>
-              </div>
-              <div>
-                <ImageBlock src="/images/casestudy-3/research-session-2.webp" alt="User testing session capturing field constraints" />
-                <p className="text-center text-sm text-muted-foreground mt-2">Captured field constraints</p>
-              </div>
-            </div>
-            <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
-              <p className="font-bold mb-3" style={{ color: KD_GREEN }}>Key findings</p>
-              <ul className="space-y-3">
-                {[
-                  '92% of PKs completed session creation without assistance',
-                  'Average attendance recording time reduced from 8 min to 45 sec',
-                  'PKMs praised real-time visibility',
-                  'QR code check-in was the most-loved feature among drivers',
-                ].map((finding) => (
-                  <li key={finding} className="flex items-start gap-2 text-sm text-foreground">
-                    <CircleCheck className="w-4 h-4 shrink-0 mt-0.5" style={{ color: KD_GREEN }} />
-                    {finding}
-                  </li>
-                ))}
-              </ul>
             </div>
           </Section>
         </Reveal>
 
-        {/* Iteration */}
+        {/* 13 ITERATION */}
         <Reveal>
-          <Section title="What changed after we tested it.">
-            <div className="grid sm:grid-cols-3 gap-4">
-              <BeforeAfter icon={GitCompare} before="Separate flows for K1 and K2" after="One session flow" color={KD_GREEN} />
-              <BeforeAfter icon={CloudOff} before="Connectivity required" after="Offline capture + sync" color={KD_ORANGE} />
-              <BeforeAfter icon={SlidersHorizontal} before="Too many metrics" after="Focused supervisor signals" color={KD_TEAL} />
+          <Section title="">
+            <Beat eyebrow="Iteration" color={KD_TEAL}>Research didn't validate the design. It changed it.</Beat>
+            <div className="grid sm:grid-cols-3 gap-4 mt-6">
+              <BeforeAfterCompact icon={GitCompare} before="Separate K1/K2 flows" after="One session flow" color={KD_GREEN} />
+              <BeforeAfterCompact icon={CloudOff} before="Connectivity required" after="Offline capture + sync" color={KD_ORANGE} />
+              <BeforeAfterCompact icon={SlidersHorizontal} before="Too many metrics" after="Focused supervisor signals" color={KD_TEAL} />
             </div>
           </Section>
         </Reveal>
 
-        {/* Impact */}
+        {/* 14 IMPACT */}
         <Reveal>
-          <Section title="The system reduced work without reducing the human connection.">
-            <div className="rounded-2xl border p-6" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
+          <Section title="">
+            <Beat eyebrow="Impact" color={KD_GREEN}>Less operational work. More room for the relationship.</Beat>
+
+            <div className="rounded-2xl border p-6 md:p-8 mt-6" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
               <div className="flex items-center gap-2 mb-4">
-                <Workflow className="w-5 h-5" style={{ color: KD_GREEN }} />
-                <p className="font-bold" style={{ color: KD_GREEN }}>Operational</p>
+                <Workflow className="w-5 h-5" style={{ color: KD_TEAL }} />
+                <p className="font-bold" style={{ color: KD_TEAL }}>Operational</p>
               </div>
               <div className="grid sm:grid-cols-3 gap-4 items-end">
-                <div className="text-center sm:text-left">
-                  <p className="text-5xl font-bold" style={{ color: KD_GREEN }}>85%</p>
+                <div>
+                  <p className="text-6xl font-bold" style={{ color: KD_TEAL }}>85%</p>
                   <p className="text-muted-foreground text-sm mt-1">Reduction in manual tasks</p>
                 </div>
-                <div className="text-center sm:text-left">
-                  <p className="text-3xl font-bold" style={{ color: KD_GREEN }}>3.2×</p>
+                <div>
+                  <p className="text-3xl font-bold" style={{ color: KD_TEAL }}>3.2×</p>
                   <p className="text-muted-foreground text-sm mt-1">Increase in consistency</p>
                 </div>
-                <div className="text-center sm:text-left">
-                  <p className="text-3xl font-bold" style={{ color: KD_GREEN }}>2,400+</p>
+                <div>
+                  <p className="text-3xl font-bold" style={{ color: KD_TEAL }}>2,400+</p>
                   <p className="text-muted-foreground text-sm mt-1">Sessions in 3 months</p>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border p-6" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
+            <div className="rounded-2xl border p-6 md:p-8 mt-4" style={{ borderColor: KD_GREEN, backgroundColor: tint(KD_GREEN, 6) }}>
               <div className="flex items-center gap-2 mb-4">
-                <UsersIcon className="w-5 h-5" style={{ color: KD_TEAL }} />
-                <p className="font-bold" style={{ color: KD_TEAL }}>Human</p>
+                <UsersIcon className="w-5 h-5" style={{ color: KD_GREEN }} />
+                <p className="font-bold" style={{ color: KD_GREEN }}>Human</p>
               </div>
+              <p className="text-foreground font-medium mb-4">The system made the human work easier.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-3xl font-bold" style={{ color: KD_TEAL }}>94%</p>
+                  <p className="text-4xl font-bold" style={{ color: KD_GREEN }}>94%</p>
                   <p className="text-muted-foreground text-sm mt-1">PK confidence score</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold" style={{ color: KD_TEAL }}>18,000+</p>
+                  <p className="text-4xl font-bold" style={{ color: KD_GREEN }}>18,000+</p>
                   <p className="text-muted-foreground text-sm mt-1">Drivers engaged</p>
                 </div>
               </div>
@@ -635,11 +853,12 @@ function KopdarInitiativePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border p-6" style={{ borderColor: KD_PURPLE, backgroundColor: tint(KD_PURPLE, 6) }}>
+            <div className="rounded-2xl border p-6 md:p-8 mt-4" style={{ borderColor: KD_PURPLE, backgroundColor: tint(KD_PURPLE, 6) }}>
               <div className="flex items-center gap-2 mb-4">
                 <Network className="w-5 h-5" style={{ color: KD_PURPLE }} />
                 <p className="font-bold" style={{ color: KD_PURPLE }}>Organizational</p>
               </div>
+              <p className="text-foreground font-medium mb-4">Visibility became actionable.</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-2xl font-bold" style={{ color: KD_PURPLE }}>5× faster</p>
@@ -658,37 +877,42 @@ function KopdarInitiativePage() {
           </Section>
         </Reveal>
 
-        {/* What Changed */}
+        {/* 15 TRANSFORMATION */}
         <Reveal>
-          <Section title="From fragmented operations to a scalable operating system.">
-            <div className="grid sm:grid-cols-2 gap-6 items-center">
-              <div className="rounded-xl border border-border p-5">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-                  Before: Fragmented tools
-                </p>
-                <DotList items={['WhatsApp', 'Sheets', 'Forms', 'Slides', 'Screenshots', 'Manual reports']} />
+          <Section title="">
+            <Beat eyebrow="Transformation" color={KD_TEAL}>From fragmented operations to a scalable operating system.</Beat>
+            <div className="grid sm:grid-cols-2 gap-6 items-center mt-8">
+              <div className="rounded-2xl border-2 p-6" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: KD_RED }}>Before</p>
+                <div className="text-center mb-3">
+                  <UsersIcon className="w-6 h-6 mx-auto mb-1" style={{ color: KD_RED }} />
+                  <p className="font-bold text-foreground text-sm">PK</p>
+                </div>
+                <DotList items={['WhatsApp', 'Google Sheets', 'Google Forms', 'Google Slides', 'Screenshots', 'Manual reports']} />
               </div>
-              <div className="flex justify-center">
-                <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90 sm:rotate-0" />
+              <div className="rounded-2xl border-2 p-6" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: KD_TEAL }}>After</p>
+                <p className="font-bold text-foreground text-sm text-center mb-3">One connected Kopdar system</p>
+                <DotList items={['Prepare', 'Gather', 'Conduct', 'Learn', 'Repeats']} />
               </div>
             </div>
-            <div className="rounded-xl border border-primary/30 bg-accent/10 p-5 max-w-md">
-              <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-3">
-                After: One connected workflow
+            <div className="flex justify-center my-6">
+              <ArrowRight className="w-8 h-8 rotate-90 sm:rotate-0" style={{ color: KD_TEAL }} />
+            </div>
+            <div className="text-center py-6">
+              <p className="text-2xl md:text-4xl font-bold text-foreground max-w-3xl mx-auto leading-snug">
+                We didn't digitise the relationship. We digitised the work that made the
+                relationship harder to sustain.
               </p>
-              <DotList items={['Prepare', 'Gather', 'Conduct', 'Learn', 'Repeat']} />
             </div>
-            <p className="text-2xl font-bold text-foreground text-center max-w-2xl mx-auto leading-snug">
-              We didn't digitise the relationship. We digitised the work that made the
-              relationship harder to sustain.
-            </p>
           </Section>
         </Reveal>
 
-        {/* What I Learned */}
+        {/* 16 LEARNINGS */}
         <Reveal>
-          <Section title="What I learned">
-            <div className="space-y-4">
+          <Section title="">
+            <Beat eyebrow="Learnings" color={KD_TEAL}>What Kopdar taught me about designing at scale.</Beat>
+            <div className="space-y-4 mt-6">
               <PrincipleBlock number={1} title="Design the system around the human moment." iconColor={KD_GREEN}>
                 The interface was only one part of the problem. The bigger challenge was
                 understanding what happened before and after the interaction.
@@ -709,11 +933,12 @@ function KopdarInitiativePage() {
         <Reveal>
           <div className="text-center py-6">
             <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
-              Automate the work. Protect the relationship.
+              Good systems make more room for people.
             </p>
             <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Kopdar showed me that good systems don't make human interactions less
-              important. They make more room for them.
+              Kopdar showed me that technology doesn't have to make human interactions
+              less important. The right system can remove the work that gets in their
+              way.
             </p>
           </div>
         </Reveal>
