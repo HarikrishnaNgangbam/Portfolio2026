@@ -211,58 +211,84 @@ export interface LoopStageProps {
   color: string;
 }
 
+function LoopStage({ stage, index, showArrow, color }: { stage: LoopStageProps; index: number; showArrow: boolean; color: string }) {
+  return (
+    <div className="relative rounded-xl border p-4 text-center" style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}>
+      <span
+        className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-xs font-bold mb-2"
+        style={{ backgroundColor: stage.color }}
+      >
+        {index + 1}
+      </span>
+      <stage.icon className="w-6 h-6 mx-auto mb-2" style={{ color: stage.color }} />
+      <p className="font-bold text-foreground text-sm">{stage.title}</p>
+      <p className="text-muted-foreground text-xs mt-1">{stage.words.join(' · ')}</p>
+      {showArrow && (
+        <ArrowRight
+          className="hidden md:block absolute top-1/2 -right-3 -translate-y-1/2 w-4 h-4 z-10"
+          style={{ color }}
+        />
+      )}
+    </div>
+  );
+}
+
 /**
  * A sequence of stages that loops back to the first, communicating a recurring
  * system rather than a one-off flow. `tone="debt"` frames it as an
  * administrative loop (old lifecycle); `tone="system"` frames it as a
  * healthy operating loop (new system flow).
+ *
+ * Short sequences (up to 4 stages) get a single row with a precise
+ * return-to-start bracket beneath it, since that fits comfortably within the
+ * page's max-w-5xl content column. Longer sequences would force columns
+ * narrower than their content at any viewport, so they wrap into a plain
+ * responsive grid instead, with the loop stated as text rather than a
+ * bracket that can't be positioned reliably across wrapped rows.
  */
 function LoopFlow({ stages, tone }: { stages: LoopStageProps[]; tone: 'debt' | 'system' }) {
   const loopColor = tone === 'debt' ? KD_RED : KD_TEAL;
-  return (
-    <div className="relative pb-10">
-      <div
-        className="grid gap-3"
-        style={{ gridTemplateColumns: `repeat(${Math.min(stages.length, 2)}, minmax(0, 1fr))` }}
-      >
-        <div className={`contents md:grid md:gap-3`} style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}>
-          {stages.map((stage, i) => (
-            <div key={stage.title} className="relative rounded-xl border p-4 text-center" style={{ borderColor: stage.color, backgroundColor: tint(stage.color, 6) }}>
-              <span
-                className="inline-flex items-center justify-center w-7 h-7 rounded-full text-white text-xs font-bold mb-2"
-                style={{ backgroundColor: stage.color }}
-              >
-                {i + 1}
-              </span>
-              <stage.icon className="w-6 h-6 mx-auto mb-2" style={{ color: stage.color }} />
-              <p className="font-bold text-foreground text-sm">{stage.title}</p>
-              <p className="text-muted-foreground text-xs mt-1">{stage.words.join(' · ')}</p>
-              {i < stages.length - 1 && (
-                <ArrowRight
-                  className="hidden md:block absolute top-1/2 -right-3 -translate-y-1/2 w-4 h-4 z-10"
-                  style={{ color: loopColor }}
-                />
-              )}
-            </div>
-          ))}
+  const fitsOneRow = stages.length <= 4;
+
+  if (fitsOneRow) {
+    return (
+      <div className="relative pb-10">
+        <div className="grid grid-cols-2 md:gap-3" style={{ gridTemplateColumns: undefined }}>
+          <div className="contents md:grid md:gap-3" style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}>
+            {stages.map((stage, i) => (
+              <LoopStage key={stage.title} stage={stage} index={i} showArrow={i < stages.length - 1} color={loopColor} />
+            ))}
+          </div>
+        </div>
+        <div
+          className="hidden md:block absolute bottom-0 border-l-2 border-r-2 border-b-2 rounded-b-lg"
+          style={{
+            left: `calc(50% / ${stages.length})`,
+            right: `calc(50% / ${stages.length})`,
+            height: '1.75rem',
+            borderColor: loopColor,
+          }}
+        />
+        <ArrowUp
+          className="hidden md:block absolute bottom-7 w-4 h-4"
+          style={{ left: `calc(50% / ${stages.length} - 0.5rem)`, color: loopColor }}
+        />
+        <div className="md:hidden flex items-center justify-center gap-2 mt-4 font-semibold text-sm" style={{ color: loopColor }}>
+          <ArrowUp className="w-4 h-4 rotate-[-135deg]" />
+          Loops back to {stages[0].title}
         </div>
       </div>
-      {/* Return-to-start bracket, spanning under the row (desktop only: needs the full horizontal row to bracket) */}
-      <div
-        className="hidden md:block absolute bottom-0 border-l-2 border-r-2 border-b-2 rounded-b-lg"
-        style={{
-          left: `calc(50% / ${stages.length})`,
-          right: `calc(50% / ${stages.length})`,
-          height: '1.75rem',
-          borderColor: loopColor,
-        }}
-      />
-      <ArrowUp
-        className="hidden md:block absolute bottom-7 w-4 h-4"
-        style={{ left: `calc(50% / ${stages.length} - 0.5rem)`, color: loopColor }}
-      />
-      {/* Mobile: stages stack in a grid with no room for a bracket, so state the loop explicitly instead */}
-      <div className="md:hidden flex items-center justify-center gap-2 mt-4 font-semibold text-sm" style={{ color: loopColor }}>
+    );
+  }
+
+  return (
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {stages.map((stage, i) => (
+          <LoopStage key={stage.title} stage={stage} index={i} showArrow={false} color={loopColor} />
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-2 mt-4 font-semibold text-sm" style={{ color: loopColor }}>
         <ArrowUp className="w-4 h-4 rotate-[-135deg]" />
         Loops back to {stages[0].title}
       </div>
@@ -547,19 +573,27 @@ function KopdarInitiativePage() {
                 170 PKs · 75 PKMs interviewed
               </div>
             </div>
-            {/* Editorial collage: one large image, two smaller */}
+            {/* Editorial collage: one large image, two smaller stacked beside it */}
             <div className="grid sm:grid-cols-2 gap-4 mt-6">
-              <div className="sm:row-span-2">
-                <ImageBlock src="/images/casestudy-3/field-workshop-1.webp" alt="Field research workshop observing PKs run a Kopdar session" />
+              <div className="flex flex-col">
+                <div className="relative flex-1 min-h-[280px] rounded-2xl overflow-hidden border border-border">
+                  <ImageWithFallback
+                    src="/images/casestudy-3/field-workshop-1.webp"
+                    alt="Field research workshop observing PKs run a Kopdar session"
+                    className="w-full h-full object-cover absolute inset-0"
+                  />
+                </div>
                 <p className="text-sm text-muted-foreground mt-2">Observed a live session</p>
               </div>
-              <div>
-                <ImageBlock src="/images/casestudy-3/field-workshop-2.webp" alt="Team testing the redesigned Kopdar workflow with PKs in Jakarta" />
-                <p className="text-sm text-muted-foreground mt-2">Tested the new workflow</p>
-              </div>
-              <div>
-                <ImageBlock src="/images/casestudy-3/research-session-1.webp" alt="User research session validating the attendance flow" />
-                <p className="text-sm text-muted-foreground mt-2">Validated attendance</p>
+              <div className="grid grid-rows-2 gap-4">
+                <div>
+                  <ImageBlock src="/images/casestudy-3/field-workshop-2.webp" alt="Team testing the redesigned Kopdar workflow with PKs in Jakarta" />
+                  <p className="text-sm text-muted-foreground mt-2">Tested the new workflow</p>
+                </div>
+                <div>
+                  <ImageBlock src="/images/casestudy-3/research-session-1.webp" alt="User research session validating the attendance flow" />
+                  <p className="text-sm text-muted-foreground mt-2">Validated attendance</p>
+                </div>
               </div>
             </div>
 
