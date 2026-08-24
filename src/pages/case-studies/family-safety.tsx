@@ -5,16 +5,11 @@ import {
   Workflow,
   Lightbulb,
   FileText,
-  Target,
-  GitBranch,
-  CircleCheckBig,
   ArrowRight,
   ArrowDown,
-  ArrowUpCircle,
   ExternalLink,
   Sparkles,
   Eye,
-  Cog,
   RefreshCw,
   Image as ImageIcon,
   Boxes,
@@ -62,78 +57,6 @@ function FlowChain({ steps }: { steps: { icon: IconComponent; label: string; sub
         <div key={step.label} className="contents">
           {i > 0 && <ArrowRight className="w-4 h-4 text-muted-foreground shrink-0" aria-hidden="true" />}
           <FlowNode {...step} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/** The signature operating-model diagram: a linear chain that opens into three decision branches, one of which continues to Engineering. */
-function OperatingModelDiagram() {
-  return (
-    <div>
-      <FlowChain
-        steps={[
-          { icon: Lightbulb, label: 'Idea', color: 'var(--icon-orange)' },
-          { icon: Sparkles, label: 'AI / Vibe code', color: 'var(--icon-purple)' },
-          { icon: Eye, label: 'Explore', color: 'var(--icon-purple)' },
-          { icon: UsersIcon, label: 'Design Office Hours', color: 'var(--icon-blue)' },
-        ]}
-      />
-      <div className="flex justify-center my-2">
-        <ArrowDown className="w-4 h-4 text-muted-foreground" />
-      </div>
-      <div className="flex justify-center">
-        <FlowNode icon={Target} label="Decision" color="var(--icon-blue)" />
-      </div>
-      <div className="relative mt-2 pt-6">
-        <div className="hidden sm:block absolute top-0 left-1/6 right-1/6 border-t-2 border-border" style={{ left: '16.66%', right: '16.66%' }} />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="flex flex-col items-center gap-2">
-            <div className="hidden sm:block w-px h-4 -mt-4 bg-border" />
-            <FlowNode icon={CircleCheckBig} label="Proceed" sublabel="Ready to build" color="var(--icon-green)" />
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="hidden sm:block w-px h-4 -mt-4 bg-border" />
-            <FlowNode icon={RefreshCw} label="Iterate" sublabel="Back to explore" color="var(--icon-orange)" />
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="hidden sm:block w-px h-4 -mt-4 bg-border" />
-            <FlowNode icon={ArrowUpCircle} label="Escalate" sublabel="Needs a bigger call" color="var(--icon-red)" />
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-center my-2">
-        <ArrowDown className="w-4 h-4 text-muted-foreground" />
-      </div>
-      <div className="flex justify-center">
-        <FlowNode icon={Workflow} label="Engineering" color="var(--icon-teal)" />
-      </div>
-    </div>
-  );
-}
-
-/** Three stacked, connected layers forming one capability. */
-function LayerStack({ layers }: { layers: { number: string; icon: IconComponent; title: string; description: string; color: string }[] }) {
-  return (
-    <div className="space-y-2">
-      {layers.map((layer, i) => (
-        <div key={layer.title}>
-          <div className="rounded-xl border-2 p-4 flex items-center gap-4" style={{ borderColor: layer.color, backgroundColor: `color-mix(in srgb, ${layer.color} 6%, transparent)` }}>
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold shrink-0" style={{ backgroundColor: layer.color }}>
-              {layer.number}
-            </span>
-            <layer.icon className="w-6 h-6 shrink-0" style={{ color: layer.color }} />
-            <div>
-              <p className="font-bold text-foreground">{layer.title}</p>
-              <p className="text-muted-foreground text-sm">{layer.description}</p>
-            </div>
-          </div>
-          {i < layers.length - 1 && (
-            <div className="flex justify-center py-1">
-              <span className="text-lg text-muted-foreground leading-none">+</span>
-            </div>
-          )}
         </div>
       ))}
     </div>
@@ -199,35 +122,8 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="">
             <Beat eyebrow="Overview" color="var(--icon-blue)">Family Safety was becoming a scale problem.</Beat>
-            <div className="mt-6 space-y-2">
-              <FlowChain
-                steps={[
-                  { icon: Boxes, label: 'Multiple platforms', sublabel: 'Frequent incremental changes', color: 'var(--icon-blue)' },
-                  { icon: UsersIcon, label: 'Team velocity', sublabel: 'Growing', color: 'var(--icon-orange)' },
-                  { icon: Eye, label: 'Exploration demand', sublabel: 'Rising', color: 'var(--icon-purple)' },
-                ]}
-              />
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4 mt-6">
-              <div className="rounded-xl border border-border p-5">
-                <UsersIcon className="w-5 h-5 mb-2" style={{ color: 'var(--icon-orange)' }} />
-                <p className="font-bold text-foreground">PM</p>
-                <p className="text-muted-foreground text-sm mt-1">Needs to explore independently.</p>
-              </div>
-              <div className="rounded-xl border border-border p-5">
-                <Shield className="w-5 h-5 mb-2" style={{ color: 'var(--icon-blue)' }} />
-                <p className="font-bold text-foreground">Design</p>
-                <p className="text-muted-foreground text-sm mt-1">Needs to protect system quality.</p>
-              </div>
-            </div>
-            <div className="flex items-center justify-center gap-4 mt-6 flex-wrap">
-              <span className="px-4 py-2 rounded-full text-sm font-semibold" style={{ color: 'var(--icon-red)', backgroundColor: 'color-mix(in srgb, var(--icon-red) 10%, transparent)' }}>
-                Exploration wait
-              </span>
-              <span className="text-muted-foreground text-sm font-medium">vs</span>
-              <span className="px-4 py-2 rounded-full text-sm font-semibold" style={{ color: 'var(--icon-orange)', backgroundColor: 'color-mix(in srgb, var(--icon-orange) 10%, transparent)' }}>
-                Quality drift
-              </span>
+            <div className="mt-6">
+              <ImageBlock src="/images/casestudy-2/family-safety-scale-problem.webp" alt="Diagram: multiple platforms, surfaces and frequent incremental changes increased exploration demand, creating tension between PMs needing to explore independently and Design needing to protect system quality, resulting in exploration wait and quality drift" />
             </div>
             <Prose>
               <p className="text-center max-w-2xl mx-auto">
@@ -250,31 +146,7 @@ function FamilySafetyPage() {
           <Section title="">
             <Beat eyebrow="The tension" color="var(--icon-purple)">AI made prototyping faster. It also made inconsistency easier.</Beat>
             <div className="mt-6">
-              <BeforeAfter
-                color="var(--icon-orange)"
-                before={
-                  <>
-                    <FlowChain steps={[
-                      { icon: Lightbulb, label: 'PM idea', color: 'var(--icon-orange)' },
-                      { icon: UsersIcon, label: 'Design queue', color: 'var(--icon-blue)' },
-                      { icon: Workflow, label: 'Prototype', color: 'var(--icon-blue)' },
-                      { icon: Workflow, label: 'Engineering', color: 'var(--icon-teal)' },
-                    ]} />
-                    <p className="text-center text-sm font-semibold mt-4" style={{ color: 'var(--icon-red)' }}>Problem: exploration wait</p>
-                  </>
-                }
-                after={
-                  <>
-                    <FlowChain steps={[
-                      { icon: Lightbulb, label: 'PM idea', color: 'var(--icon-orange)' },
-                      { icon: Sparkles, label: 'AI / vibe code', color: 'var(--icon-purple)' },
-                      { icon: Workflow, label: 'Working prototype', color: 'var(--icon-purple)' },
-                      { icon: ArrowUpCircle, label: 'System divergence', color: 'var(--icon-red)' },
-                    ]} />
-                    <p className="text-center text-sm font-semibold mt-4" style={{ color: 'var(--icon-orange)' }}>Problem: quality drift</p>
-                  </>
-                }
-              />
+              <ImageBlock src="/images/casestudy-2/two-bottlenecks-dual-challenge.webp" alt="Diagram comparing the before state (PM idea, design queue, prototype, engineering, bottleneck: exploration wait) with AI-assisted exploration (PM idea, AI or vibe code, working prototype, system divergence, bottleneck: quality drift)" />
             </div>
             <Prose>
               <p className="text-center max-w-xl mx-auto">
@@ -301,18 +173,7 @@ function FamilySafetyPage() {
           <Section title="">
             <Beat eyebrow="The leadership move" color="var(--icon-blue)">Instead of gatekeeping exploration, I redesigned the gate.</Beat>
             <div className="mt-6">
-              <BeforeAfter
-                color="var(--icon-blue)"
-                before={
-                  <FlowChain steps={[
-                    { icon: Lightbulb, label: 'PM', color: 'var(--icon-orange)' },
-                    { icon: Shield, label: 'Design', color: 'var(--icon-blue)' },
-                    { icon: Workflow, label: 'Prototype', color: 'var(--icon-blue)' },
-                    { icon: Workflow, label: 'Engineering', color: 'var(--icon-teal)' },
-                  ]} />
-                }
-                after={<OperatingModelDiagram />}
-              />
+              <ImageBlock src="/images/casestudy-2/leadership-move-redesign-the-gate.webp" alt="Diagram comparing the old model, where Design was the bottleneck between PM idea and Engineering, with the new model, where PM idea flows through AI or vibe code, free exploration and Design Office Hours as a quality gate before proceed, iterate or escalate, then Engineering" />
             </div>
             <Prose>
               <p className="text-center max-w-2xl mx-auto">
@@ -320,22 +181,9 @@ function FamilySafetyPage() {
                 checkpoints, led the rebuild of the Family Safety Portal master
                 prototype as a system-correct, vibe-coded foundation, and
                 established Design Office Hours as the formal quality gate.
+                Exploration became distributed. Quality stayed owned.
               </p>
             </Prose>
-          </Section>
-        </Reveal>
-
-        {/* 05 Ownership model, compact */}
-        <Reveal>
-          <Section title="">
-            <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto">
-              <FlowNode icon={Lightbulb} label="PM" sublabel="Explore" color="var(--icon-orange)" />
-              <FlowNode icon={Shield} label="Design" sublabel="Curate" color="var(--icon-blue)" />
-              <FlowNode icon={Workflow} label="Engineering" sublabel="Build" color="var(--icon-teal)" />
-            </div>
-            <p className="text-center text-xl font-bold text-foreground mt-6">
-              Exploration became distributed. Quality stayed owned.
-            </p>
           </Section>
         </Reveal>
 
@@ -343,20 +191,8 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="">
             <Beat eyebrow="The model" color="var(--icon-purple)">The model had three layers.</Beat>
-            <div className="mt-6 max-w-lg mx-auto">
-              <LayerStack
-                layers={[
-                  { number: '01', icon: Sparkles, title: 'Capability', description: 'AI-assisted exploration', color: 'var(--icon-purple)' },
-                  { number: '02', icon: Boxes, title: 'System', description: 'System-correct Family Safety master prototype', color: 'var(--icon-blue)' },
-                  { number: '03', icon: Cog, title: 'Operating model', description: 'Design Office Hours and governance', color: 'var(--icon-teal)' },
-                ]}
-              />
-            </div>
-            <div className="flex justify-center my-3">
-              <span className="text-lg text-muted-foreground leading-none">=</span>
-            </div>
-            <div className="max-w-xs mx-auto">
-              <FlowNode icon={ShieldCheck} label="Scalable design exploration" color="var(--icon-green)" />
+            <div className="mt-6">
+              <ImageBlock src="/images/casestudy-2/three-layer-design-model.webp" alt="Diagram of three layers working together: capability (AI-assisted exploration, vibe coding), system (system-correct Family Safety master prototype), and operating model (Design Office Hours plus governance), together enabling scalable design exploration" />
             </div>
           </Section>
         </Reveal>
@@ -391,17 +227,8 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="">
             <Beat eyebrow="The master prototype" color="var(--icon-blue)">I didn't just create a prototype. I created the runway.</Beat>
-            <div className="mt-6 max-w-md mx-auto space-y-2">
-              <FlowNode icon={Boxes} label="Master prototype" color="var(--icon-blue)" />
-              <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-muted-foreground" /></div>
-              <div className="rounded-xl border border-border bg-muted/20 p-4 text-center">
-                <p className="font-bold text-foreground text-sm mb-1">System foundation</p>
-                <p className="text-muted-foreground text-xs">Components · Tokens · Patterns · Behaviour · Edge states · Complete flows</p>
-              </div>
-              <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-muted-foreground" /></div>
-              <FlowNode icon={GitBranch} label="Make a copy" color="var(--icon-purple)" />
-              <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-muted-foreground" /></div>
-              <FlowNode icon={Lightbulb} label="PM exploration" color="var(--icon-orange)" />
+            <div className="mt-6">
+              <ImageBlock src="/images/casestudy-2/master-prototype-many-explorations.webp" alt="Diagram: the master prototype, a system foundation built and maintained by Design with components, tokens, patterns, behaviour, edge states and complete flows, gets duplicated via make a copy into many independent PM explorations, each free to explore within the system" />
             </div>
 
             <Prose>
@@ -414,7 +241,7 @@ function FamilySafetyPage() {
               </p>
             </Prose>
 
-            <div className="grid sm:grid-cols-2 gap-4 mt-8">
+            <div className="grid sm:grid-cols-3 gap-4 mt-8">
               <ImageBlock src="/images/casestudy-2/portal-overview.webp" alt="Family Safety Portal overview interface, part of the system-correct master prototype" />
               <ImageBlock src="/images/casestudy-2/portal-dashboard.webp" alt="Family Safety Portal dashboard with make a copy and share actions" caption="Make a copy of the prototype and start exploring" />
               <ImageBlock src="/images/casestudy-2/mobile-controls.webp" alt="Family Safety mobile app controls and settings interface, part of the master prototype" />
@@ -441,18 +268,8 @@ function FamilySafetyPage() {
         <Reveal>
           <Section title="">
             <Beat eyebrow="System correctness" color="var(--icon-teal)">System quality isn't just pixels. It's behaviour.</Beat>
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
-              {['Components', 'Tokens', 'Patterns', 'Behaviour', 'Edge states', 'Complete flows'].map((item) => (
-                <span key={item} className="px-3 py-1.5 rounded-full text-sm font-medium border border-border text-foreground">
-                  {item}
-                </span>
-              ))}
-            </div>
-            <div className="flex justify-center my-3">
-              <ArrowDown className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <div className="max-w-xs mx-auto">
-              <FlowNode icon={ShieldCheck} label="System-correct prototype" color="var(--icon-teal)" />
+            <div className="mt-6">
+              <ImageBlock src="/images/casestudy-2/system-correctness-more-than-pixels.webp" alt="Diagram: components, tokens, patterns, behaviour, edge states and complete flows all feed into a system-correct prototype that looks right, behaves right and holds up in the real world" />
             </div>
 
             <div className="mt-10 pt-8 border-t border-border">
@@ -489,15 +306,7 @@ function FamilySafetyPage() {
               />
             </div>
             <div className="mt-6">
-              <FlowChain
-                steps={[
-                  { icon: Lightbulb, label: 'PM prototype', color: 'var(--icon-orange)' },
-                  { icon: Boxes, label: 'System review', color: 'var(--icon-blue)' },
-                  { icon: Eye, label: 'Behaviour review', color: 'var(--icon-blue)' },
-                  { icon: Shield, label: 'Edge case review', color: 'var(--icon-blue)' },
-                  { icon: Target, label: 'Decision', color: 'var(--icon-teal)' },
-                ]}
-              />
+              <ImageBlock src="/images/casestudy-2/design-office-hours-quality-backbone.webp" alt="Diagram: a PM prototype, built with AI and explored freely, goes through system review, behaviour review and edge case review, leading to a decision to proceed to engineering, iterate, or escalate for deeper design involvement" />
             </div>
             <p className="text-center text-lg font-semibold text-foreground mt-6">
               We weren't reviewing pixels. We were reviewing readiness.
@@ -527,20 +336,7 @@ function FamilySafetyPage() {
           <Section title="">
             <Beat eyebrow="Governance" color="var(--icon-teal)">Governance became a multiplier, not a gate.</Beat>
             <div className="mt-6">
-              <FlowChain
-                steps={[
-                  { icon: Boxes, label: 'Master prototype', color: 'var(--icon-blue)' },
-                  { icon: FileText, label: 'PM checklist', color: 'var(--icon-orange)' },
-                  { icon: UsersIcon, label: 'Design Office Hours', color: 'var(--icon-blue)' },
-                  { icon: FileText, label: 'Engineering checklist', color: 'var(--icon-teal)' },
-                ]}
-              />
-            </div>
-            <div className="flex justify-center my-3">
-              <ArrowDown className="w-4 h-4 text-muted-foreground" />
-            </div>
-            <div className="max-w-xs mx-auto">
-              <FlowNode icon={Cog} label="Design operating system" color="var(--icon-green)" />
+              <ImageBlock src="/images/casestudy-2/governance-ownership-transformation.webp" alt="Diagram: the master prototype, PM checklist, Design Office Hours and engineering checklist feed into one design operating system, which distributes ownership so PMs explore, Design curates system quality and readiness, and Engineering builds and scales" />
             </div>
             <p className="text-center text-muted-foreground mt-4 max-w-lg mx-auto">
               Governance created autonomy. It did not remove it.
