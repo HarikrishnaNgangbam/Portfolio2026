@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
+import { Beat } from '@/components/casestudy/beat';
 import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
@@ -60,31 +61,6 @@ function lucideAsBrandIcon(Icon: IconComponent) {
   return function BrandIconAdapter({ className }: { className?: string }) {
     return <Icon className={className} />;
   };
-}
-
-/* ---------------------------------------------------------------------- */
-/* Eyebrow + takeaway headline, the two-tier heading used before every    */
-/* major beat of the story.                                               */
-/* ---------------------------------------------------------------------- */
-function Beat({
-  eyebrow,
-  color,
-  children,
-}: {
-  eyebrow: string;
-  color: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color }}>
-        {eyebrow}
-      </p>
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-        {children}
-      </h2>
-    </div>
-  );
 }
 
 /** A single node in a relationship chain: icon + label, connected to its neighbors by the parent. */
