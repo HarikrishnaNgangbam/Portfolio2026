@@ -7,9 +7,24 @@ import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
+import { HOME_PROJECT_ORDER } from '@/data/projects';
 
 function WorkPage() {
-  const projects = useEffectiveProjects();
+  const effectiveProjects = useEffectiveProjects();
+  /**
+   * Sorted to match Home's fixed order rather than trusting
+   * useEffectiveProjects' order directly, since that order is driven by a
+   * per-project `order` value that persists in localStorage once set (e.g.
+   * from Settings > Project Management) and would otherwise silently drift
+   * out of sync with Home whenever that stored value doesn't match
+   * HOME_PROJECT_ORDER. Any project not listed there (e.g. newly added)
+   * falls back to the end, in its useEffectiveProjects order.
+   */
+  const projects = [...effectiveProjects].sort((a, b) => {
+    const ai = HOME_PROJECT_ORDER.indexOf(a.slug);
+    const bi = HOME_PROJECT_ORDER.indexOf(b.slug);
+    return (ai === -1 ? HOME_PROJECT_ORDER.length : ai) - (bi === -1 ? HOME_PROJECT_ORDER.length : bi);
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
