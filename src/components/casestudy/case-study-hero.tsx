@@ -34,6 +34,10 @@ export interface CaseStudyHeroProps {
   workInProgress?: boolean;
   /** Device → arrow → device row under the subtitle (e.g. smartphone → PC), each with its own color. */
   iconFlow?: { icon: IconComponent; color: string }[];
+  /** `h1` (default) for every real case-study page. Set to `h2` when embedding this component on a page that already has its own `h1` (e.g. the design-system showcase). */
+  headingLevel?: 'h1' | 'h2';
+  /** Mounts the fixed reading-progress bar. Default `true`; set `false` when this component is rendered somewhere other than the top of an actual case-study page, to avoid a second progress bar on screen. */
+  showProgress?: boolean;
 }
 
 function CaseStudyHero({
@@ -50,12 +54,14 @@ function CaseStudyHero({
   imageBadge,
   workInProgress,
   iconFlow,
+  headingLevel: Heading = 'h1',
+  showProgress = true,
 }: CaseStudyHeroProps) {
   const titleParts = titleHighlight ? title.split(titleHighlight) : null;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
-      <CaseStudyProgress />
+      {showProgress && <CaseStudyProgress />}
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link to="/" className="flex items-center gap-1 hover:text-primary">
           Home
@@ -108,7 +114,7 @@ function CaseStudyHero({
         )}
       </div>
 
-      <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
+      <Heading className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
         {titleParts ? (
           <>
             {titleParts[0]}
@@ -118,7 +124,7 @@ function CaseStudyHero({
         ) : (
           title
         )}
-      </h1>
+      </Heading>
       <p className="text-lg text-muted-foreground leading-relaxed mt-4">{subtitle}</p>
 
       {iconFlow && (

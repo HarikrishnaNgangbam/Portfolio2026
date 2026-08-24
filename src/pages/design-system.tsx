@@ -32,6 +32,7 @@ import { ProjectSignal } from '@/components/portfolio/project-signal';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
+import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { Section } from '@/components/casestudy/section';
 import { Beat } from '@/components/casestudy/beat';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
@@ -48,6 +49,11 @@ import { BeforeAfter, BeforeAfterCompact, BeforeAfterInline } from '@/components
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { Quote } from '@/components/casestudy/quote';
 import { ChecklistSection } from '@/components/casestudy/checklist-section';
+import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
+import { LinkList } from '@/components/casestudy/link-list';
+import { PressGrid } from '@/components/casestudy/press-grid';
+import { SpotifyIcon } from '@/design-system/ui/icons/brands';
+import { Switch } from '@/design-system/ui/switch';
 import { Footer } from '@/components/nav/footer';
 import { SettingsModal } from '@/components/nav/settings-modal';
 import { Seo } from '@/components/seo';
@@ -145,6 +151,7 @@ function ComponentDemo({
 
 function DesignSystemPage() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [switchOn, setSwitchOn] = useState(true);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -333,6 +340,10 @@ function DesignSystemPage() {
             <Badge>Community Engagement</Badge>
           </div>
         </ComponentDemo>
+
+        <ComponentDemo name="Switch" purpose="Toggle control used in the owner-only Settings panels (e.g. Project Access Control).">
+          <Switch checked={switchOn} onCheckedChange={setSwitchOn} label="Example toggle" />
+        </ComponentDemo>
       </ShowcaseSection>
 
       {/* NAVIGATION */}
@@ -375,6 +386,14 @@ function DesignSystemPage() {
         <ComponentDemo name="SettingsModal" purpose="Owner-only settings lock screen, reproduced from the reference.">
           <Button onClick={() => setSettingsOpen(true)}>Open Settings Modal</Button>
           <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+        </ComponentDemo>
+
+        <ComponentDemo name="CaseStudyGate" purpose="Gates a case study behind its project-level password, set from Settings → Project Access Control. The site owner always sees the real content once settings are unlocked.">
+          <p className="text-sm text-muted-foreground">
+            No case study here is currently password-protected, so there's nothing to unlock
+            in this demo — set a password on a project in Settings to see the gate live on
+            its case-study page.
+          </p>
         </ComponentDemo>
       </ShowcaseSection>
 
@@ -569,6 +588,23 @@ function DesignSystemPage() {
         title="Case Study"
         description="Composable narrative blocks used to build every case-study page."
       >
+        <ComponentDemo name="CaseStudyHero" purpose="The opening block for every case study: breadcrumb, badges, title, subtitle, meta facts, cover image, optional Work in Progress notice and icon flow. Also mounts CaseStudyProgress internally.">
+          <CaseStudyHero
+            headingLevel="h2"
+            showProgress={false}
+            breadcrumbLabel={PROJECTS[0].title}
+            badges={PROJECTS[0].narrative?.capabilities.slice(0, 2) ?? PROJECTS[0].tags.slice(0, 2)}
+            title={PROJECTS[0].title}
+            subtitle={PROJECTS[0].description}
+            meta={[
+              { label: 'Role', value: PROJECTS[0].role },
+              { label: 'Timeline', value: PROJECTS[0].period },
+            ]}
+            coverImage={PROJECTS[0].coverImage}
+            coverAlt={PROJECTS[0].coverAlt}
+          />
+        </ComponentDemo>
+
         <ComponentDemo name="MetaGrid" purpose="Platform / Domain / Pillar / Capability quick-facts.">
           <MetaGrid
             items={[
@@ -681,6 +717,31 @@ function DesignSystemPage() {
             intro="This work established a durable pattern:"
             items={['Users move between devices without restarting work']}
             closingStatement="This repositioned the product as a connected system."
+          />
+        </ComponentDemo>
+
+        <ComponentDemo name="AppScenarioCard" purpose="Icon + title (+description) card for shipped/upcoming app-integration scenarios — 'Designing for Different Kinds of Work' style sections.">
+          <div className="grid sm:grid-cols-3 gap-4">
+            <AppScenarioCard icon={SpotifyIcon} title="Spotify" description="Continue playback without rebuilding context." />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="PressGrid" purpose="Grid of press-coverage clipping screenshots — External Validation sections.">
+          <PressGrid
+            columns={2}
+            items={[
+              { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
+              { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
+            ]}
+          />
+        </ComponentDemo>
+
+        <ComponentDemo name="LinkList" purpose="External reference links (documentation, press) with a consistent icon and underline treatment.">
+          <LinkList
+            links={[
+              { label: 'Cross-device Resume support page', href: 'https://support.microsoft.com' },
+              { label: 'Windows Insider Blog update', href: 'https://blogs.windows.com/windows-insider' },
+            ]}
           />
         </ComponentDemo>
       </ShowcaseSection>
