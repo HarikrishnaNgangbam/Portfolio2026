@@ -229,6 +229,19 @@ function FamilySafetyPage() {
                 Quality drift
               </span>
             </div>
+            <Prose>
+              <p className="text-center max-w-2xl mx-auto">
+                Family Safety spans multiple platforms and surfaces, and needs
+                frequent incremental changes. As the team grew, PMs waited on
+                designer availability to explore ideas, and the PM-created
+                prototypes that did get built often diverged from system
+                components, creating downstream rework. Rather than gatekeeping
+                exploration, I led the{' '}
+                <strong className="text-foreground">Ideation to Prototype initiative</strong>,
+                a design-led governance model that let PMs prototype
+                independently while Design kept quality ownership.
+              </p>
+            </Prose>
           </Section>
         </Reveal>
 
@@ -301,6 +314,14 @@ function FamilySafetyPage() {
                 after={<OperatingModelDiagram />}
               />
             </div>
+            <Prose>
+              <p className="text-center max-w-2xl mx-auto">
+                I defined the Ideation to Prototype workflow and its decision
+                checkpoints, led the rebuild of the Family Safety Portal master
+                prototype as a system-correct, vibe-coded foundation, and
+                established Design Office Hours as the formal quality gate.
+              </p>
+            </Prose>
           </Section>
         </Reveal>
 
@@ -383,9 +404,20 @@ function FamilySafetyPage() {
               <FlowNode icon={Lightbulb} label="PM exploration" color="var(--icon-orange)" />
             </div>
 
+            <Prose>
+              <p className="text-center max-w-2xl mx-auto">
+                The master prototype used approved components and tokens only,
+                Fluent-aligned interaction patterns, realistic edge cases and
+                states (error, blocked, pending), and complete end-to-end
+                portal flows, so any copy PMs made started from something
+                already correct.
+              </p>
+            </Prose>
+
             <div className="grid sm:grid-cols-2 gap-4 mt-8">
               <ImageBlock src="/images/casestudy-2/portal-overview.webp" alt="Family Safety Portal overview interface, part of the system-correct master prototype" />
               <ImageBlock src="/images/casestudy-2/portal-dashboard.webp" alt="Family Safety Portal dashboard with make a copy and share actions" caption="Make a copy of the prototype and start exploring" />
+              <ImageBlock src="/images/casestudy-2/mobile-controls.webp" alt="Family Safety mobile app controls and settings interface, part of the master prototype" />
             </div>
 
             <p className="text-center text-xl font-bold text-foreground mt-8">
@@ -473,9 +505,11 @@ function FamilySafetyPage() {
             <Prose>
               <p className="text-center max-w-xl mx-auto">
                 Office Hours were a lightweight readiness mechanism, not a design
-                crit. Each session asked the same four questions: does the idea fit
-                the system, does the behaviour make sense, are the important edge
-                cases considered, and is it ready for the next stage.
+                crit. Each session reviewed an interactive prototype duplicated
+                from the master, not a static spec, and asked the same four
+                questions: does the idea fit the system, does the behaviour make
+                sense, are the important edge cases considered, and is it ready
+                for the next stage.
               </p>
             </Prose>
             <div className="mt-6">
@@ -559,9 +593,13 @@ function FamilySafetyPage() {
               ]}
             />
             <Prose>
-              <p className="text-center max-w-xl mx-auto">
+              <p className="text-center max-w-2xl mx-auto">
                 More people could explore. Design still owned quality. Engineering
-                received clearer signals.
+                received clearer signals. The master prototype became a reusable
+                design foundation that PMs, engineers and designers referenced in
+                planning, reviews and crits well beyond the initiative itself,
+                and it turned a one-time cleanup into a governance model that
+                could keep scaling as the team grew.
               </p>
             </Prose>
           </Section>
@@ -641,18 +679,39 @@ function FamilySafetyPage() {
         {/* Artifacts, condensed */}
         <Reveal>
           <Section title="Artifacts">
-            <div className="flex flex-wrap gap-3">
+            <div className="rounded-2xl border border-border p-2 space-y-1">
               {[
-                { title: 'Ideation to Prototype workflow', color: 'var(--icon-blue)' },
-                { title: 'PM checklist', color: 'var(--icon-orange)' },
-                { title: 'Design Office Hours documentation', color: 'var(--icon-blue)' },
-                { title: 'Engineering checklist', color: 'var(--icon-teal)' },
-              ].map((artifact) => (
-                <span key={artifact.title} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border border-border text-foreground">
-                  <FileText className="w-3.5 h-3.5" style={{ color: artifact.color }} />
-                  {artifact.title}
-                </span>
-              ))}
+                { title: 'Ideation to Prototype workflow (Master)', file: 'Family Safety: Ideation to Prototype Workflow (Master).page', color: 'var(--icon-blue)' },
+                { title: 'PM checklist', file: 'PM Checklist: Ideation to Prototype.loop', color: 'var(--icon-orange)' },
+                { title: 'Design Office Hours documentation', file: 'Quality gate governance and review process', color: 'var(--icon-blue)' },
+                { title: 'Engineering checklist', file: 'Quality gate checklist for engineering handoff', color: 'var(--icon-teal)' },
+                { title: 'Family Safety master prototype', file: 'Interactive Figma Make prototype', color: 'var(--icon-purple)', href: MASTER_PROTOTYPE_URL },
+              ].map((artifact) =>
+                artifact.href ? (
+                  <a
+                    key={artifact.title}
+                    href={artifact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg p-3 flex items-start gap-3 hover:bg-accent/50 transition-colors"
+                  >
+                    <FileText className="w-4 h-4 shrink-0 mt-0.5" style={{ color: artifact.color }} />
+                    <div className="flex-1">
+                      <p className="font-medium text-foreground text-sm">{artifact.title}</p>
+                      <p className="text-sm text-muted-foreground">{artifact.file}</p>
+                    </div>
+                    <ExternalLink className="w-4 h-4 shrink-0 mt-0.5 text-muted-foreground" />
+                  </a>
+                ) : (
+                  <div key={artifact.title} className="rounded-lg p-3 flex items-start gap-3">
+                    <FileText className="w-4 h-4 shrink-0 mt-0.5" style={{ color: artifact.color }} />
+                    <div>
+                      <p className="font-medium text-foreground text-sm">{artifact.title}</p>
+                      <p className="text-sm text-muted-foreground">{artifact.file}</p>
+                    </div>
+                  </div>
+                ),
+              )}
             </div>
           </Section>
         </Reveal>
