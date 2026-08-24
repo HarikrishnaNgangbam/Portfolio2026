@@ -47,22 +47,22 @@ export const PROJECTS: ProjectSummary[] = [
     },
   },
   {
-    slug: 'pc-to-phone-resume',
-    period: '2025-Present',
+    slug: 'kopdar-initiative',
+    period: '2019-2020',
     role: 'Lead Product Designer',
-    title: 'PC to Phone Resume: Completing the Continuity Loop',
-    subtitle: 'Bidirectional Cross-Device Continuity',
+    title: 'Kopdar Initiative: Scaling Driver Engagement for Gojek',
+    subtitle: 'Community Engagement Platform',
     description:
-      'System-level capability enabling users to continue PC tasks on mobile when they step away, completing the bidirectional continuity loop and making Windows a connected journey.',
-    tags: ['PC to Phone Continuity', 'Bi-directional Continuity', 'Connected Experience'],
-    coverImage: '/images/shared/project-pc-to-phone-cover.webp',
-    coverAlt: 'PC to Phone continuity - Desktop to mobile transition',
+      'Improving efficiency, consistency, and community connection across Indonesia. Transformed how thousands of drivers connect through face-to-face sessions, increasing attendance 3.2× and reducing admin time 65%.',
+    tags: ['System Design', 'Community Engagement', 'Super App'],
+    coverImage: '/images/shared/project-kopdar-cover.webp',
+    coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
     narrative: {
-      title: 'PC → Phone Continuity',
-      label: "When the system doesn't exist yet",
+      title: 'GoAgent / Kopdar',
+      label: 'When the system spans an organization',
       description:
-        'Exploring what continuity should look like when the user leaves the PC rather than arrives at it.',
-      capabilities: ['0→1', 'Vision', 'Cross-platform'],
+        "Turning fragmented field operations into a product ecosystem that could evolve with Gojek's rapidly growing network.",
+      capabilities: ['Ecosystem', 'Operations', 'Scale'],
     },
   },
   {
@@ -85,27 +85,33 @@ export const PROJECTS: ProjectSummary[] = [
     },
   },
   {
-    slug: 'kopdar-initiative',
-    period: '2019-2020',
+    slug: 'pc-to-phone-resume',
+    period: '2025-Present',
     role: 'Lead Product Designer',
-    title: 'Kopdar Initiative: Scaling Driver Engagement for Gojek',
-    subtitle: 'Community Engagement Platform',
+    title: 'PC to Phone Resume: Completing the Continuity Loop',
+    subtitle: 'Bidirectional Cross-Device Continuity',
     description:
-      'Improving efficiency, consistency, and community connection across Indonesia. Transformed how thousands of drivers connect through face-to-face sessions, increasing attendance 3.2× and reducing admin time 65%.',
-    tags: ['System Design', 'Community Engagement', 'Super App'],
-    coverImage: '/images/shared/project-kopdar-cover.webp',
-    coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
+      'System-level capability enabling users to continue PC tasks on mobile when they step away, completing the bidirectional continuity loop and making Windows a connected journey.',
+    tags: ['PC to Phone Continuity', 'Bi-directional Continuity', 'Connected Experience'],
+    coverImage: '/images/shared/project-pc-to-phone-cover.webp',
+    coverAlt: 'PC to Phone continuity - Desktop to mobile transition',
     narrative: {
-      title: 'GoAgent / Kopdar',
-      label: 'When the system spans an organization',
+      title: 'PC → Phone Continuity',
+      label: "When the system doesn't exist yet",
       description:
-        "Turning fragmented field operations into a product ecosystem that could evolve with Gojek's rapidly growing network.",
-      capabilities: ['Ecosystem', 'Operations', 'Scale'],
+        'Exploring what continuity should look like when the user leaves the PC rather than arrives at it.',
+      capabilities: ['0→1', 'Vision', 'Cross-platform'],
     },
   },
 ];
 
-/** Default homepage display order (independent of /work, which follows Settings > Project Management order). */
+/**
+ * Homepage display order. /work uses a separate mechanism (Settings >
+ * Project Management order, defaulting to PROJECTS' declaration order
+ * above), so keep this list and the PROJECTS array order in sync when a
+ * project is added or reordered, unless the two pages should intentionally
+ * diverge.
+ */
 export const HOME_PROJECT_ORDER = [
   'phone-to-pc-resume',
   'kopdar-initiative',
