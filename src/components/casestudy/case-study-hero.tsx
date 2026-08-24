@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Construction } from 'lucide-react';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Badge } from '@/design-system/ui/badge';
+import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
 import type { IconComponent } from '@/lib/utils';
 
 export interface CaseStudyMetaItem {
@@ -54,6 +55,7 @@ function CaseStudyHero({
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+      <CaseStudyProgress />
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
         <Link to="/" className="flex items-center gap-1 hover:text-primary">
           Home

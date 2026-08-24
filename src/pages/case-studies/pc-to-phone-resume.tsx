@@ -12,7 +12,6 @@ import {
   Shield,
   TrendingUp,
   Users,
-  Sparkles,
   Workflow,
   HelpCircle,
   LogOut,
@@ -31,57 +30,13 @@ import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { CalloutList } from '@/components/casestudy/callout-list';
 import { StepFlow } from '@/components/casestudy/step-flow';
 import { ImageBlock, VideoBlock } from '@/components/casestudy/image-block';
+import { Placeholder } from '@/components/casestudy/placeholder';
+import { Takeaway } from '@/components/casestudy/takeaway';
+import { DecisionStrip } from '@/components/casestudy/decision-strip';
+import { Ownership } from '@/components/casestudy/ownership';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
-import type { IconComponent } from '@/lib/utils';
-
-interface PlaceholderProps {
-  icon: IconComponent;
-  title: string;
-  type: string;
-  descriptor?: string;
-  color?: string;
-  size?: 'default' | 'large';
-}
-
-/**
- * Polished stand-in for a visual asset that doesn't exist yet, naming
- * exactly what belongs here so the layout doesn't need to change once the
- * real diagram arrives.
- */
-function Placeholder({
-  icon: Icon,
-  title,
-  type,
-  descriptor,
-  color = 'var(--icon-blue)',
-  size = 'default',
-}: PlaceholderProps) {
-  return (
-    <div
-      className={`rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center gap-2 ${size === 'large' ? 'p-12 md:p-16' : 'p-8'}`}
-      style={{
-        borderColor: `color-mix(in srgb, ${color} 30%, transparent)`,
-        backgroundColor: `color-mix(in srgb, ${color} 4%, transparent)`,
-      }}
-    >
-      <div
-        className="w-12 h-12 rounded-full flex items-center justify-center mb-1"
-        style={{ backgroundColor: `color-mix(in srgb, ${color} 14%, transparent)` }}
-      >
-        <Icon className="w-6 h-6" style={{ color }} aria-hidden="true" />
-      </div>
-      <p className="font-bold text-foreground">{title}</p>
-      <p className="text-xs font-semibold uppercase tracking-wide" style={{ color }}>
-        {type}
-      </p>
-      {descriptor && (
-        <p className="text-sm text-muted-foreground max-w-lg mt-1">{descriptor}</p>
-      )}
-    </div>
-  );
-}
 
 function PcToPhoneResumePage() {
   return (
@@ -158,7 +113,7 @@ function PcToPhoneResumePage() {
         {/* 02 The Insight */}
         <Reveal>
           <Section title="Continuity isn't about moving the app. It's about preserving context.">
-            <Prose callout>
+            <Prose callout kind="insight">
               The unit of continuity is the task, not the device.
             </Prose>
             <Prose>
@@ -246,9 +201,10 @@ function PcToPhoneResumePage() {
                 },
               ]}
             />
-            <Prose callout>
-              The target: helpful without being interruptive.
-            </Prose>
+            <DecisionStrip
+              decision="Aim for helpful without being interruptive, rather than maximizing either automation or user control on its own."
+              why="Too little intelligence forces the user to do everything by hand. Too much intervention makes the system noisy and untrustworthy."
+            />
             <Prose>
               <p>
                 That meant designing for seamlessness, resuming with minimal steps
@@ -343,6 +299,7 @@ function PcToPhoneResumePage() {
               heading="Cross-Device Resume: one platform capability, many surfaces"
               src="/images/casestudy-1/xdr-platform-diagram.webp"
               alt="Cross Device Resume platform diagram showing continuity as a shared capability across app surfaces"
+              evidence="system-model"
             />
           </Section>
         </Reveal>
@@ -361,6 +318,7 @@ function PcToPhoneResumePage() {
               heading="PC to Phone Resume Map"
               src="/images/casestudy-1/resume-map-flow.webp"
               alt="PC to Phone Resume map showing the active task, transition, and continuation flow"
+              evidence="system-model"
             />
           </Section>
         </Reveal>
@@ -384,22 +342,26 @@ function PcToPhoneResumePage() {
                 heading="Now Bar: single app ready to resume"
                 src="/images/casestudy-1/nowbar-single-app.webp"
                 alt="Now Bar showing a single active app ready to resume"
+                evidence="design-exploration"
               />
               <ImageBlock
                 heading="Now Bar: multiple apps available"
                 src="/images/casestudy-1/nowbar-multiple-app.webp"
                 alt="Now Bar showing multiple apps available to resume"
+                evidence="design-exploration"
               />
             </div>
             <ImageBlock
               heading="Notification: a contextual resume prompt"
               src="/images/casestudy-1/teams-notification.webp"
               alt="Notification prompting the user to resume a task"
+              evidence="design-exploration"
             />
             <ImageBlock
               heading="Status chip: a persistent multi-app indicator"
               src="/images/casestudy-1/status-chip-multiple-app.webp"
               alt="Status chip indicating multiple apps available to resume"
+              evidence="design-exploration"
             />
             <Placeholder
               icon={LayoutGrid}
@@ -417,6 +379,7 @@ function PcToPhoneResumePage() {
             <VideoBlock
               heading="A Teams call, resumed exactly where it left off"
               src="/videos/pc-to-phone-teams-call.mp4"
+              evidence="design-exploration"
             />
             <StepFlow
               variant="numbered"
@@ -432,7 +395,7 @@ function PcToPhoneResumePage() {
               src="/images/casestudy-1/teams-notification.webp"
               alt="Phone notification prompting the user to resume the Teams call"
             />
-            <Prose callout>
+            <Prose callout kind="outcome">
               <p className="text-center text-lg font-semibold">
                 Same call. Same context. No reconstruction.
               </p>
@@ -471,39 +434,13 @@ function PcToPhoneResumePage() {
         {/* 12 Role */}
         <Reveal>
           <Section title="What I was responsible for">
-            <IconCardList
-              columns={3}
+            <Ownership
               items={[
-                {
-                  icon: Target,
-                  iconColor: 'var(--icon-blue)',
-                  title: 'Vision',
-                  description: 'Defined the continuity vision as part of the broader Connected Experience strategy.',
-                },
-                {
-                  icon: Layers,
-                  iconColor: 'var(--icon-purple)',
-                  title: 'System',
-                  description: 'Designed system-level patterns for cross-device resume across PC and phone.',
-                },
-                {
-                  icon: Sparkles,
-                  iconColor: 'var(--icon-teal)',
-                  title: 'Experience',
-                  description: 'Balanced implicit intelligence with explicit user control across sensitive and non-sensitive scenarios.',
-                },
-                {
-                  icon: Users,
-                  iconColor: 'var(--icon-orange)',
-                  title: 'Collaboration',
-                  description: 'Partnered closely with Product Management and Engineering to align feasibility, platform constraints, and long-term scalability.',
-                },
-                {
-                  icon: ArrowRight,
-                  iconColor: 'var(--icon-green)',
-                  title: 'Execution',
-                  description: 'Led end-to-end design for PC to Phone Resume, from concept through active development.',
-                },
+                { dimension: 'vision', description: 'Defined the continuity vision as part of the broader Connected Experience strategy.' },
+                { dimension: 'system', description: 'Designed system-level patterns for cross-device resume across PC and phone.' },
+                { dimension: 'experience', description: 'Balanced implicit intelligence with explicit user control across sensitive and non-sensitive scenarios.' },
+                { dimension: 'collaboration', description: 'Partnered closely with Product Management and Engineering to align feasibility, platform constraints, and long-term scalability.' },
+                { dimension: 'execution', description: 'Led end-to-end design for PC to Phone Resume, from concept through active development.' },
               ]}
             />
           </Section>
@@ -574,23 +511,24 @@ function PcToPhoneResumePage() {
 
         {/* 16 Closing */}
         <Reveal>
-          <div className="text-center py-6 space-y-6">
-            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
-              Changing devices should feel irrelevant.
-            </p>
-            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              PC to Phone Resume is one expression of a broader continuity system.
-              The long-term opportunity is to make Windows feel less like a
-              collection of devices and more like a continuous environment that
-              follows the user's task, context, and intent.
-            </p>
-            <div className="flex items-center justify-center gap-2">
-              <Monitor className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
-              <ArrowRight className="w-4 h-4 text-muted-foreground" />
-              <Layers className="w-5 h-5" style={{ color: 'var(--icon-purple)' }} />
-              <ArrowRight className="w-4 h-4 text-muted-foreground" />
-              <Smartphone className="w-5 h-5" style={{ color: 'var(--icon-teal)' }} />
-            </div>
+          <Takeaway
+            supporting={
+              <>
+                PC to Phone Resume is one expression of a broader continuity system.
+                The long-term opportunity is to make Windows feel less like a
+                collection of devices and more like a continuous environment that
+                follows the user's task, context, and intent.
+              </>
+            }
+          >
+            Changing devices should feel irrelevant.
+          </Takeaway>
+          <div className="flex items-center justify-center gap-2 mt-2">
+            <Monitor className="w-5 h-5" style={{ color: 'var(--icon-blue)' }} />
+            <ArrowRight className="w-4 h-4 text-muted-foreground" />
+            <Layers className="w-5 h-5" style={{ color: 'var(--icon-purple)' }} />
+            <ArrowRight className="w-4 h-4 text-muted-foreground" />
+            <Smartphone className="w-5 h-5" style={{ color: 'var(--icon-teal)' }} />
           </div>
         </Reveal>
 

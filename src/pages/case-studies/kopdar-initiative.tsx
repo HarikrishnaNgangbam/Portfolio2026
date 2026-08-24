@@ -39,6 +39,8 @@ import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Quote } from '@/components/casestudy/quote';
+import { BeforeAfterCompact } from '@/components/casestudy/before-after';
+import { Takeaway } from '@/components/casestudy/takeaway';
 import { DotList } from '@/design-system/ui/dot-list';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { WhatsAppIcon, GoogleSheetsIcon, GoogleFormsIcon, GoogleSlidesIcon } from '@/design-system/ui/icons/brands';
@@ -338,21 +340,6 @@ function DecisionBlock({
   );
 }
 
-function BeforeAfterCompact({ icon: Icon, before, after, color }: { icon: IconComponent; before: string; after: string; color: string }) {
-  return (
-    <div className="rounded-xl border border-border p-5">
-      <Icon className="w-5 h-5 mb-3" style={{ color }} />
-      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Before</p>
-      <p className="font-medium text-foreground">{before}</p>
-      <div className="flex items-center gap-2 my-2">
-        <ArrowDown className="w-4 h-4" style={{ color }} />
-      </div>
-      <p className="text-xs font-semibold uppercase tracking-wide" style={{ color }}>After</p>
-      <p className="font-medium text-foreground">{after}</p>
-    </div>
-  );
-}
-
 const LIFECYCLE_LOOP_STAGES: LoopStageProps[] = [
   { icon: Calendar, title: 'Prepare', words: ['Manual coordination', 'No RSVP tracking'], color: KD_RED },
   { icon: Mic, title: 'Conduct', words: ['App switching', 'Separate forms'], color: KD_RED },
@@ -397,8 +384,7 @@ function KopdarInitiativePage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-20">
         {/* 01 PEOPLE */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The human side" color={KD_GREEN}>Kopdar was about people.</Beat>
+          <Section eyebrow="The human side" eyebrowColor={KD_GREEN} title="Kopdar was about people.">
             <div className="rounded-2xl overflow-hidden border border-border mt-6">
               <ImageBlock src="/images/casestudy-3/community-meeting.webp" alt="Gojek drivers and the design team gathered face to face at a Kopdar session" />
             </div>
@@ -432,8 +418,7 @@ function KopdarInitiativePage() {
 
         {/* 02 SCALE */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The scale" color={KD_GREEN}>A human conversation happening at operational scale.</Beat>
+          <Section eyebrow="The scale" eyebrowColor={KD_GREEN} title="A human conversation happening at operational scale.">
             <div className="relative rounded-2xl overflow-hidden min-h-[260px] md:min-h-[340px] mt-6">
               <ImageWithFallback
                 src="/images/casestudy-3/indonesia-map.webp"
@@ -468,8 +453,7 @@ function KopdarInitiativePage() {
 
         {/* 03 THE PROBLEM: fragmentation */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The friction" color={KD_RED}>The conversation was simple. Everything around it wasn't.</Beat>
+          <Section eyebrow="The friction" eyebrowColor={KD_RED} title="The conversation was simple. Everything around it wasn't.">
             <p className="text-center text-xs font-bold uppercase tracking-widest text-muted-foreground mt-6">
               One Kopdar session
             </p>
@@ -494,8 +478,7 @@ function KopdarInitiativePage() {
 
         {/* 04 FRICTION EVERYWHERE: old lifecycle loop */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The old workflow" color={KD_RED}>The fragmentation followed PKs through the entire cycle.</Beat>
+          <Section eyebrow="The old workflow" eyebrowColor={KD_RED} title="The fragmentation followed PKs through the entire cycle.">
             <div className="mt-8">
               <LoopFlow tone="debt" stages={LIFECYCLE_LOOP_STAGES} />
             </div>
@@ -511,8 +494,7 @@ function KopdarInitiativePage() {
 
         {/* 05 MY ROLE */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="My role" color={KD_TEAL}>I designed the system around the session, not just the screens inside it.</Beat>
+          <Section eyebrow="My role" eyebrowColor={KD_TEAL} title="I designed the system around the session, not just the screens inside it.">
             <div className="grid sm:grid-cols-2 gap-4 mt-6">
               {[
                 { icon: Compass, title: 'Field research', description: 'Understand how Kopdar actually happened on the ground.', color: KD_GREEN },
@@ -532,8 +514,7 @@ function KopdarInitiativePage() {
 
         {/* 06 FIELD RESEARCH */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Discovery" color={KD_PURPLE}>The field changed the problem.</Beat>
+          <Section eyebrow="Discovery" eyebrowColor={KD_PURPLE} title="The field changed the problem.">
             <div className="flex flex-wrap gap-4 mt-6">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" style={{ color: KD_GREEN }} />
@@ -669,8 +650,7 @@ function KopdarInitiativePage() {
 
         {/* 10 THE NEW SYSTEM */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The solution" color={KD_TEAL}>One system. One continuous loop.</Beat>
+          <Section eyebrow="The solution" eyebrowColor={KD_TEAL} title="One system. One continuous loop.">
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mt-6">
               {[
                 { icon: UsersIcon, title: 'Community', color: KD_GREEN },
@@ -700,8 +680,7 @@ function KopdarInitiativePage() {
 
         {/* 11 DESIGN DECISIONS */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Design decisions" color={KD_TEAL}>Four decisions made the system work.</Beat>
+          <Section eyebrow="Design decisions" eyebrowColor={KD_TEAL} title="Four decisions made the system work.">
             <div className="space-y-12 mt-8">
               <DecisionBlock
                 number="01"
@@ -767,8 +746,7 @@ function KopdarInitiativePage() {
 
         {/* 12 VALIDATION */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Validation" color={KD_GREEN}>The field was part of the product.</Beat>
+          <Section eyebrow="Validation" eyebrowColor={KD_GREEN} title="The field was part of the product.">
             <div className="flex flex-wrap gap-3 mt-6">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border" style={{ borderColor: KD_GREEN, color: KD_GREEN }}>
                 <MapPin className="w-3.5 h-3.5" /> Jakarta
@@ -803,8 +781,7 @@ function KopdarInitiativePage() {
 
         {/* 13 ITERATION */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Iteration" color={KD_TEAL}>Research didn't validate the design. It changed it.</Beat>
+          <Section eyebrow="Iteration" eyebrowColor={KD_TEAL} title="Research didn't validate the design. It changed it.">
             <div className="grid sm:grid-cols-3 gap-4 mt-6">
               <BeforeAfterCompact icon={GitCompare} before="Separate K1/K2 flows" after="One session flow" color={KD_GREEN} />
               <BeforeAfterCompact icon={CloudOff} before="Connectivity required" after="Offline capture + sync" color={KD_ORANGE} />
@@ -815,8 +792,7 @@ function KopdarInitiativePage() {
 
         {/* 14 IMPACT */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Impact" color={KD_GREEN}>Less operational work. More room for the relationship.</Beat>
+          <Section eyebrow="Impact" eyebrowColor={KD_GREEN} title="Less operational work. More room for the relationship.">
 
             <div className="rounded-2xl border p-6 md:p-8 mt-6" style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 6) }}>
               <div className="flex items-center gap-2 mb-4">
@@ -889,8 +865,7 @@ function KopdarInitiativePage() {
 
         {/* 15 TRANSFORMATION */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Transformation" color={KD_TEAL}>From fragmented operations to a scalable operating system.</Beat>
+          <Section eyebrow="Transformation" eyebrowColor={KD_TEAL} title="From fragmented operations to a scalable operating system.">
             <div className="grid sm:grid-cols-2 gap-6 items-center mt-8">
               <div className="rounded-2xl border-2 p-6" style={{ borderColor: KD_RED, backgroundColor: tint(KD_RED, 6) }}>
                 <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: KD_RED }}>Before</p>
@@ -920,8 +895,7 @@ function KopdarInitiativePage() {
 
         {/* 16 LEARNINGS */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Learnings" color={KD_TEAL}>What Kopdar taught me about designing at scale.</Beat>
+          <Section eyebrow="Learnings" eyebrowColor={KD_TEAL} title="What Kopdar taught me about designing at scale.">
             <div className="space-y-4 mt-6">
               <PrincipleBlock number={1} title="Design the system around the human moment." iconColor={KD_GREEN}>
                 The interface was only one part of the problem. The bigger challenge was
@@ -941,16 +915,17 @@ function KopdarInitiativePage() {
 
         {/* Closing */}
         <Reveal>
-          <div className="text-center py-6">
-            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
-              Good systems make more room for people.
-            </p>
-            <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Kopdar showed me that technology doesn't have to make human interactions
-              less important. The right system can remove the work that gets in their
-              way.
-            </p>
-          </div>
+          <Takeaway
+            supporting={
+              <>
+                Kopdar showed me that technology doesn't have to make human interactions
+                less important. The right system can remove the work that gets in their
+                way.
+              </>
+            }
+          >
+            Good systems make more room for people.
+          </Takeaway>
         </Reveal>
 
         <Reveal>

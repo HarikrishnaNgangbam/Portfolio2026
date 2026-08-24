@@ -11,17 +11,18 @@ import {
   Sparkles,
   Eye,
   RefreshCw,
-  Image as ImageIcon,
   Boxes,
   ShieldCheck,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
-import { Beat } from '@/components/casestudy/beat';
 import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { ImageBlock } from '@/components/casestudy/image-block';
+import { BeforeAfter } from '@/components/casestudy/before-after';
+import { Placeholder } from '@/components/casestudy/placeholder';
+import { Takeaway } from '@/components/casestudy/takeaway';
 import { buttonVariants } from '@/design-system/ui/button';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
@@ -63,33 +64,6 @@ function FlowChain({ steps }: { steps: { icon: IconComponent; label: string; sub
   );
 }
 
-/** Before/after pair, stacked with a transformation arrow on mobile, side by side on desktop. */
-function BeforeAfter({ before, after, color }: { before: React.ReactNode; after: React.ReactNode; color: string }) {
-  return (
-    <div className="grid sm:grid-cols-2 gap-4 items-stretch">
-      <div className="rounded-xl border border-border p-5">
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-3">Before</p>
-        {before}
-      </div>
-      <div className="rounded-xl border-2 p-5" style={{ borderColor: color, backgroundColor: `color-mix(in srgb, ${color} 6%, transparent)` }}>
-        <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color }}>After</p>
-        {after}
-      </div>
-    </div>
-  );
-}
-
-/** Polished placeholder for a screenshot that doesn't exist yet, naming exactly what belongs there so the layout never needs to change when it's added. */
-function ScreenPlaceholder({ label, insert, aspect = 'video' }: { label: string; insert: string; aspect?: 'video' | 'wide' }) {
-  return (
-    <div className={`rounded-2xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center text-center p-8 ${aspect === 'wide' ? 'aspect-[21/9]' : 'aspect-video'}`}>
-      <ImageIcon className="w-7 h-7 text-muted-foreground/40 mb-3" aria-hidden="true" />
-      <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1.5">{label}</p>
-      <p className="text-sm text-muted-foreground max-w-sm">{insert}</p>
-    </div>
-  );
-}
-
 function FamilySafetyPage() {
   return (
     <div className="pb-20">
@@ -120,8 +94,7 @@ function FamilySafetyPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
         {/* 01 Overview: the scale problem */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Overview" color="var(--icon-blue)">Family Safety was becoming a scale problem.</Beat>
+          <Section eyebrow="Overview" eyebrowColor="var(--icon-blue)" title="Family Safety was becoming a scale problem.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/family-safety-scale-problem.webp" alt="Diagram: multiple platforms, surfaces and frequent incremental changes increased exploration demand, creating tension between PMs needing to explore independently and Design needing to protect system quality, resulting in exploration wait and quality drift" />
             </div>
@@ -143,8 +116,7 @@ function FamilySafetyPage() {
 
         {/* 02 The AI shift */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The tension" color="var(--icon-purple)">AI made prototyping faster. It also made inconsistency easier.</Beat>
+          <Section eyebrow="The tension" eyebrowColor="var(--icon-purple)" title="AI made prototyping faster. It also made inconsistency easier.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/two-bottlenecks-dual-challenge.webp" alt="Diagram comparing the before state (PM idea, design queue, prototype, engineering, bottleneck: exploration wait) with AI-assisted exploration (PM idea, AI or vibe code, working prototype, system divergence, bottleneck: quality drift)" />
             </div>
@@ -170,8 +142,7 @@ function FamilySafetyPage() {
 
         {/* 04 Leadership move */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The leadership move" color="var(--icon-blue)">Instead of gatekeeping exploration, I redesigned the gate.</Beat>
+          <Section eyebrow="The leadership move" eyebrowColor="var(--icon-blue)" title="Instead of gatekeeping exploration, I redesigned the gate.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/leadership-move-redesign-the-gate.webp" alt="Diagram comparing the old model, where Design was the bottleneck between PM idea and Engineering, with the new model, where PM idea flows through AI or vibe code, free exploration and Design Office Hours as a quality gate before proceed, iterate or escalate, then Engineering" />
             </div>
@@ -189,8 +160,7 @@ function FamilySafetyPage() {
 
         {/* 06 Three-layer model */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The model" color="var(--icon-purple)">The model had three layers.</Beat>
+          <Section eyebrow="The model" eyebrowColor="var(--icon-purple)" title="The model had three layers.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/three-layer-design-model.webp" alt="Diagram of three layers working together: capability (AI-assisted exploration, vibe coding), system (system-correct Family Safety master prototype), and operating model (Design Office Hours plus governance), together enabling scalable design exploration" />
             </div>
@@ -199,8 +169,7 @@ function FamilySafetyPage() {
 
         {/* 07 AI as the exploration engine */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="AI's role" color="var(--icon-purple)">AI became the exploration engine.</Beat>
+          <Section eyebrow="AI's role" eyebrowColor="var(--icon-purple)" title="AI became the exploration engine.">
             <div className="grid md:grid-cols-2 gap-6 items-center mt-6">
               <FlowChain
                 steps={[
@@ -225,8 +194,7 @@ function FamilySafetyPage() {
 
         {/* 08 Master prototype */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The master prototype" color="var(--icon-blue)">I didn't just create a prototype. I created the runway.</Beat>
+          <Section eyebrow="The master prototype" eyebrowColor="var(--icon-blue)" title="I didn't just create a prototype. I created the runway.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/master-prototype-many-explorations.webp" alt="Diagram: the master prototype, a system foundation built and maintained by Design with components, tokens, patterns, behaviour, edge states and complete flows, gets duplicated via make a copy into many independent PM explorations, each free to explore within the system" />
             </div>
@@ -266,8 +234,7 @@ function FamilySafetyPage() {
 
         {/* 09 System correctness + guardrails */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="System correctness" color="var(--icon-teal)">System quality isn't just pixels. It's behaviour.</Beat>
+          <Section eyebrow="System correctness" eyebrowColor="var(--icon-teal)" title="System quality isn't just pixels. It's behaviour.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/system-correctness-more-than-pixels.webp" alt="Diagram: components, tokens, patterns, behaviour, edge states and complete flows all feed into a system-correct prototype that looks right, behaves right and holds up in the real world" />
             </div>
@@ -296,8 +263,7 @@ function FamilySafetyPage() {
 
         {/* 10 Design Office Hours */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="The quality backbone" color="var(--icon-blue)">Design Office Hours became the quality backbone.</Beat>
+          <Section eyebrow="The quality backbone" eyebrowColor="var(--icon-blue)" title="Design Office Hours became the quality backbone.">
             <div className="mt-6">
               <ImageBlock
                 heading="Design Office Hours in action"
@@ -322,9 +288,10 @@ function FamilySafetyPage() {
               </p>
             </Prose>
             <div className="mt-6">
-              <ScreenPlaceholder
-                label="FS_BEFORE_AFTER"
-                insert="Insert: before and after showing how a PM exploration was refined through a Design Office Hours review."
+              <Placeholder
+                variant="screenshot"
+                title="FS_BEFORE_AFTER"
+                type="Insert: before and after showing how a PM exploration was refined through a Design Office Hours review."
                 aspect="wide"
               />
             </div>
@@ -333,8 +300,7 @@ function FamilySafetyPage() {
 
         {/* 11 Governance */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Governance" color="var(--icon-teal)">Governance became a multiplier, not a gate.</Beat>
+          <Section eyebrow="Governance" eyebrowColor="var(--icon-teal)" title="Governance became a multiplier, not a gate.">
             <div className="mt-6">
               <ImageBlock src="/images/casestudy-2/governance-ownership-transformation.webp" alt="Diagram: the master prototype, PM checklist, Design Office Hours and engineering checklist feed into one design operating system, which distributes ownership so PMs explore, Design curates system quality and readiness, and Engineering builds and scales" />
             </div>
@@ -346,11 +312,7 @@ function FamilySafetyPage() {
 
         {/* 12 Team enablement (merged with democratize exploration) */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Team enablement" color="var(--icon-orange)">
-              The biggest change wasn't what Design produced. It was what the team
-              could now do without Design.
-            </Beat>
+          <Section eyebrow="Team enablement" eyebrowColor="var(--icon-orange)" title="The biggest change wasn't what Design produced. It was what the team could now do without Design.">
             <div className="mt-6">
               <BeforeAfter
                 color="var(--icon-orange)"
@@ -378,8 +340,7 @@ function FamilySafetyPage() {
 
         {/* 13 Impact, directional only */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Impact" color="var(--icon-green)">Directional impact, not invented metrics.</Beat>
+          <Section eyebrow="Impact" eyebrowColor="var(--icon-green)" title="Directional impact, not invented metrics.">
             <IconCardList
               columns={3}
               items={[
@@ -403,8 +364,7 @@ function FamilySafetyPage() {
 
         {/* 14 Final transformation diagram */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Transformation" color="var(--icon-blue)">From a production bottleneck to a capability multiplier.</Beat>
+          <Section eyebrow="Transformation" eyebrowColor="var(--icon-blue)" title="From a production bottleneck to a capability multiplier.">
             <div className="mt-6">
               <BeforeAfter
                 color="var(--icon-blue)"
@@ -442,8 +402,7 @@ function FamilySafetyPage() {
 
         {/* 15 Leadership reflection */}
         <Reveal>
-          <Section title="">
-            <Beat eyebrow="Leadership" color="var(--icon-purple)">I didn't scale Design by doing more design.</Beat>
+          <Section eyebrow="Leadership" eyebrowColor="var(--icon-purple)" title="I didn't scale Design by doing more design.">
             <p className="text-xl font-semibold text-foreground mt-2">
               I scaled Design by increasing the team's ability to design well.
             </p>
@@ -514,15 +473,16 @@ function FamilySafetyPage() {
 
         {/* Closing */}
         <Reveal>
-          <div className="text-center py-6">
-            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
-              Design shouldn't be the bottleneck. Quality shouldn't be optional.
-            </p>
-            <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              The future of Design is not doing all the design. It is creating the
-              conditions for more people to design well.
-            </p>
-          </div>
+          <Takeaway
+            supporting={
+              <>
+                The future of Design is not doing all the design. It is creating the
+                conditions for more people to design well.
+              </>
+            }
+          >
+            Design shouldn't be the bottleneck. Quality shouldn't be optional.
+          </Takeaway>
         </Reveal>
 
         <Reveal>

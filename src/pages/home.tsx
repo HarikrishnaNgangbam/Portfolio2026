@@ -4,13 +4,13 @@ import { Seo } from '@/components/seo';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
-import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
 import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { CareerNarrative } from '@/design-system/ui/career-narrative';
 import { buttonVariants } from '@/design-system/ui/button';
 import { ProjectCard } from '@/components/portfolio/project-card';
+import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
 import { EXPERIENCE, EARLIER_COMPANIES } from '@/data/experience';
@@ -254,23 +254,22 @@ function HomePage() {
       {/* Contact CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <Reveal>
-          <AcrylicCard variant="surface" interactive={false} className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Have a complex product problem?
-            </h2>
-            <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl mx-auto">
-              I'm interested in Senior Product Designer and Lead Product Design opportunities
-              where the problem is bigger than a screen: products, platforms, ecosystems and
-              0→1 challenges.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 text-primary font-medium mt-6 hover:gap-3 transition-all"
-            >
-              Let's talk
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </AcrylicCard>
+          <CtaBand
+            heading="Have a complex product problem?"
+            links={
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+              >
+                Let's talk
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            }
+          >
+            I'm interested in Senior Product Designer and Lead Product Design opportunities
+            where the problem is bigger than a screen: products, platforms, ecosystems and
+            0→1 challenges.
+          </CtaBand>
         </Reveal>
       </section>
     </div>

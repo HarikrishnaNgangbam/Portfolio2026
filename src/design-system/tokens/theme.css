@@ -89,6 +89,16 @@
   --shadow-md: 0 4px 16px #3849591f;
   --shadow-lg: 0 8px 32px #38495929;
   --glow-primary: 0 0 20px #88bdf24d, 0 0 40px #88bdf21a;
+
+  /* Semantic tokens for editorial/case-study components (DecisionStrip,
+     EvidenceLabel, Callout kinds). Aliases onto the existing icon-accent
+     palette so meaning has one name instead of a hardcoded var(--icon-*) at
+     every call site — no new colors introduced. */
+  --color-insight: var(--icon-purple);
+  --color-decision: var(--icon-blue);
+  --color-outcome: var(--icon-green);
+  --color-evidence: var(--icon-teal);
+  --color-warning: var(--icon-orange);
 }
 
 .dark {

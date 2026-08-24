@@ -8,6 +8,8 @@ export interface StepFlowItem {
   iconColor?: string;
   title: string;
   description: React.ReactNode;
+  /** Overrides the "Step N" kicker above the title — e.g. "Question", "Decision", "Outcome" — for a flow that isn't a plain sequence of process steps. */
+  kicker?: string;
 }
 
 export interface StepFlowProps {
@@ -64,7 +66,7 @@ function StepFlow({ steps, variant = 'default' }: StepFlowProps) {
             <step.icon className="w-5 h-5" style={{ color: step.iconColor ?? 'var(--icon-blue)' }} />
           </div>
           <span className="text-xs font-semibold text-primary uppercase tracking-wide">
-            Step {i + 1}
+            {step.kicker ?? `Step ${i + 1}`}
           </span>
           <p className="font-semibold text-foreground mt-1">{step.title}</p>
           <p className="text-muted-foreground text-sm mt-1">{step.description}</p>

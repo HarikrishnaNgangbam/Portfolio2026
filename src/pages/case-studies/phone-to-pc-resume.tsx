@@ -14,7 +14,6 @@ import {
   ArrowLeftRight,
   HelpCircle,
   Search,
-  Users,
   Check,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
@@ -30,6 +29,10 @@ import { PressGrid } from '@/components/casestudy/press-grid';
 import { LinkList } from '@/components/casestudy/link-list';
 import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
+import { DecisionStrip } from '@/components/casestudy/decision-strip';
+import { Takeaway } from '@/components/casestudy/takeaway';
+import { Ownership } from '@/components/casestudy/ownership';
+import { BeforeAfterInline } from '@/components/casestudy/before-after';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import {
   SpotifyIcon,
@@ -161,7 +164,7 @@ function PhoneToPcResumePage() {
                 "A perception of Windows as disconnected from the user's flow",
               ]}
             />
-            <Prose callout>
+            <Prose callout kind="insight">
               The real problem wasn't that users couldn't move between devices. It was
               that the device transition broke their mental model of the task.
             </Prose>
@@ -256,13 +259,12 @@ function PhoneToPcResumePage() {
                 partners, including Samsung, Spotify and WhatsApp.
               </p>
             </Prose>
-            <IconCardList
-              columns={2}
+            <Ownership
               items={[
-                { icon: Target, title: 'Strategy', description: 'Defined the Windows Continuity experience strategy.' },
-                { icon: Layers, iconColor: 'var(--icon-purple)', title: 'System design', description: 'Established the interaction model for Phone → PC Resume.' },
-                { icon: LayoutPanelLeft, iconColor: 'var(--icon-green)', title: 'Experience', description: 'Designed the primary Taskbar-first entry point and progressive disclosure model.' },
-                { icon: Users, iconColor: 'var(--icon-orange)', title: 'Alignment', description: 'Worked across Product, Engineering, Platform teams and external partners.' },
+                { dimension: 'vision', description: 'Defined the Windows Continuity experience strategy.' },
+                { dimension: 'system', description: 'Established the interaction model for Phone → PC Resume.' },
+                { dimension: 'experience', description: 'Designed the primary Taskbar-first entry point and progressive disclosure model.' },
+                { dimension: 'collaboration', description: 'Worked across Product, Engineering, Platform teams and external partners.' },
               ]}
             />
           </Section>
@@ -278,7 +280,7 @@ function PhoneToPcResumePage() {
                 about.
               </p>
             </Prose>
-            <Prose callout>
+            <Prose callout kind="insight">
               The more confident Windows is about a user's intent, the more proactive it
               can be.
             </Prose>
@@ -339,18 +341,15 @@ function PhoneToPcResumePage() {
                 <h3 className="text-2xl font-bold text-foreground">
                   01. Taskbar became the primary surface.
                 </h3>
-                <Prose>
-                  <p>
-                    Rather than introducing another notification destination, we placed
-                    Resume where ongoing work already lives: close to the existing
-                    Windows mental model, near active work, with system-owned
-                    interaction and lower cognitive overhead.
-                  </p>
-                </Prose>
+                <DecisionStrip
+                  decision="Placed Resume where ongoing work already lives, the Taskbar, instead of introducing another notification destination."
+                  why="It stays close to the existing Windows mental model, near active work, with system-owned interaction and lower cognitive overhead."
+                />
                 <ImageBlock
                   heading="Design framework for Taskbar Resume"
                   src="/images/casestudy-0/taskbar-framework.webp"
                   alt="Taskbar Resume design framework"
+                  evidence="shipped"
                 />
               </div>
 
@@ -358,9 +357,10 @@ function PhoneToPcResumePage() {
                 <h3 className="text-2xl font-bold text-foreground">
                   02. Progressive disclosure instead of immediate interruption.
                 </h3>
-                <Prose>
-                  <p>Users get more context only when they ask for it.</p>
-                </Prose>
+                <DecisionStrip
+                  decision="Reveal context in stages, signal, then context, then action, instead of surfacing everything at once."
+                  why="Users get more context only when they ask for it, so the ambient signal stays quiet until it's wanted."
+                />
                 <StepFlow
                   variant="numbered"
                   steps={[
@@ -372,6 +372,7 @@ function PhoneToPcResumePage() {
                 <VideoBlock
                   heading="Signal to Resume, demonstrated with Spotify"
                   src="/videos/phone-to-pc-spotify.mp4"
+                  evidence="shipped"
                 />
                 <ImageBlock
                   heading="Resume ingress on Taskbar and hovercard, by app availability"
@@ -384,16 +385,10 @@ function PhoneToPcResumePage() {
                 <h3 className="text-2xl font-bold text-foreground">
                   03. Make the destination predictable.
                 </h3>
-                <Prose>
-                  <p>
-                    One of the biggest anxieties in continuity is not knowing what will
-                    happen after selecting Resume. The hovercard needed to answer what
-                    is being resumed, where it will open, and what to expect.
-                  </p>
-                </Prose>
-                <Prose callout>
-                  The user should understand the consequence before committing to it.
-                </Prose>
+                <DecisionStrip
+                  decision="Made the hovercard always answer what is being resumed, where it will open, and what to expect, before the user commits."
+                  why="One of the biggest anxieties in continuity is not knowing what happens after selecting Resume. The user should understand the consequence before committing to it."
+                />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <ImageBlock
                     src="/images/casestudy-0/spotify-continuity-1.webp"
@@ -408,6 +403,7 @@ function PhoneToPcResumePage() {
                   heading="Resume variations communicating what will happen next"
                   src="/images/casestudy-0/resume-variations.webp"
                   alt="Resume from phone continuity variations"
+                  evidence="shipped"
                 />
               </div>
             </div>
@@ -628,22 +624,10 @@ function PhoneToPcResumePage() {
         {/* What Changed */}
         <Reveal>
           <Section title="What changed">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-border p-5">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Before</p>
-                <p className="font-semibold text-foreground">Connected devices</p>
-                <p className="text-muted-foreground text-sm mt-1">
-                  Users had to reconstruct context between them.
-                </p>
-              </div>
-              <div className="rounded-xl border border-primary/30 bg-accent/10 p-5">
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">After</p>
-                <p className="font-semibold text-foreground">A system that moves with the user</p>
-                <p className="text-muted-foreground text-sm mt-1">
-                  Windows can help users pick up where they left off.
-                </p>
-              </div>
-            </div>
+            <BeforeAfterInline
+              before={{ label: 'Connected devices', sublabel: 'Users had to reconstruct context between them.' }}
+              after={{ label: 'A system that moves with the user', sublabel: 'Windows can help users pick up where they left off.' }}
+            />
             <Prose>
               <p>
                 Phone → PC Resume established a system-level continuity pattern that can
@@ -693,12 +677,10 @@ function PhoneToPcResumePage() {
 
         {/* Closing */}
         <Reveal>
-          <div className="text-center py-6">
-            <p className="text-2xl md:text-3xl font-bold text-foreground max-w-2xl mx-auto leading-snug">
-              Windows doesn't need to ask where you want to work next. It can help you
-              pick up where you left off.
-            </p>
-          </div>
+          <Takeaway>
+            Windows doesn't need to ask where you want to work next. It can help you
+            pick up where you left off.
+          </Takeaway>
         </Reveal>
 
         <Reveal>

@@ -9,6 +9,9 @@ import {
   Target,
   X,
   Check,
+  GitCompare,
+  Workflow,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/design-system/ui/button';
 import { Badge } from '@/design-system/ui/badge';
@@ -25,14 +28,27 @@ import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { CareerNarrative } from '@/design-system/ui/career-narrative';
 import { ProjectCard } from '@/components/portfolio/project-card';
+import { ProjectSignal } from '@/components/portfolio/project-signal';
+import { CtaBand } from '@/components/portfolio/cta-band';
+import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
+import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
+import { Section } from '@/components/casestudy/section';
+import { Beat } from '@/components/casestudy/beat';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
-import { RoleSection } from '@/components/casestudy/role-section';
+import { Ownership } from '@/components/casestudy/ownership';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { CalloutList } from '@/components/casestudy/callout-list';
+import { Prose } from '@/components/casestudy/prose';
+import { Takeaway } from '@/components/casestudy/takeaway';
+import { DecisionStrip } from '@/components/casestudy/decision-strip';
+import { EvidenceLabel, type EvidenceKind } from '@/components/casestudy/evidence-label';
+import { Placeholder } from '@/components/casestudy/placeholder';
 import { StepFlow } from '@/components/casestudy/step-flow';
+import { BeforeAfter, BeforeAfterCompact, BeforeAfterInline } from '@/components/casestudy/before-after';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { Quote } from '@/components/casestudy/quote';
 import { ChecklistSection } from '@/components/casestudy/checklist-section';
+import { Footer } from '@/components/nav/footer';
 import { SettingsModal } from '@/components/nav/settings-modal';
 import { Seo } from '@/components/seo';
 import { PROJECTS } from '@/data/projects';
@@ -58,13 +74,29 @@ const ICON_TOKENS = [
   { name: '--icon-cyan', value: '#45b7d1' },
 ];
 
+const SEMANTIC_TOKENS: { name: string; usage: string }[] = [
+  { name: '--color-insight', usage: 'A callout naming what was learned' },
+  { name: '--color-decision', usage: 'DecisionStrip, and "decision" callouts' },
+  { name: '--color-outcome', usage: 'Results, impact, "outcome" callouts' },
+  { name: '--color-evidence', usage: 'Product exploration evidence' },
+  { name: '--color-warning', usage: 'Caveats, "note" callouts' },
+];
+
+const EVIDENCE_KINDS: EvidenceKind[] = [
+  'shipped',
+  'exploration',
+  'system-model',
+  'design-exploration',
+  'directional-outcome',
+  'concept',
+];
+
 const NAV_LINKS = [
   { id: 'foundations', label: 'Foundations' },
-  { id: 'actions', label: 'Actions' },
-  { id: 'content', label: 'Content' },
+  { id: 'navigation', label: 'Navigation' },
   { id: 'portfolio', label: 'Portfolio' },
+  { id: 'editorial', label: 'Editorial' },
   { id: 'casestudy', label: 'Case Study' },
-  { id: 'interactive', label: 'Interactive' },
 ];
 
 function ShowcaseSection({
@@ -121,11 +153,15 @@ function DesignSystemPage() {
         description="Internal component and design-token reference."
         noindex
       />
+      {/* Renders live: scroll this page to see the actual CaseStudyProgress
+          component in action, the same one mounted on every case study. */}
+      <CaseStudyProgress />
       <H1 className="mb-2">Design System</H1>
       <LeadParagraph className="mb-10">
-        Living documentation of the tokens and components that power this portfolio —
-        every example on this page renders the same production component used
-        elsewhere in the site, so changes to one automatically apply everywhere.
+        Living documentation of the shared component layer that makes this portfolio feel
+        like one coherent system instead of a set of individually designed pages. Every
+        example here renders the same production component used elsewhere in the site, so
+        a change to one automatically applies everywhere.
       </LeadParagraph>
 
       <nav className="flex flex-wrap gap-2 mb-4 sticky top-[72px] z-10 bg-background/95 backdrop-blur py-3 border-b border-border">
@@ -144,7 +180,7 @@ function DesignSystemPage() {
       <ShowcaseSection
         id="foundations"
         title="Foundations"
-        description="Design tokens extracted directly from the reference site's compiled CSS."
+        description="Design tokens extracted directly from the reference site's compiled CSS, plus the semantic aliases layered on top for editorial components."
       >
         <div>
           <h3 className="font-bold text-foreground mb-3">Color</h3>
@@ -174,6 +210,29 @@ function DesignSystemPage() {
                   style={{ backgroundColor: t.value }}
                 />
                 <p className="font-mono text-[10px] text-muted-foreground mt-1">{t.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="font-bold text-foreground mb-3">Semantic tokens</h3>
+          <p className="text-sm text-muted-foreground mb-3">
+            Aliases onto the icon palette above, so editorial components reach for what a
+            color <em>means</em> (a decision, an insight, an outcome) instead of a hardcoded
+            accent — no new palette introduced.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {SEMANTIC_TOKENS.map((t) => (
+              <div key={t.name} className="flex items-center gap-3 rounded-lg border border-border p-3">
+                <div
+                  className="w-10 h-10 rounded-md border border-border shrink-0"
+                  style={{ backgroundColor: `var(${t.name})` }}
+                />
+                <div className="min-w-0">
+                  <p className="font-mono text-xs text-foreground truncate">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.usage}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -236,15 +295,15 @@ function DesignSystemPage() {
           <p className="text-sm text-muted-foreground">
             Sections fade + slide up (700ms ease-out) on scroll into view via
             IntersectionObserver, and reset when scrolled away — matching the
-            reference site's re-triggering behavior. See the <code>Reveal</code>{' '}
-            component wrapping every section on Home, About, Resume, and case-study
-            pages.
+            reference site's re-triggering behavior. Respects{' '}
+            <code>prefers-reduced-motion</code> by skipping straight to the final state.
+            See the <code>Reveal</code> component wrapping every section on Home, About,
+            Resume, and case-study pages, and the reading-progress bar in the{' '}
+            <a href="#navigation" className="text-primary hover:underline">Navigation</a>{' '}
+            section below.
           </p>
         </div>
-      </ShowcaseSection>
 
-      {/* ACTIONS */}
-      <ShowcaseSection id="actions" title="Actions" description="Button variants, sizes, and states.">
         <ComponentDemo name="Button" purpose="Primary interactive element across the site.">
           <div className="flex flex-wrap gap-3">
             <Button variant="default">Default</Button>
@@ -265,7 +324,7 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="Badge" purpose="Color-cycled tag pill (hash-stable per label).">
+        <ComponentDemo name="Badge" purpose="Color-cycled tag pill (hash-stable per label) — for ordinary tags, not project classification. See ProjectSignal in Portfolio for that distinction.">
           <div className="flex flex-wrap gap-2">
             <Badge>Task Continuity</Badge>
             <Badge>Vibe Coding</Badge>
@@ -276,8 +335,172 @@ function DesignSystemPage() {
         </ComponentDemo>
       </ShowcaseSection>
 
-      {/* CONTENT */}
-      <ShowcaseSection id="content" title="Content" description="Text and list primitives.">
+      {/* NAVIGATION */}
+      <ShowcaseSection
+        id="navigation"
+        title="Navigation"
+        description="Orientation — getting around the site, and knowing where you are in a long case study."
+      >
+        <ComponentDemo name="Header / Mobile Nav" purpose="Fixed, translucent, never visually dominant. Resize your browser below the lg breakpoint to see the hamburger menu — it's the same Header rendered site-wide.">
+          <p className="text-sm text-muted-foreground">
+            See the live header at the top of this page.
+          </p>
+        </ComponentDemo>
+
+        <ComponentDemo name="Breadcrumb" purpose="Home / Work / [Case Study] — built into CaseStudyHero, giving every case study a clear way back to Work without a separate component.">
+          <nav aria-label="Breadcrumb example" className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span>Home</span>
+            <span aria-hidden="true">›</span>
+            <span>Work</span>
+            <span aria-hidden="true">›</span>
+            <span className="text-foreground">PC to Phone Resume</span>
+          </nav>
+        </ComponentDemo>
+
+        <ComponentDemo name="CaseStudyProgress" purpose="A 2px reading-progress line fixed just below the header — subtle on desktop and mobile alike, never a floating panel or a page count.">
+          <p className="text-sm text-muted-foreground">
+            Mounted once, at the top of this page (via CaseStudyHero on every case study).
+            Scroll to see it fill — it's tracking your actual position on this page right now.
+          </p>
+        </ComponentDemo>
+
+        <ComponentDemo name="CaseStudyNav" purpose="Previous/Next links between case studies, wrapping at the ends — closes out every case study page.">
+          <CaseStudyNav slug={PROJECTS[0].slug} />
+        </ComponentDemo>
+
+        <ComponentDemo name="Footer" purpose="Site-wide closing note.">
+          <Footer />
+        </ComponentDemo>
+
+        <ComponentDemo name="SettingsModal" purpose="Owner-only settings lock screen, reproduced from the reference.">
+          <Button onClick={() => setSettingsOpen(true)}>Open Settings Modal</Button>
+          <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+        </ComponentDemo>
+      </ShowcaseSection>
+
+      {/* PORTFOLIO */}
+      <ShowcaseSection id="portfolio" title="Portfolio" description="Project listing and career components.">
+        <ComponentDemo name="ProjectSignal" purpose="Immediately communicates the type of design problem a project represents — a design classification, not a filter chip, so it reads as plain tracked text rather than a colored pill.">
+          <div className="space-y-2">
+            <ProjectSignal items={['Systems', 'Platform', 'Shipped']} />
+            <ProjectSignal items={['0→1', 'Vision', 'Cross-platform']} />
+            <ProjectSignal items={['Leadership', 'AI', 'Design Operations']} />
+            <ProjectSignal items={['Ecosystem', 'Operations', 'Scale']} />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="ProjectCard" purpose="Featured/Work project card — links to its case study. `work` variant (default, used on /work) vs `narrative` variant (Home's Selected Work framing). Both now use ProjectSignal for their classification, not Badge.">
+          <div className="space-y-4">
+            <ProjectCard project={PROJECTS[0]} />
+            <ProjectCard project={PROJECTS[0]} variant="narrative" number={1} />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="CtaBand" purpose="The closing 'here's what to do next' prompt shared by Home and Work — a heading, optional supporting copy, and one or more links. `surface` wraps it in an AcrylicCard; `plain` sits directly on the page.">
+          <CtaBand
+            heading="Have a complex product problem?"
+            links={
+              <span className="inline-flex items-center gap-2 text-primary font-medium">
+                Let's talk →
+              </span>
+            }
+          >
+            I'm interested in opportunities where the problem is bigger than a screen.
+          </CtaBand>
+        </ComponentDemo>
+
+        <ComponentDemo name="ExperienceCard" purpose="Work-history card with logo, dates, and bullets.">
+          <ExperienceCard
+            role="Senior Product Designer"
+            company="Microsoft - Windows"
+            companyLogo="/images/logos/microsoft-windows.webp"
+            companyLogoAlt="Microsoft - Windows logo"
+            dates="Aug 2024 - Present"
+            location="Hyderabad, India"
+            bullets={['Lead UX strategy for Windows cross-device continuity']}
+          />
+        </ComponentDemo>
+
+        <ComponentDemo name="CareerNarrative" purpose="Condensed career-chapter card — Home's 'Career across scale and systems' section.">
+          <CareerNarrative
+            company="Microsoft"
+            companyLogo="/images/logos/microsoft-windows.webp"
+            companyLogoAlt="Microsoft - Windows logo"
+            role="Senior Product Designer, Microsoft"
+            dates="Aug 2024 - Present"
+          >
+            Designing cross-device experiences across Windows, phones and connected
+            ecosystems.
+          </CareerNarrative>
+        </ComponentDemo>
+
+        <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Contact.">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <ContactInfoCard icon={Mail} iconColor="var(--icon-orange)" label="Email" value="hello@example.com" />
+            <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Imphal, India" />
+          </div>
+        </ComponentDemo>
+      </ShowcaseSection>
+
+      {/* EDITORIAL */}
+      <ShowcaseSection
+        id="editorial"
+        title="Editorial"
+        description="The narrative-craft components — how a case study speaks, not just what it shows."
+      >
+        <ComponentDemo name="Section (eyebrow + title + supporting)" purpose="The shared section-heading pattern: a category eyebrow, a large narrative headline, and an optional supporting line — used in place of generic 'Overview / Problem / Solution' labels.">
+          <Section
+            eyebrow="The insight"
+            eyebrowColor="var(--icon-purple)"
+            title="Continuity isn't about moving the app. It's about preserving context."
+            supporting="A section heading with all three tiers filled in."
+          >
+            <p className="text-sm text-muted-foreground">Section body content renders here.</p>
+          </Section>
+        </ComponentDemo>
+
+        <ComponentDemo name="Beat" purpose="A standalone eyebrow + headline unit for a secondary beat nested inside an already-titled section. Prefer Section's own eyebrow/title/supporting props for a section's primary heading.">
+          <Beat eyebrow="Field notes" color="var(--icon-teal)">
+            What we found wasn't what we expected.
+          </Beat>
+        </ComponentDemo>
+
+        <ComponentDemo name="Takeaway" purpose="Closes a section with one memorable idea — the portfolio's recurring closing-statement pattern, used identically across every case study instead of a hand-styled centered paragraph.">
+          <Takeaway supporting="This should become one of the portfolio's recognizable patterns.">
+            Continuity isn't about moving the app. It's about preserving the task.
+          </Takeaway>
+        </ComponentDemo>
+
+        <ComponentDemo name="DecisionStrip" purpose="Names a single product/design decision and the reasoning behind it — used sparingly, at genuinely deliberate choices, to communicate senior product thinking.">
+          <DecisionStrip
+            decision="Move from app-level handoff to task-level continuity."
+            why="Context survives the transition."
+          />
+        </ComponentDemo>
+
+        <ComponentDemo name="Prose callout kinds" purpose="Semantic callout types (insight / decision / outcome / note) layered onto the existing neutral callout — omit `kind` for the plain treatment used everywhere else.">
+          <div className="space-y-3">
+            <Prose callout>A plain callout, unchanged from before — no kind specified.</Prose>
+            <Prose callout kind="insight">An insight worth pulling out of the narrative.</Prose>
+            <Prose callout kind="decision">A lighter-weight decision note, for when DecisionStrip is too heavy.</Prose>
+            <Prose callout kind="outcome">What actually happened as a result.</Prose>
+            <Prose callout kind="note">A caveat or scoping note.</Prose>
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="CalloutList" purpose="Tinted summary box — negative / positive / neutral tone, • or ✓ marker.">
+          <div className="space-y-3">
+            <CalloutList tone="negative" title="This caused:" items={['Drop-off during high-intent moments']} />
+            <CalloutList tone="positive" marker="✓" title="This helped:" items={['Act decisively when intent is clear']} />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="Quote" purpose="Attributed pull-quote in large editorial type, attribution kept secondary. Used sparingly.">
+          <Quote attribution="PKM, Jakarta Region">
+            This changed how we work. We're building a smarter, more connected community.
+          </Quote>
+        </ComponentDemo>
+
         <ComponentDemo name="IconList" purpose="Checkmark bullet list — used for Resume/Home experience bullets.">
           <IconList
             items={[
@@ -303,13 +526,6 @@ function DesignSystemPage() {
             <AcrylicCard variant="surface" interactive={false}>
               Surface variant — static
             </AcrylicCard>
-          </div>
-        </ComponentDemo>
-
-        <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Contact.">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <ContactInfoCard icon={Mail} iconColor="var(--icon-orange)" label="Email" value="hello@example.com" />
-            <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Imphal, India" />
           </div>
         </ComponentDemo>
 
@@ -347,41 +563,6 @@ function DesignSystemPage() {
         </ComponentDemo>
       </ShowcaseSection>
 
-      {/* PORTFOLIO */}
-      <ShowcaseSection id="portfolio" title="Portfolio" description="Project listing components.">
-        <ComponentDemo name="ProjectCard" purpose="Featured/Work project card — links to its case study. `work` variant (default, used on /work) vs `narrative` variant (Home's Selected Work framing).">
-          <div className="space-y-4">
-            <ProjectCard project={PROJECTS[0]} />
-            <ProjectCard project={PROJECTS[0]} variant="narrative" number={1} />
-          </div>
-        </ComponentDemo>
-
-        <ComponentDemo name="ExperienceCard" purpose="Work-history card with logo, dates, and bullets.">
-          <ExperienceCard
-            role="Senior Product Designer"
-            company="Microsoft - Windows"
-            companyLogo="/images/logos/microsoft-windows.webp"
-            companyLogoAlt="Microsoft - Windows logo"
-            dates="Aug 2024 - Present"
-            location="Hyderabad, India"
-            bullets={['Lead UX strategy for Windows cross-device continuity']}
-          />
-        </ComponentDemo>
-
-        <ComponentDemo name="CareerNarrative" purpose="Condensed career-chapter card — Home's 'Career across scale and systems' section.">
-          <CareerNarrative
-            company="Microsoft"
-            companyLogo="/images/logos/microsoft-windows.webp"
-            companyLogoAlt="Microsoft - Windows logo"
-            role="Senior Product Designer, Microsoft"
-            dates="Aug 2024 - Present"
-          >
-            Designing cross-device experiences across Windows, phones and connected
-            ecosystems.
-          </CareerNarrative>
-        </ComponentDemo>
-      </ShowcaseSection>
-
       {/* CASE STUDY */}
       <ShowcaseSection
         id="casestudy"
@@ -399,10 +580,13 @@ function DesignSystemPage() {
           />
         </ComponentDemo>
 
-        <ComponentDemo name="RoleSection" purpose="'My Role' arrow-bulleted responsibility list.">
-          <RoleSection
-            title="Lead UX Designer"
-            bullets={['Drove system-level UX strategy', 'Designed primary entry points']}
+        <ComponentDemo name="Ownership" purpose="'What I owned' — every case study maps its real responsibilities onto the same five dimensions (Vision / System / Experience / Collaboration / Execution), styled identically everywhere.">
+          <Ownership
+            items={[
+              { dimension: 'vision', description: 'Defined the continuity vision.' },
+              { dimension: 'system', description: 'Designed the cross-device interaction model.' },
+              { dimension: 'experience', description: 'Balanced automation with user control.' },
+            ]}
           />
         </ComponentDemo>
 
@@ -416,21 +600,69 @@ function DesignSystemPage() {
           />
         </ComponentDemo>
 
-        <ComponentDemo name="CalloutList" purpose="Tinted summary box — negative / positive / neutral tone, • or ✓ marker.">
-          <div className="space-y-3">
-            <CalloutList tone="negative" title="This caused:" items={['Drop-off during high-intent moments']} />
-            <CalloutList tone="positive" marker="✓" title="This helped:" items={['Act decisively when intent is clear']} />
+        <ComponentDemo name="StepFlow" purpose="Numbered step flow with icon avatars. Each step's kicker can be overridden (e.g. 'Question' / 'Decision' / 'Outcome') instead of the default 'Step N', for a flow that isn't a plain process sequence.">
+          <div className="space-y-6">
+            <StepFlow
+              steps={[
+                { icon: Smartphone, title: 'Activity detected', description: 'User acts on phone' },
+                { icon: Bell, iconColor: 'var(--icon-purple)', title: 'Alert appears', description: 'Ambient notification' },
+                { icon: Check, iconColor: 'var(--icon-green)', title: 'Resumed', description: 'Task continues' },
+              ]}
+            />
+            <StepFlow
+              steps={[
+                { icon: Target, kicker: 'Question', title: 'Where should it appear?', description: 'Ambient, timely, active or persistent' },
+                { icon: Workflow, kicker: 'Decision', iconColor: 'var(--icon-purple)', title: 'Match the surface to the moment', description: 'Different attention levels need different surfaces' },
+                { icon: Check, kicker: 'Outcome', iconColor: 'var(--icon-green)', title: 'Four distinct entry points', description: 'Each with a clear reason to exist' },
+              ]}
+            />
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="StepFlow" purpose="Numbered step flow with icon avatars — UX/workflow diagrams.">
-          <StepFlow
-            steps={[
-              { icon: Smartphone, title: 'Activity detected', description: 'User acts on phone' },
-              { icon: Bell, iconColor: 'var(--icon-purple)', title: 'Alert appears', description: 'Ambient notification' },
-              { icon: Check, iconColor: 'var(--icon-green)', title: 'Resumed', description: 'Task continues' },
-            ]}
-          />
+        <ComponentDemo name="BeforeAfter family" purpose="Three sizes of the same transformation pattern (manual → automated, fragmented → unified): a two-column panel for richer content, a compact single card for dense grids, and an inline pair for a short textual contrast.">
+          <div className="space-y-4">
+            <BeforeAfterInline
+              before={{ label: 'Connected devices', sublabel: 'Users had to reconstruct context.' }}
+              after={{ label: 'A system that moves with the user', sublabel: 'Windows helps pick up where they left off.' }}
+            />
+            <div className="grid sm:grid-cols-3 gap-3">
+              <BeforeAfterCompact icon={GitCompare} before="Separate flows" after="One session flow" color="var(--icon-green)" />
+              <BeforeAfterCompact icon={GitCompare} before="Connectivity required" after="Offline capture + sync" color="var(--icon-orange)" />
+              <BeforeAfterCompact icon={GitCompare} before="Too many metrics" after="Focused signals" color="var(--icon-teal)" />
+            </div>
+            <BeforeAfter
+              color="var(--icon-blue)"
+              before={<p className="text-sm text-muted-foreground">Any content — text, a diagram, a small flow.</p>}
+              after={<p className="text-sm text-muted-foreground">Any content on the other side too.</p>}
+            />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="EvidenceLabel" purpose="A quiet marker distinguishing what kind of evidence an image or video represents, since the portfolio mixes real shipped screenshots with conceptual artifacts. Wired into ImageBlock/VideoBlock via an optional `evidence` prop.">
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {EVIDENCE_KINDS.map((kind) => (
+              <EvidenceLabel key={kind} kind={kind} />
+            ))}
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="Placeholder" purpose="Stand-in for a visual asset that doesn't exist yet, naming exactly what belongs there. `diagram` variant for a system/concept model; `screenshot` variant locks a fixed aspect ratio for a specific product screenshot.">
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Placeholder
+              icon={Workflow}
+              title="Context Transfer Model"
+              type="System diagram placeholder"
+              descriptor="How intent, state and context travel with a task"
+              color="var(--icon-purple)"
+            />
+            <Placeholder
+              variant="screenshot"
+              icon={ImageIcon}
+              title="FS_BEFORE_AFTER"
+              type="Insert: before/after screenshot"
+              aspect="video"
+            />
+          </div>
         </ComponentDemo>
 
         <ComponentDemo name="StatGrid" purpose="Big-number metric cards — Metrics & Impact / Results sections.">
@@ -444,37 +676,12 @@ function DesignSystemPage() {
           />
         </ComponentDemo>
 
-        <ComponentDemo name="Quote" purpose="Attributed pull-quote.">
-          <Quote attribution="PKM, Jakarta Region">
-            "This changed how we work. We're building a smarter, more connected
-            community."
-          </Quote>
-        </ComponentDemo>
-
         <ComponentDemo name="ChecklistSection" purpose="Individually-boxed checkmark rows with an optional closing statement — Outcome sections.">
           <ChecklistSection
             intro="This work established a durable pattern:"
             items={['Users move between devices without restarting work']}
             closingStatement="This repositioned the product as a connected system."
           />
-        </ComponentDemo>
-      </ShowcaseSection>
-
-      {/* INTERACTIVE */}
-      <ShowcaseSection
-        id="interactive"
-        title="Interactive"
-        description="Stateful components — open them to inspect behavior."
-      >
-        <ComponentDemo name="SettingsModal" purpose="Owner-only settings lock screen, reproduced from the reference.">
-          <Button onClick={() => setSettingsOpen(true)}>Open Settings Modal</Button>
-          <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-        </ComponentDemo>
-
-        <ComponentDemo name="Header / Mobile Nav" purpose="Resize your browser below the lg breakpoint to see the hamburger menu — it's the same Header component rendered site-wide.">
-          <p className="text-sm text-muted-foreground">
-            See the live header at the top of this page.
-          </p>
         </ComponentDemo>
       </ShowcaseSection>
 

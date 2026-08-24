@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
-import { Badge } from '@/design-system/ui/badge';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
+import { ProjectSignal } from '@/components/portfolio/project-signal';
 import type { ProjectSummary } from '@/data/projects';
 
 export interface ProjectCardProps {
@@ -31,8 +31,8 @@ function ProjectCard({
   number,
 }: ProjectCardProps) {
   const narrative = variant === 'narrative' ? project.narrative : undefined;
-  /** First capability doubles as the project's "problem type" label on /work — e.g. "Systems", "Ecosystem". */
-  const problemType = variant === 'work' ? project.narrative?.capabilities[0] : undefined;
+  /** The project's design-classification signal — capabilities on /work's case-study framing, falling back to tags when a project has no narrative metadata. */
+  const signal = variant === 'work' ? (project.narrative?.capabilities ?? project.tags) : undefined;
 
   return (
     <Link to={`/work/${project.slug}`} className="block">
@@ -49,15 +49,13 @@ function ProjectCard({
         <div className="flex-1 min-w-0">
           {narrative ? (
             <>
-              <div className="flex flex-wrap items-center gap-2 mb-2">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
                 {number != null && (
                   <span className="text-sm font-mono text-muted-foreground">
                     {String(number).padStart(2, '0')}
                   </span>
                 )}
-                {narrative.capabilities.map((cap) => (
-                  <Badge key={cap}>{cap}</Badge>
-                ))}
+                <ProjectSignal items={narrative.capabilities} />
               </div>
               <p className="text-sm font-medium text-primary italic">{narrative.label}</p>
               <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors mt-1">
@@ -72,18 +70,13 @@ function ProjectCard({
             </>
           ) : (
             <>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                {problemType && (
-                  <>
-                    <Badge className="text-xs px-2.5 py-1">{problemType}</Badge>
-                    <span aria-hidden="true">•</span>
-                  </>
-                )}
+              {signal && <ProjectSignal items={signal} className="mb-2" />}
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span>{project.period}</span>
                 <span aria-hidden="true">•</span>
                 <span>{project.role}</span>
               </div>
-              <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors">
+              <Heading className="text-3xl md:text-4xl font-bold text-foreground group-hover:text-primary transition-colors mt-1">
                 {project.title}
               </Heading>
               <p className="text-lg text-muted-foreground font-medium mt-1">
@@ -95,11 +88,6 @@ function ProjectCard({
               {project.narrative?.evidence && (
                 <p className="text-sm text-muted-foreground mt-3">{project.narrative.evidence}</p>
               )}
-              <div className="flex flex-wrap gap-2 mt-4">
-                {project.tags.map((tag) => (
-                  <Badge key={tag}>{tag}</Badge>
-                ))}
-              </div>
             </>
           )}
           <div className="flex items-center gap-2 text-primary font-medium mt-6 group-hover:gap-3 transition-all">
