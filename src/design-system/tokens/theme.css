@@ -99,6 +99,19 @@
   --color-outcome: var(--icon-green);
   --color-evidence: var(--icon-teal);
   --color-warning: var(--icon-orange);
+
+  /*
+   * Warm editorial surface — introduced for Home's redesign and the shared
+   * Header. Additive only: --background/--foreground/--primary and every
+   * other globally-load-bearing token above are untouched, so About, Work,
+   * Contact, Resume and the case studies keep their current appearance.
+   * Home opts into this via an explicit style/className, not by changing
+   * the tokens every page already inherits.
+   */
+  --surface-warm: #faf8f4;
+  --surface-warm-foreground: #2b2622;
+  --surface-warm-muted: #6b6459;
+  --surface-warm-border: #e6e1d8;
 }
 
 .dark {
@@ -208,6 +221,10 @@
 
   --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* Editorial display serif for Home's headings — loaded via Google Fonts
+     in index.html. Not applied to body/base typography anywhere, so it
+     only shows up where a component explicitly opts in with font-serif. */
+  --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 }
 
 @layer base {

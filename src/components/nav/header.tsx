@@ -15,6 +15,8 @@ function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  /** The wordmark on the left is the Home link, so the text nav only lists the rest. */
+  const navLinks = NAV_ITEMS.filter((item) => item.href !== '/');
   const activeItem = NAV_ITEMS.find((item) => isActive(location.pathname, item.href));
   const currentTitle = activeItem?.label ?? 'Home';
 
@@ -22,51 +24,55 @@ function Header() {
     <>
       <nav
         aria-label="Main"
-        className="fixed top-0 left-0 right-0 z-50 w-full border-b border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl shadow-[var(--shadow-sm)]"
+        className="fixed top-0 left-0 right-0 z-50 w-full bg-background/90 backdrop-blur-sm border-b border-border"
       >
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between max-w-7xl mx-auto h-[72px]">
+            <Link
+              to="/"
+              aria-label="Harikrishna Ngangbam, Home"
+              className="flex items-baseline font-serif text-xl font-bold text-foreground shrink-0"
+            >
+              HK
+              <span aria-hidden="true" style={{ color: 'var(--icon-red)' }}>
+                °
+              </span>
+            </Link>
+
             {/* Desktop layout */}
-            <div className="hidden lg:block w-24" />
-            <div className="hidden lg:flex items-center gap-3">
-              {NAV_ITEMS.map((item) => {
+            <div className="hidden lg:flex items-center gap-8">
+              {navLinks.map((item) => {
                 const active = isActive(location.pathname, item.href);
-                const Icon = item.icon;
                 return (
                   <Link
                     key={item.href}
                     to={item.href}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+                      'text-sm font-medium pb-1 border-b-2 transition-colors duration-200',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm',
                       active
-                        ? 'text-primary bg-accent shadow-md'
-                        : 'text-muted-foreground hover:text-primary hover:bg-accent/80 hover:shadow-sm',
+                        ? 'text-foreground border-b-[var(--icon-purple)]'
+                        : 'text-muted-foreground border-transparent hover:text-foreground',
                     )}
                   >
-                    <Icon
-                      className="w-4 h-4"
-                      style={item.href === '/' ? { color: 'var(--icon-blue)' } : undefined}
-                    />
                     {item.label}
                   </Link>
                 );
               })}
-            </div>
-            <div className="hidden lg:flex w-24 justify-end">
               <button
                 type="button"
                 aria-label="Settings"
                 onClick={() => setSettingsOpen(true)}
-                className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:text-primary hover:bg-accent/80 transition-all duration-300"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground/60 hover:text-muted-foreground transition-colors duration-200"
               >
-                <Settings className="w-5 h-5" />
+                <Settings className="w-4 h-4" />
               </button>
             </div>
 
             {/* Mobile layout */}
-            <div className="flex lg:hidden items-center justify-between w-full">
+            <div className="flex lg:hidden items-center justify-between flex-1 pl-4">
+              <span className="font-medium text-foreground">{currentTitle}</span>
               <button
                 type="button"
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -74,16 +80,12 @@ function Header() {
                 aria-controls="mobile-nav-panel"
                 onClick={() => setMobileOpen((v) => !v)}
                 className={cn(
-                  'flex h-9 w-9 items-center justify-center rounded-full transition-all duration-300',
-                  mobileOpen
-                    ? 'text-primary bg-accent'
-                    : 'text-foreground hover:bg-accent/80',
+                  'flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200',
+                  mobileOpen ? 'text-foreground bg-muted' : 'text-foreground hover:bg-muted',
                 )}
               >
                 {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
-              <span className="font-semibold text-foreground">{currentTitle}</span>
-              <div className="w-9" />
             </div>
           </div>
         </div>
@@ -92,25 +94,21 @@ function Header() {
         {mobileOpen && (
           <div
             id="mobile-nav-panel"
-            className="lg:hidden border-t border-[var(--acrylic-border)] bg-[var(--acrylic-base)] backdrop-blur-2xl px-4 py-3"
+            className="lg:hidden border-t border-border bg-background px-4 py-3"
           >
             <div className="flex flex-col gap-1">
-              {NAV_ITEMS.map((item) => {
+              {navLinks.map((item) => {
                 const active = isActive(location.pathname, item.href);
-                const Icon = item.icon;
                 return (
                   <Link
                     key={item.href}
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300',
-                      active
-                        ? 'text-primary bg-accent'
-                        : 'text-foreground hover:bg-accent/50',
+                      'px-3 py-3 rounded-lg text-sm font-medium transition-colors duration-200',
+                      active ? 'text-foreground bg-muted' : 'text-muted-foreground hover:bg-muted',
                     )}
                   >
-                    <Icon className="w-4 h-4" />
                     {item.label}
                   </Link>
                 );
@@ -121,7 +119,7 @@ function Header() {
                   setMobileOpen(false);
                   setSettingsOpen(true);
                 }}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-accent/50 transition-all duration-300"
+                className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors duration-200"
               >
                 <Settings className="w-4 h-4" />
                 Settings

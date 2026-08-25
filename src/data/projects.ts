@@ -8,6 +8,9 @@ export interface ProjectSummary {
   tags: string[];
   coverImage: string;
   coverAlt: string;
+  /** Company the project was built at, for the compact project-card logo. Reuses the same logo assets as EXPERIENCE. */
+  companyLogo?: string;
+  companyLogoAlt?: string;
   /**
    * Homepage-only narrative framing for the "Selected Work" section. Falls
    * back to the case-study fields above (used on /work and the case-study
@@ -37,6 +40,8 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['Phone to PC Continuity', 'Task Continuity', 'Cross Platform'],
     coverImage: '/images/shared/project-phone-to-pc-cover.webp',
     coverAlt: 'Phone to PC Resume - Taskbar and system-level continuity',
+    companyLogo: '/images/logos/microsoft-windows.webp',
+    companyLogoAlt: 'Microsoft',
     narrative: {
       title: 'Windows Phone → PC Continuity',
       label: 'When the system spans devices',
@@ -57,6 +62,8 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['System Design', 'Community Engagement', 'Super App'],
     coverImage: '/images/shared/project-kopdar-cover.webp',
     coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
+    companyLogo: '/images/logos/gojek-tech.webp',
+    companyLogoAlt: 'Gojek',
     narrative: {
       title: 'GoAgent / Kopdar',
       label: 'When the system spans an organization',
@@ -76,6 +83,8 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['AI Workflow', 'Vibe Coding', 'Design Operations'],
     coverImage: '/images/shared/project-family-safety-cover.webp',
     coverAlt: 'Family Safety app interface with collaborative team environment',
+    companyLogo: '/images/logos/microsoft-windows.webp',
+    companyLogoAlt: 'Microsoft',
     narrative: {
       title: 'Family Safety',
       label: 'When the system includes the design team',
@@ -95,6 +104,8 @@ export const PROJECTS: ProjectSummary[] = [
     tags: ['PC to Phone Continuity', 'Bi-directional Continuity', 'Connected Experience'],
     coverImage: '/images/shared/project-pc-to-phone-cover.webp',
     coverAlt: 'PC to Phone continuity - Desktop to mobile transition',
+    companyLogo: '/images/logos/microsoft-windows.webp',
+    companyLogoAlt: 'Microsoft',
     narrative: {
       title: 'PC → Phone Continuity',
       label: "When the system doesn't exist yet",

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
+import { Badge } from '@/design-system/ui/badge';
 import { ProjectSignal } from '@/components/portfolio/project-signal';
 import type { ProjectSummary } from '@/data/projects';
 
@@ -15,12 +16,14 @@ export interface ProjectCardProps {
   headingLevel?: 'h2' | 'h3';
   /**
    * `work` (default) = case-study framing (title/subtitle/description/tags),
-   * used on /work and the /design-system showcase. `narrative` = Home's
-   * "Selected Work" framing (project.narrative), numbered and editorial.
-   * Falls back to `work` fields if `project.narrative` is absent.
+   * used on /work and the /design-system showcase. `narrative` = a numbered,
+   * editorial single-column framing (project.narrative). `compact` = a
+   * grid-friendly vertical card (image on top, metadata below) for a
+   * multi-column layout, used by Home's project grid. `narrative` and
+   * `compact` fall back to `work` fields if `project.narrative` is absent.
    */
-  variant?: 'work' | 'narrative';
-  /** 1-based position, shown as a numeral badge in `narrative` variant. */
+  variant?: 'work' | 'narrative' | 'compact';
+  /** 1-based position, shown as a numeral badge in `narrative`/`compact` variants. */
   number?: number;
 }
 
@@ -30,9 +33,74 @@ function ProjectCard({
   variant = 'work',
   number,
 }: ProjectCardProps) {
-  const narrative = variant === 'narrative' ? project.narrative : undefined;
+  const narrative = variant !== 'work' ? project.narrative : undefined;
   /** The project's design-classification signal — capabilities on /work's case-study framing, falling back to tags when a project has no narrative metadata. */
   const signal = variant === 'work' ? (project.narrative?.capabilities ?? project.tags) : undefined;
+
+  if (variant === 'compact') {
+    const tags = narrative?.capabilities ?? project.tags;
+    /** Evidence is one verified string like "3.1M monthly alerts · 290K+ engaged users · 8.5% conversion" — split into stat/label pairs for display, never fabricated for projects that don't have one. */
+    const stats = narrative?.evidence
+      ?.split('·')
+      .map((chunk) => chunk.trim())
+      .filter(Boolean)
+      .map((chunk) => {
+        const [value, ...labelWords] = chunk.split(' ');
+        return { value, label: labelWords.join(' ') };
+      });
+
+    return (
+      <Link
+        to={`/work/${project.slug}`}
+        className="group block rounded-2xl border border-border bg-card overflow-hidden transition-colors duration-200 hover:border-[var(--icon-purple)]/50"
+      >
+        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+          {number != null && (
+            <span className="absolute top-3 left-3 z-10 flex items-center justify-center w-7 h-7 rounded-full bg-background/90 text-xs font-bold text-foreground">
+              {String(number).padStart(2, '0')}
+            </span>
+          )}
+          <ImageWithFallback
+            src={project.coverImage}
+            alt={project.coverAlt}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+        <div className="p-5">
+          {project.companyLogo && (
+            <ImageWithFallback
+              src={project.companyLogo}
+              alt={project.companyLogoAlt ?? ''}
+              className="h-4 w-auto object-contain mb-2"
+            />
+          )}
+          <Heading className="font-bold text-foreground leading-snug group-hover:text-[var(--icon-purple)] transition-colors">
+            {narrative?.title ?? project.title}
+          </Heading>
+          {narrative?.label && (
+            <p className="text-sm text-muted-foreground italic mt-1">{narrative.label}</p>
+          )}
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {tags.slice(0, 3).map((tag) => (
+              <Badge key={tag} className="text-[11px] px-2 py-1">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+          {stats && stats.length > 0 && (
+            <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-border">
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-bold text-sm text-foreground">{stat.value}</p>
+                  <p className="text-[11px] text-muted-foreground leading-tight">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link to={`/work/${project.slug}`} className="block">
