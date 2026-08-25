@@ -112,20 +112,23 @@ const CAREER_TIMELINE = [
     company: 'Microsoft',
     logo: MICROSOFT.companyLogo,
     logoAlt: MICROSOFT.companyLogoAlt,
-    dates: MICROSOFT.dates,
+    // Authoritative display dates for this timeline, provided directly by
+    // the site owner — intentionally not EXPERIENCE[].dates (which is more
+    // granular, e.g. exact start month).
+    dates: '2024 – Present',
     description: MICROSOFT.narrativeSummary,
   },
   {
     company: 'Gojek',
     logo: GOJEK.companyLogo,
     logoAlt: GOJEK.companyLogoAlt,
-    dates: GOJEK.dates,
+    dates: '2017 – 2022',
     description: GOJEK.narrativeSummary,
   },
   {
     company: 'Earlier career',
     role: EARLIER_COMPANIES.join(' · '),
-    dates: '2014 - 2024',
+    dates: '2014 – 2017',
     description:
       'Engineering, industrial design and product design experiences that shaped how I think about making, systems and pragmatic execution.',
   },
@@ -172,13 +175,13 @@ function HomePage() {
       />
 
       {/* Hero */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:pt-20 md:pb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14 md:pt-12 md:pb-16">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <Reveal>
             <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
               Design Leader · Microsoft
             </p>
-            <H1 size="hero" className="font-serif mt-3 leading-[1.08]">
+            <H1 size="page" className="font-serif mt-3 leading-[1.02]">
               I'm Harikrishna.
               <br />
               I design through
@@ -186,13 +189,13 @@ function HomePage() {
               complexity
               <span style={{ color: 'var(--icon-purple)' }}>.</span>
             </H1>
-            <LeadParagraph className="mt-6 max-w-md">
+            <LeadParagraph className="mt-5 max-w-md">
               10+ years designing products, platforms and ecosystems across Microsoft and Gojek.
             </LeadParagraph>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mt-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mt-4">
               Systems Thinking · Product Strategy · AI · 0→1 · Design Leadership
             </p>
-            <div className="flex flex-wrap items-center gap-6 mt-6">
+            <div className="flex flex-wrap items-center gap-6 mt-5">
               <a
                 href="#selected-work"
                 className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
@@ -205,7 +208,7 @@ function HomePage() {
                 Manipur, India
               </div>
             </div>
-            <div className="flex items-start gap-3 mt-8 rounded-2xl border p-4 max-w-md">
+            <div className="flex items-start gap-3 mt-6 rounded-2xl border p-4 max-w-md">
               <Sparkles className="w-4 h-4 mt-0.5 shrink-0" style={{ color: 'var(--icon-purple)' }} />
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Engineer by degree, Designer by practice &amp; Curious by default. DIY tinkerer and
@@ -214,9 +217,9 @@ function HomePage() {
             </div>
           </Reveal>
           <Reveal delay={150}>
-            <div className="relative">
+            <div className="relative max-w-sm mx-auto lg:mx-0 lg:ml-auto">
               <DotPattern
-                className="hidden lg:block absolute -left-10 -top-6 w-28 h-28 -z-10"
+                className="hidden lg:block absolute -left-10 -top-6 w-24 h-24 -z-10"
                 spacing={14}
                 size={1.25}
                 color="var(--icon-purple)"
@@ -236,12 +239,12 @@ function HomePage() {
       </section>
 
       {/* Complexity comes in different forms */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             Complexity comes in different forms.
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 mt-10">
+          <div className="grid md:grid-cols-3 gap-8 mt-6">
             <IconColumn icon={Users} color="var(--icon-blue)" title="People">
               Different needs, mental models, constraints and emotions all interact. Designing for
               real people is never simple.
@@ -258,20 +261,20 @@ function HomePage() {
       </section>
 
       {/* How I lead */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">How I lead</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-8 mt-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-6 mt-8">
             {LEAD_PRINCIPLES.map((p, i) => (
-              <div key={p.title} className={cn('lg:px-6 first:lg:pl-0', i > 0 && 'lg:border-l')}>
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-bold" style={{ color: p.color }}>
+              <div key={p.title} className={cn('lg:px-5 first:lg:pl-0', i > 0 && 'lg:border-l')}>
+                <div className="flex items-center gap-2.5 mb-2.5">
+                  <span className="text-xs font-semibold" style={{ color: p.color }}>
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p.icon className="w-4 h-4 text-muted-foreground" />
+                  <p.icon className="w-3.5 h-3.5 text-muted-foreground" />
                 </div>
-                <h3 className="font-bold text-foreground leading-snug">{p.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mt-2">{p.description}</p>
+                <h3 className="font-semibold text-foreground leading-snug text-[15px]">{p.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mt-1.5">{p.description}</p>
               </div>
             ))}
           </div>
@@ -279,12 +282,12 @@ function HomePage() {
       </section>
 
       {/* Selected Work */}
-      <section id="selected-work" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t scroll-mt-24">
+      <section id="selected-work" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t scroll-mt-24">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             A few problems I've had the privilege to work on
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
             {projects.map((project, i) => (
               <Reveal key={project.slug} delay={i * 80}>
                 <ProjectCard project={project} variant="compact" number={i + 1} headingLevel="h3" />
@@ -304,7 +307,7 @@ function HomePage() {
       </section>
 
       {/* Problems I like */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             I'm drawn to problems where...
@@ -320,7 +323,7 @@ function HomePage() {
       </section>
 
       {/* Career across scale and systems */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             A career that taught me to think in systems
@@ -370,7 +373,7 @@ function HomePage() {
       </section>
 
       {/* Contact CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <CtaBand
             variant="panel"

@@ -52,11 +52,11 @@ function ProjectCard({
     return (
       <Link
         to={`/work/${project.slug}`}
-        className="group block rounded-2xl border border-border bg-card overflow-hidden transition-colors duration-200 hover:border-[var(--icon-purple)]/50"
+        className="group block rounded-xl border border-border bg-card overflow-hidden transition-colors duration-200 hover:border-[var(--icon-purple)]/50"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+        <div className="relative aspect-video overflow-hidden bg-muted">
           {number != null && (
-            <span className="absolute top-3 left-3 z-10 flex items-center justify-center w-7 h-7 rounded-full bg-background/90 text-xs font-bold text-foreground">
+            <span className="absolute top-2.5 left-2.5 z-10 flex items-center justify-center w-6 h-6 rounded-full bg-background/90 text-[11px] font-bold text-foreground">
               {String(number).padStart(2, '0')}
             </span>
           )}
@@ -66,33 +66,33 @@ function ProjectCard({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <div className="p-5">
+        <div className="p-4">
           {project.companyLogo && (
             <ImageWithFallback
               src={project.companyLogo}
               alt={project.companyLogoAlt ?? ''}
-              className="h-4 w-auto object-contain mb-2"
+              className="h-3.5 w-auto object-contain mb-2"
             />
           )}
-          <Heading className="font-bold text-foreground leading-snug group-hover:text-[var(--icon-purple)] transition-colors">
+          <Heading className="text-[15px] font-semibold text-foreground leading-snug group-hover:text-[var(--icon-purple)] transition-colors">
             {narrative?.title ?? project.title}
           </Heading>
           {narrative?.label && (
-            <p className="text-sm text-muted-foreground italic mt-1">{narrative.label}</p>
+            <p className="text-xs text-muted-foreground italic mt-1">{narrative.label}</p>
           )}
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="flex flex-wrap gap-1 mt-2.5">
             {tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} className="text-[11px] px-2 py-1">
+              <Badge key={tag} className="text-[10px] px-1.5 py-0.5">
                 {tag}
               </Badge>
             ))}
           </div>
           {stats && stats.length > 0 && (
-            <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-border">
+            <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-border">
               {stats.map((stat) => (
                 <div key={stat.label}>
                   <p className="font-bold text-sm text-foreground">{stat.value}</p>
-                  <p className="text-[11px] text-muted-foreground leading-tight">{stat.label}</p>
+                  <p className="text-[10px] text-muted-foreground leading-tight">{stat.label}</p>
                 </div>
               ))}
             </div>

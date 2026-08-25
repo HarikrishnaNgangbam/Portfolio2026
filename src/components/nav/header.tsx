@@ -24,7 +24,7 @@ function Header() {
     <>
       <nav
         aria-label="Main"
-        className="fixed top-0 left-0 right-0 z-50 w-full bg-background/90 backdrop-blur-sm border-b border-border"
+        className="fixed top-0 left-0 right-0 z-50 w-full bg-[var(--surface-warm)]/85 backdrop-blur-sm border-b border-[var(--surface-warm-border)]"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between max-w-7xl mx-auto h-[72px]">
@@ -94,7 +94,7 @@ function Header() {
         {mobileOpen && (
           <div
             id="mobile-nav-panel"
-            className="lg:hidden border-t border-border bg-background px-4 py-3"
+            className="lg:hidden border-t border-[var(--surface-warm-border)] bg-[var(--surface-warm)] px-4 py-3"
           >
             <div className="flex flex-col gap-1">
               {navLinks.map((item) => {
