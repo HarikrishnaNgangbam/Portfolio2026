@@ -66,7 +66,7 @@ const LEAD_PRINCIPLES: { icon: IconComponent; color: string; title: string; desc
   },
   {
     icon: Users,
-    color: 'var(--icon-teal)',
+    color: 'var(--icon-cyan)',
     title: 'Give design a seat at the decision table',
     description:
       'I believe design should influence product direction, not just express decisions made elsewhere.',
@@ -147,10 +147,10 @@ function IconColumn({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="rounded-2xl p-5" style={{ backgroundColor: tint(color, 6) }}>
       <div
         className="w-10 h-10 rounded-full flex items-center justify-center mb-4"
-        style={{ backgroundColor: tint(color, 12) }}
+        style={{ backgroundColor: tint(color, 18) }}
       >
         <Icon className="w-5 h-5" style={{ color }} />
       </div>
@@ -217,7 +217,7 @@ function HomePage() {
             </div>
           </Reveal>
           <Reveal delay={150}>
-            <div className="relative max-w-sm mx-auto lg:mx-0 lg:ml-auto">
+            <div className="relative max-w-sm lg:max-w-lg mx-auto lg:mx-0 lg:ml-auto">
               <DotPattern
                 className="hidden lg:block absolute -left-10 -top-6 w-24 h-24 -z-10"
                 spacing={14}
@@ -249,7 +249,7 @@ function HomePage() {
               Different needs, mental models, constraints and emotions all interact. Designing for
               real people is never simple.
             </IconColumn>
-            <IconColumn icon={Package} color="var(--icon-teal)" title="Products">
+            <IconColumn icon={Package} color="var(--icon-purple)" title="Products">
               Features, flows, states, platforms and dependencies. The more powerful the product,
               the more complex it becomes.
             </IconColumn>
@@ -264,9 +264,13 @@ function HomePage() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">How I lead</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-y-6 mt-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
             {LEAD_PRINCIPLES.map((p, i) => (
-              <div key={p.title} className={cn('lg:px-5 first:lg:pl-0', i > 0 && 'lg:border-l')}>
+              <div
+                key={p.title}
+                className={cn('rounded-xl p-4', i > 0 && 'lg:border-l')}
+                style={{ backgroundColor: tint(p.color, 5) }}
+              >
                 <div className="flex items-center gap-2.5 mb-2.5">
                   <span className="text-xs font-semibold" style={{ color: p.color }}>
                     {String(i + 1).padStart(2, '0')}
