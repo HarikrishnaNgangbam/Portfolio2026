@@ -21,6 +21,8 @@ import {
   Layers,
   TrendingUp,
   ExternalLink,
+  Sparkles,
+  Users,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { Section } from '@/components/casestudy/section';
@@ -28,11 +30,11 @@ import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { StepFlow } from '@/components/casestudy/step-flow';
 import { VideoBlock, ImageBlock } from '@/components/casestudy/image-block';
+import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { StatGrid } from '@/components/casestudy/stat-grid';
 import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Takeaway } from '@/components/casestudy/takeaway';
-import { Ownership } from '@/components/casestudy/ownership';
 import {
   SpotifyIcon,
   BrowserIcon,
@@ -94,6 +96,20 @@ const IMPACT_STATS = [
   { value: '290K+', label: 'Monthly engaged users' },
   { value: '8.5%', label: 'Conversion on Resume toasts' },
   { value: '~28%', label: 'Engagement rate on Toolbar Resume' },
+];
+
+/**
+ * The five-part contribution row. Rendered as a plain local grid (not the
+ * shared Ownership component, which caps at 3 columns and would wrap these
+ * 5 items into 3+2 rows) so the reference's single horizontal row is
+ * preserved on desktop.
+ */
+const ROLE_CONTRIBUTIONS: { icon: IconComponent; color: string; title: string; description: string }[] = [
+  { icon: Target, color: 'var(--icon-blue)', title: 'Vision & Strategy', description: 'Defined the Windows continuity vision.' },
+  { icon: Layers, color: 'var(--icon-purple)', title: 'System Design', description: 'Established the system behavior.' },
+  { icon: Sparkles, color: 'var(--icon-teal)', title: 'Experience Design', description: 'Designed the Taskbar experience.' },
+  { icon: Users, color: 'var(--icon-orange)', title: 'Collaboration', description: 'Partnered with Product, Engineering, Platform teams and external partners.' },
+  { icon: TrendingUp, color: 'var(--icon-green)', title: 'Impact', description: 'Shipped a capability now used by hundreds of thousands of people monthly.' },
 ];
 
 interface DiagramItem {
@@ -269,6 +285,8 @@ interface PressItemData {
   publication: string;
   headline: string;
   href: string;
+  /** Real press-clipping screenshot, only set where one actually exists in the repository. */
+  image?: string;
 }
 
 /** Real existing press coverage already documented for this case study, restructured into the reference's editorial text-card treatment rather than the shared PressGrid's screenshot-thumbnail style. No publication or headline here is invented — see LinkList entries this page previously rendered. */
@@ -277,6 +295,7 @@ const PRESS_ITEMS: PressItemData[] = [
     publication: 'The Verge',
     headline: "Windows 11's ability to resume Android apps like Apple Handoff.",
     href: 'https://www.theverge.com/news/869161/microsoft-windows-11-android-app-resume-feature-release-preview',
+    image: '/images/casestudy-0/press-theverge.webp',
   },
   {
     publication: 'Windows Insider Blog',
@@ -467,16 +486,14 @@ function PhoneToPcResumePage() {
               heading="I designed the rule, not just the screens."
               supporting="I led the end-to-end design across strategy, system design, experience definition and cross-team collaboration."
             />
-            <div className="mt-8">
-              <Ownership
-                items={[
-                  { dimension: 'vision', description: 'Defined the Windows continuity vision.' },
-                  { dimension: 'system', description: 'Established the system behavior.' },
-                  { dimension: 'experience', description: 'Designed the Taskbar experience.' },
-                  { dimension: 'collaboration', description: 'Partnered with Product, Engineering, Platform teams and external partners.' },
-                  { dimension: 'impact', description: 'Shipped a capability now used by hundreds of thousands of people monthly.' },
-                ]}
-              />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-8">
+              {ROLE_CONTRIBUTIONS.map((item) => (
+                <div key={item.title} className="rounded-xl border border-border bg-muted/30 p-5">
+                  <item.icon className="w-5 h-5 mb-3" style={{ color: item.color }} aria-hidden="true" />
+                  <p className="font-semibold text-foreground">{item.title}</p>
+                  <p className="text-muted-foreground text-sm mt-1">{item.description}</p>
+                </div>
+              ))}
             </div>
           </Section>
         </Reveal>
@@ -526,9 +543,18 @@ function PhoneToPcResumePage() {
                     </div>
                   ))}
                 </div>
+                <div className="mt-4">
+                  <ImageBlock
+                    src="/images/casestudy-0/continuity-flow.webp"
+                    alt="Resume ingress on Taskbar and hovercard, by app availability"
+                  />
+                </div>
               </DecisionCard>
               <DecisionCard data={DECISIONS[2]}>
-                <ImageBlock src="/images/casestudy-0/spotify-continuity-1.webp" alt="Spotify continuity hovercard state" />
+                <div className="grid grid-cols-2 gap-2">
+                  <ImageBlock src="/images/casestudy-0/spotify-continuity-1.webp" alt="Spotify continuity hovercard state" />
+                  <ImageBlock src="/images/casestudy-0/spotify-continuity-2.webp" alt="Spotify continuity hovercard state, expanded" />
+                </div>
               </DecisionCard>
             </div>
           </Section>
@@ -634,16 +660,24 @@ function PhoneToPcResumePage() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-2xl border border-border p-5 block hover:border-primary/40 transition-colors"
+                  className="rounded-2xl border border-border overflow-hidden block hover:border-primary/40 transition-colors"
                 >
-                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
-                    {item.publication}
-                  </p>
-                  <p className="text-foreground text-sm leading-relaxed mt-2">{item.headline}</p>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium mt-3" style={{ color: 'var(--icon-purple)' }}>
-                    Read article
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </span>
+                  {item.image && (
+                    <ImageWithFallback src={item.image} alt={`${item.publication} coverage`} className="w-full h-auto" />
+                  )}
+                  <div className="p-5">
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
+                      {item.publication}
+                    </p>
+                    <p className="text-foreground text-sm leading-relaxed mt-2">{item.headline}</p>
+                    <span
+                      className="inline-flex items-center gap-1.5 text-sm font-medium mt-3"
+                      style={{ color: 'var(--icon-purple)' }}
+                    >
+                      Read article
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
                 </a>
               ))}
             </div>
