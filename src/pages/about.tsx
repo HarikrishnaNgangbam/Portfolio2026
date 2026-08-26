@@ -192,7 +192,7 @@ function GuidingPrinciple({
 }) {
   return (
     <div>
-      <Icon className="w-5 h-5 mb-2" style={{ color }} />
+      <Icon className="w-6 h-6 mb-3" style={{ color }} />
       <h3 className="text-xl font-bold text-foreground">{heading}</h3>
       <p className="text-muted-foreground leading-relaxed mt-2">{children}</p>
     </div>
@@ -457,6 +457,7 @@ function AboutPage() {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="rounded-2xl border border-border p-6">
+                <ClipboardCheck className="w-5 h-5 mb-3" style={{ color: 'var(--icon-blue)' }} />
                 <ul className="space-y-2.5">
                   <CheckItem>AI-assisted prototyping &amp; exploration</CheckItem>
                   <CheckItem>Partnering with PMs to explore ideas independently</CheckItem>
@@ -465,6 +466,7 @@ function AboutPage() {
                 </ul>
               </div>
               <div className="rounded-2xl p-6" style={{ backgroundColor: tint('var(--icon-purple)', 8) }}>
+                <Sparkles className="w-5 h-5 mb-3" style={{ color: 'var(--icon-purple)' }} />
                 <p className="font-bold text-foreground leading-snug">
                   AI should expand design capacity, not dilute it.
                 </p>
