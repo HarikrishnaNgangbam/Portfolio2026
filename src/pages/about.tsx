@@ -443,7 +443,7 @@ function AboutPage() {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             AI is changing the equation again.
           </h2>
-          <div className="grid md:grid-cols-[auto_1fr] gap-8 md:gap-10 mt-8 items-center">
+          <div className="grid md:grid-cols-[auto_1fr] gap-6 md:gap-8 mt-8 items-center">
             <div className="hidden md:block relative w-32 h-32 shrink-0">
               <div className="absolute inset-4 rounded-2xl border-2 rotate-6" style={{ borderColor: tint('var(--icon-purple)', 25) }} />
               <div className="absolute inset-6 rounded-2xl border-2 -rotate-3" style={{ borderColor: tint('var(--icon-purple)', 40) }} />
