@@ -527,7 +527,7 @@ function AboutPage() {
       {/* Principles / closing */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <NarrativeSection heading="What guides me every day">
+          <NarrativeSection heading={'What guides me every day'}>
             <div className="grid sm:grid-cols-3 gap-8">
               <GuidingPrinciple icon={Eye} color="var(--icon-purple)" heading="Clarity">
                 Make complexity visible so teams can make better decisions.
