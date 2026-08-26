@@ -155,9 +155,19 @@ const LESSONS: LessonCard[] = [
 ];
 
 /** Icon + short label chip, used for the leadership responsibility grid and the "making" section below. */
-function LabelChip({ icon: Icon, color, label }: { icon: IconComponent; color: string; label: string }) {
+function LabelChip({
+  icon: Icon,
+  color,
+  label,
+  className = '',
+}: {
+  icon: IconComponent;
+  color: string;
+  label: string;
+  className?: string;
+}) {
   return (
-    <div className="rounded-xl p-3" style={{ backgroundColor: tint(color, 6) }}>
+    <div className={`rounded-xl p-3 ${className}`.trim()} style={{ backgroundColor: tint(color, 6) }}>
       <Icon className="w-4 h-4 mb-1.5" style={{ color }} />
       <p className="text-xs font-medium text-foreground leading-tight">{label}</p>
     </div>
@@ -504,7 +514,12 @@ function AboutPage() {
             <LabelChip icon={Sofa} color="var(--icon-blue)" label="Furniture & shelves" />
             <LabelChip icon={CircuitBoard} color="var(--icon-green)" label="Prototypes & experiments" />
             <LabelChip icon={Smartphone} color="var(--icon-purple)" label="Curious about gadgets" />
-            <LabelChip icon={RefreshCw} color="var(--icon-pink)" label="Take things apart to understand how they work" />
+            <LabelChip
+              icon={RefreshCw}
+              color="var(--icon-pink)"
+              label="Take things apart to understand how they work"
+              className="col-span-2 sm:col-span-1"
+            />
           </div>
         </Reveal>
       </section>
