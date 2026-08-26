@@ -408,7 +408,7 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="ProjectCard" purpose="Featured/Work project card — links to its case study. `work` variant (default, used on /work) vs `narrative` variant (Home's Selected Work framing). Both now use ProjectSignal for their classification, not Badge.">
+        <ComponentDemo name="ProjectCard" purpose="Project card that links to its case study. `work` variant (default, full case-study framing) vs `narrative` variant (Home's Selected Work framing). Both now use ProjectSignal for their classification, not Badge.">
           <div className="space-y-4">
             <ProjectCard project={PROJECTS[0]} />
             <ProjectCard project={PROJECTS[0]} variant="narrative" number={1} />

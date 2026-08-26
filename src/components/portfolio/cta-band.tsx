@@ -31,7 +31,7 @@ function CtaBand({ heading, children, links, button, variant = 'surface', classN
           <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground leading-snug">{heading}</h2>
           {button && <div className="mt-5">{button}</div>}
         </div>
-        {children && <p className="text-muted-foreground leading-relaxed">{children}</p>}
+        {children && <div className="text-muted-foreground leading-relaxed">{children}</div>}
         <div>{links}</div>
       </div>
     );

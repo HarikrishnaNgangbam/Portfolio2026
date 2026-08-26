@@ -70,6 +70,7 @@ export const PROJECTS: ProjectSummary[] = [
       description:
         "Turning fragmented field operations into a product ecosystem that could evolve with Gojek's rapidly growing network.",
       capabilities: ['Ecosystem', 'Operations', 'Scale'],
+      evidence: '3.2× higher attendance · 65% less admin time',
     },
   },
   {

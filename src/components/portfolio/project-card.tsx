@@ -10,17 +10,16 @@ export interface ProjectCardProps {
   project: ProjectSummary;
   /**
    * Heading level for the project title, matching wherever the card sits in
-   * the page's outline: h3 on Home (nested under the "Selected Work" h2),
-   * h2 on Work (the primary heading directly under the page's h1).
+   * the page's outline: h3 on Home (nested under the "Selected Work" h2).
    */
   headingLevel?: 'h2' | 'h3';
   /**
-   * `work` (default) = case-study framing (title/subtitle/description/tags),
-   * used on /work and the /design-system showcase. `narrative` = a numbered,
-   * editorial single-column framing (project.narrative). `compact` = a
+   * `work` (default) = case-study framing (title/subtitle/description/tags).
+   * `narrative` = a numbered, editorial single-column framing
+   * (project.narrative), used by Home's Selected Work section. `compact` = a
    * grid-friendly vertical card (image on top, metadata below) for a
-   * multi-column layout, used by Home's project grid. `narrative` and
-   * `compact` fall back to `work` fields if `project.narrative` is absent.
+   * multi-column layout. `narrative` and `compact` fall back to `work`
+   * fields if `project.narrative` is absent.
    */
   variant?: 'work' | 'narrative' | 'compact';
   /** 1-based position, shown as a numeral badge in `narrative`/`compact` variants. */
