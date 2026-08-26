@@ -127,7 +127,7 @@ function ProjectSection({
   return (
     <Link
       to={`/work/${project.slug}`}
-      className="group grid lg:grid-cols-2 gap-8 lg:gap-14 items-center py-12 md:py-16 border-t border-border first:border-t-0 first:pt-0"
+      className="group grid lg:grid-cols-2 gap-8 lg:gap-14 items-center py-9 md:py-14 border-t border-border first:border-t-0 first:pt-0"
     >
       <div className="relative rounded-2xl overflow-hidden aspect-video">
         <span
@@ -231,7 +231,7 @@ function WorkPage() {
       />
 
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 md:pt-12 md:pb-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 md:pt-12 md:pb-16">
         <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-center">
           <Reveal>
             <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
@@ -240,13 +240,13 @@ function WorkPage() {
             <H1 size="hero" className="font-serif mt-3 leading-[1.05]">
               Products, systems and ecosystems I've had the privilege to shape.
             </H1>
-            <LeadParagraph className="mt-4 md:mt-6 max-w-2xl">
+            <LeadParagraph className="mt-3 md:mt-6 max-w-2xl">
               Across Microsoft and Gojek, I've worked on problems that span devices, platforms,
               operations and design teams. These projects are different on the surface, but they
               share a common thread: understanding the system around the problem and finding
               where design can create leverage.
             </LeadParagraph>
-            <div className="flex flex-wrap gap-x-8 gap-y-3 mt-6 md:mt-8">
+            <div className="flex flex-wrap gap-x-8 gap-y-3 mt-5 md:mt-8">
               <div className="flex items-center gap-2.5">
                 <Briefcase className="w-4 h-4" style={{ color: 'var(--icon-purple)' }} />
                 <div>
@@ -338,6 +338,7 @@ function WorkPage() {
         <Reveal>
           <CtaBand
             variant="panel"
+            className="p-6 md:p-10 gap-6 md:gap-10"
             heading="Want the details?"
             button={
               filteredProjects[0] && (
