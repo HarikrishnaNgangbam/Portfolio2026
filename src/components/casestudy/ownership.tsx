@@ -1,7 +1,7 @@
-import { Target, Layers, Sparkles, Users, ArrowRight } from 'lucide-react';
+import { Target, Layers, Sparkles, Users, ArrowRight, TrendingUp } from 'lucide-react';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 
-export type OwnershipDimension = 'vision' | 'system' | 'experience' | 'collaboration' | 'execution';
+export type OwnershipDimension = 'vision' | 'system' | 'experience' | 'collaboration' | 'execution' | 'impact';
 
 export interface OwnershipItem {
   dimension: OwnershipDimension;
@@ -14,6 +14,7 @@ const DIMENSION_META: Record<OwnershipDimension, { label: string; icon: typeof T
   experience: { label: 'Experience', icon: Sparkles, color: 'var(--icon-teal)' },
   collaboration: { label: 'Collaboration', icon: Users, color: 'var(--icon-orange)' },
   execution: { label: 'Execution', icon: ArrowRight, color: 'var(--icon-green)' },
+  impact: { label: 'Impact', icon: TrendingUp, color: 'var(--icon-green)' },
 };
 
 /**

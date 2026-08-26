@@ -23,9 +23,11 @@ export interface CaseStudyHeroProps {
   /** Substring of `title` to render in the primary-green accent (Kopdar's partial-color heading). */
   titleHighlight?: string;
   subtitle: string;
+  /** Optional supporting paragraph rendered after the subtitle, before the meta row. */
+  description?: React.ReactNode;
   meta: CaseStudyMetaItem[];
-  /** `cards` = colored icon cards (Kopdar). Default `plain` = label/value pairs (other case studies). */
-  metaVariant?: 'plain' | 'cards';
+  /** `cards` = colored icon cards (Kopdar). `pills` = compact icon chips in a wrapping row. Default `plain` = label/value pairs (other case studies). */
+  metaVariant?: 'plain' | 'cards' | 'pills';
   coverImage: string;
   coverAlt: string;
   /** Small pill overlaid on the top-left corner of the cover image, e.g. "Live from Jakarta". */
@@ -47,6 +49,7 @@ function CaseStudyHero({
   title,
   titleHighlight,
   subtitle,
+  description,
   meta,
   metaVariant = 'plain',
   coverImage,
@@ -126,6 +129,9 @@ function CaseStudyHero({
         )}
       </Heading>
       <p className="text-lg text-muted-foreground leading-relaxed mt-4">{subtitle}</p>
+      {description && (
+        <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">{description}</p>
+      )}
 
       {iconFlow && (
         <div className="flex items-center gap-2 mt-6">
@@ -135,7 +141,22 @@ function CaseStudyHero({
         </div>
       )}
 
-      {metaVariant === 'cards' ? (
+      {metaVariant === 'pills' ? (
+        <div className="flex flex-wrap gap-3 mt-8">
+          {meta.map((item) => (
+            <div
+              key={item.label}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border"
+            >
+              {item.icon && <item.icon className="w-4 h-4 shrink-0" style={{ color: item.color }} aria-hidden="true" />}
+              <span className="text-sm font-medium text-foreground">
+                {item.value}
+                <span className="sr-only"> ({item.label})</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : metaVariant === 'cards' ? (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
           {meta.map((item) => (
             <div

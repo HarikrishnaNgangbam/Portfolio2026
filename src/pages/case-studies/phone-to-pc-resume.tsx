@@ -1,39 +1,38 @@
-import { useState } from 'react';
 import {
   Smartphone,
   Monitor,
-  LayoutPanelLeft,
   Target,
   Zap,
-  Clock,
+  Shield,
+  ArrowRight,
+  ArrowUpRight,
+  Eye,
+  Bell,
+  User,
+  Calendar,
+  CheckCircle2,
+  MapPin,
+  AppWindow,
+  Radar,
+  Cpu,
+  MonitorSmartphone,
+  Lock,
   X,
   Layers,
   TrendingUp,
-  Shield,
-  ArrowRight,
-  ArrowLeftRight,
-  HelpCircle,
-  Search,
-  Check,
+  ExternalLink,
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
-import { MetaGrid } from '@/components/casestudy/meta-grid';
 import { Section } from '@/components/casestudy/section';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
-import { CalloutList } from '@/components/casestudy/callout-list';
 import { StepFlow } from '@/components/casestudy/step-flow';
-import { ImageBlock, VideoBlock } from '@/components/casestudy/image-block';
+import { VideoBlock, ImageBlock } from '@/components/casestudy/image-block';
 import { StatGrid } from '@/components/casestudy/stat-grid';
-import { PressGrid } from '@/components/casestudy/press-grid';
-import { LinkList } from '@/components/casestudy/link-list';
 import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
-import { DecisionStrip } from '@/components/casestudy/decision-strip';
 import { Takeaway } from '@/components/casestudy/takeaway';
 import { Ownership } from '@/components/casestudy/ownership';
-import { BeforeAfterInline } from '@/components/casestudy/before-after';
-import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import {
   SpotifyIcon,
   BrowserIcon,
@@ -46,641 +45,669 @@ import {
 } from '@/design-system/ui/icons/brands';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
+import { tint } from '@/lib/color';
+import type { IconComponent } from '@/lib/utils';
 
-const PRESS_FEATURED = [
-  { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
-  { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
-  { src: '/images/casestudy-0/press-windowscentral.webp', alt: 'Windows Central coverage' },
-  { src: '/images/casestudy-0/press-androidpolice.webp', alt: 'Android Police coverage' },
+/**
+ * Same warm-editorial token override Home, About, Work and Contact use,
+ * scoped to this page's own root wrapper only. The shared case-study
+ * components (CaseStudyHero, Section, StatGrid, ...) read foreground/
+ * background/border/primary via CSS custom properties, so wrapping this
+ * page's own subtree in these vars brings it into the same visual language
+ * as the rest of the site without touching those components or any other
+ * case study, which keep rendering on the original tokens.
+ */
+const CASESTUDY_THEME_VARS = {
+  '--background': 'var(--surface-warm)',
+  '--foreground': 'var(--surface-warm-foreground)',
+  '--muted-foreground': 'var(--surface-warm-muted)',
+  '--border': 'var(--surface-warm-border)',
+  '--primary': 'var(--icon-purple)',
+  '--ring': 'var(--icon-purple)',
+} as React.CSSProperties;
+
+/** Small uppercase eyebrow + serif heading + optional supporting line, matching Home/About/Work's section heading pattern. Built locally rather than added to the shared Section component, which is used by other case studies that keep their existing plain-heading treatment. */
+function EditorialHeading({
+  eyebrow,
+  eyebrowColor = 'var(--icon-purple)',
+  heading,
+  supporting,
+}: {
+  eyebrow: string;
+  eyebrowColor?: string;
+  heading: React.ReactNode;
+  supporting?: React.ReactNode;
+}) {
+  return (
+    <div>
+      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: eyebrowColor }}>
+        {eyebrow}
+      </p>
+      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">{heading}</h2>
+      {supporting && <p className="text-muted-foreground leading-relaxed mt-3 max-w-2xl">{supporting}</p>}
+    </div>
+  );
+}
+
+const IMPACT_STATS = [
+  { value: '3.1M', label: 'Monthly Resume alerts surfaced to users' },
+  { value: '290K+', label: 'Monthly engaged users' },
+  { value: '8.5%', label: 'Conversion on Resume toasts' },
+  { value: '~28%', label: 'Engagement rate on Toolbar Resume' },
 ];
 
-const PRESS_MORE = [
-  { src: '/images/casestudy-0/press-sammobile.webp', alt: 'SAM MOBILE coverage' },
-  { src: '/images/casestudy-0/press-winbuzzer.webp', alt: 'WinBuzzer coverage' },
-  { src: '/images/casestudy-0/press-thurrott.webp', alt: 'Thurrott coverage' },
-  { src: '/images/casestudy-0/press-bgr.webp', alt: 'BGR coverage' },
+interface DiagramItem {
+  icon: IconComponent;
+  label: string;
+  sublabel?: string;
+}
+
+const INPUT_ITEMS: DiagramItem[] = [
+  { icon: AppWindow, label: 'First-party apps', sublabel: 'Spotify, Mail, etc.' },
+  { icon: WhatsAppIcon as unknown as IconComponent, label: 'Third-party apps', sublabel: 'WhatsApp, Chrome, etc.' },
+  { icon: Smartphone, label: 'Different phone makers', sublabel: 'Samsung, OnePlus, etc.' },
+  { icon: Layers, label: 'Apps without PC counterparts' },
+  { icon: Calendar, label: 'Varying time gaps', sublabel: 'Seconds to days' },
+];
+
+const SYSTEM_ITEMS: DiagramItem[] = [
+  { icon: Radar, label: 'Signal collection', sublabel: 'Events, activity and context' },
+  { icon: Eye, label: 'Understanding & confidence', sublabel: 'Intent, recency, relevance' },
+  { icon: Cpu, label: 'Decision engine', sublabel: 'When and what to surface' },
+  { icon: MonitorSmartphone, label: 'Presentation service', sublabel: 'Taskbar · Hovercard · Resume' },
+];
+
+const OUTPUT_ITEMS: DiagramItem[] = [
+  { icon: Monitor, label: 'Taskbar Resume' },
+  { icon: AppWindow, label: 'Hovercard' },
+  { icon: SpotifyIcon as unknown as IconComponent, label: 'Resume from your phone', sublabel: 'Spotify · Forever Faves' },
+];
+
+/**
+ * Inputs -> Windows Continuity System -> Outputs architecture diagram. Built
+ * as a page-local component (not a new shared one) since this exact 3-stage
+ * signal/decision/presentation shape is specific to this case study's
+ * platform story.
+ */
+function SystemDiagram() {
+  const Column = ({
+    title,
+    color,
+    items,
+  }: {
+    title: string;
+    color: string;
+    items: DiagramItem[];
+  }) => (
+    <div className="rounded-2xl border border-border p-5">
+      <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color }}>
+        {title}
+      </p>
+      <ul className="space-y-4">
+        {items.map((item) => (
+          <li key={item.label} className="flex items-start gap-3">
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+              style={{ backgroundColor: tint(color, 15) }}
+            >
+              <item.icon className="w-4 h-4" style={{ color }} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground leading-snug">{item.label}</p>
+              {item.sublabel && <p className="text-xs text-muted-foreground mt-0.5">{item.sublabel}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  return (
+    <div className="grid lg:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-center">
+      <Column title="Inputs: Phone activity" color="var(--icon-teal)" items={INPUT_ITEMS} />
+      <ArrowRight className="w-5 h-5 text-muted-foreground mx-auto rotate-90 lg:rotate-0" aria-hidden="true" />
+      <Column title="Windows Continuity System" color="var(--icon-purple)" items={SYSTEM_ITEMS} />
+      <ArrowRight className="w-5 h-5 text-muted-foreground mx-auto rotate-90 lg:rotate-0" aria-hidden="true" />
+      <Column title="Outputs on PC" color="var(--icon-blue)" items={OUTPUT_ITEMS} />
+    </div>
+  );
+}
+
+const CONFIDENCE_PRINCIPLES: { icon: IconComponent; color: string; title: string; description: string }[] = [
+  {
+    icon: Eye,
+    color: 'var(--icon-blue)',
+    title: 'Stay discoverable',
+    description: 'Surface subtly. Let the user decide.',
+  },
+  {
+    icon: Bell,
+    color: 'var(--icon-orange)',
+    title: 'Nudge',
+    description: 'Timely, relevant hints in the right places.',
+  },
+  {
+    icon: Zap,
+    color: 'var(--icon-purple)',
+    title: 'Act',
+    description: 'Surface at the point of flow to help the user.',
+  },
+];
+
+/** Low -> medium -> high confidence gradient bar + the three response principles beneath it. */
+function ConfidenceSpectrum() {
+  return (
+    <div className="space-y-8">
+      <div>
+        <div
+          className="h-2 rounded-full"
+          style={{
+            background:
+              'linear-gradient(to right, var(--icon-blue), var(--icon-orange), var(--icon-purple))',
+          }}
+          aria-hidden="true"
+        />
+        <div className="flex justify-between text-xs font-bold uppercase tracking-widest mt-3">
+          <span style={{ color: 'var(--icon-blue)' }}>Low confidence</span>
+          <span className="text-muted-foreground">In the middle</span>
+          <span style={{ color: 'var(--icon-purple)' }}>High confidence</span>
+        </div>
+      </div>
+      <div className="grid sm:grid-cols-3 gap-4">
+        {CONFIDENCE_PRINCIPLES.map((p) => (
+          <div key={p.title} className="rounded-2xl border border-border p-5">
+            <p.icon className="w-5 h-5 mb-3" style={{ color: p.color }} aria-hidden="true" />
+            <p className="text-xs font-bold uppercase tracking-widest text-foreground">{p.title}</p>
+            <p className="text-muted-foreground text-sm leading-relaxed mt-1.5">{p.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface DecisionCardData {
+  number: string;
+  title: string;
+  description: string;
+  visual?: React.ReactNode;
+}
+
+const DECISIONS: DecisionCardData[] = [
+  {
+    number: '01',
+    title: 'Taskbar became the primary surface.',
+    description: 'Always available, contextual and near the point of action.',
+  },
+  {
+    number: '02',
+    title: 'Progressive disclosure instead of immediate interruption.',
+    description: 'Signal → Context → Action.',
+  },
+  {
+    number: '03',
+    title: 'Make the destination predictable.',
+    description: 'Answer what, where and what to expect.',
+  },
+];
+
+/** Compact 3-card decision grid — a different geometry from the shared DecisionStrip (which pairs a single decision/why in a vertical strip), so built locally for this reference's side-by-side card layout. */
+function DecisionCard({ data, children }: { data: DecisionCardData; children?: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl border border-border p-6 flex flex-col">
+      <span className="text-xs font-bold" style={{ color: 'var(--icon-purple)' }}>
+        {data.number}
+      </span>
+      <h3 className="font-bold text-foreground leading-snug mt-2">{data.title}</h3>
+      <p className="text-muted-foreground text-sm leading-relaxed mt-2">{data.description}</p>
+      {children && <div className="mt-4">{children}</div>}
+    </div>
+  );
+}
+
+interface PressItemData {
+  publication: string;
+  headline: string;
+  href: string;
+}
+
+/** Real existing press coverage already documented for this case study, restructured into the reference's editorial text-card treatment rather than the shared PressGrid's screenshot-thumbnail style. No publication or headline here is invented — see LinkList entries this page previously rendered. */
+const PRESS_ITEMS: PressItemData[] = [
+  {
+    publication: 'The Verge',
+    headline: "Windows 11's ability to resume Android apps like Apple Handoff.",
+    href: 'https://www.theverge.com/news/869161/microsoft-windows-11-android-app-resume-feature-release-preview',
+  },
+  {
+    publication: 'Windows Insider Blog',
+    headline: 'Announcing the Release Preview update bringing cross-device Resume to more users.',
+    href: 'https://blogs.windows.com/windows-insider/2026/01/27/releasing-windows-11-builds-26100-7701-and-26200-7701-to-the-release-preview-channel/',
+  },
+  {
+    publication: 'Android Authority',
+    headline: 'Windows 11 expands Cross-Device Resume beyond its initial preview.',
+    href: 'https://www.androidauthority.com/windows-11-cross-device-resume-preview-channel-3636114/',
+  },
 ];
 
 function PhoneToPcResumePage() {
-  const [showMorePress, setShowMorePress] = useState(false);
-
   return (
-    <div className="pb-20">
+    <div style={CASESTUDY_THEME_VARS} className="bg-background text-foreground pb-20">
       <Seo
         title="Phone to PC Continuity"
         description="How Windows learned to anticipate where work should continue: a confidence-driven approach to cross-device resume across phone and PC."
       />
+
+      {/* 01 — Hero */}
       <CaseStudyHero
-        eyebrow="Microsoft · Windows Connected Experience & Ecosystem"
+        eyebrow="Microsoft · Windows 11 · Shipped"
         breadcrumbLabel="Phone → PC Continuity"
-        badges={['Phone → PC Continuity']}
-        title="Phone → PC Continuity"
+        badges={[]}
+        title="Phone → PC Continuity."
         subtitle="When Windows learned to anticipate where work should continue."
+        description="Seamlessly continue the things you're doing on your phone right on your PC — in the right app, with the right context, right when you need it."
+        metaVariant="pills"
         meta={[
-          { label: 'Role', value: 'Lead UX Designer' },
-          { label: 'Timeline', value: 'Sep 2025 - Jan 2026' },
-          { label: 'Platform', value: 'Windows 11' },
-          { label: 'Status', value: 'Shipped · GA Jan 2026' },
+          { label: 'Role', value: 'Lead UX Designer', icon: User, color: 'var(--icon-purple)' },
+          { label: 'Timeline', value: 'Sep 2025 – Jan 2026', icon: Calendar, color: 'var(--icon-blue)' },
+          { label: 'Platform', value: 'Windows 11', icon: Monitor, color: 'var(--icon-teal)' },
+          { label: 'Status', value: 'Shipped · GA Jan 2026', icon: CheckCircle2, color: 'var(--icon-green)' },
         ]}
         coverImage="/images/shared/project-phone-to-pc-cover.webp"
         coverAlt="Phone to PC Resume - Taskbar and system-level continuity"
-        iconFlow={[
-          { icon: Smartphone, color: 'var(--icon-teal)' },
-          { icon: ArrowRight, color: 'var(--icon-orange)' },
-          { icon: Monitor, color: 'var(--icon-blue)' },
-        ]}
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-14">
-        {/* The Human Moment */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 space-y-16">
+        {/* 02 — Overview */}
         <Reveal>
-          <Section title="The moment is simple. The system isn't.">
-            <Prose>
-              <p>
-                You start something on your phone. Maybe it's a song, a document, a
-                webpage or a message. Later, you're sitting at your PC.
-              </p>
-              <p>
-                You shouldn't have to remember what you were doing, find the right app,
-                send yourself a link, or reconstruct your context. You should simply be
-                able to continue.
-              </p>
-            </Prose>
-            <Prose callout>
-              The challenge was making Windows understand that transition without
-              becoming another interruption.
-            </Prose>
-            <MetaGrid
-              items={[
-                { label: 'Platform', value: 'Windows', pillColor: 'blue' },
-                { label: 'Domain', value: 'Connected Experience & Ecosystem', pillColor: 'purple' },
-                { label: 'Experience Pillar', value: 'Continuity', pillColor: 'blue' },
-                { label: 'Capability', value: 'Cross-Device Resume (Phone to PC)', pillColor: 'green' },
-              ]}
-            />
+          <Section>
+            <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 items-start">
+              <div>
+                <EditorialHeading eyebrow="Overview" heading="The moment is simple. The system isn't." />
+                <Prose className="mt-5">
+                  <p>
+                    You start something on your phone. You get to your PC. You expect to
+                    continue. The system should make that effortless.
+                  </p>
+                  <p>
+                    Phone to PC Continuity brings your recent activity from phone to the PC
+                    so you can pick up exactly where you left off.
+                  </p>
+                  <p>
+                    Whether it's a song, a webpage, a document or an app task — Windows
+                    understands your intent and helps you continue without friction.
+                  </p>
+                </Prose>
+              </div>
+              <div>
+                <StatGrid columns={2} stats={IMPACT_STATS} />
+              </div>
+            </div>
           </Section>
         </Reveal>
 
-        {/* The Problem */}
+        {/* 03 — Working experience */}
         <Reveal>
-          <Section title="The old model treated continuity as a notification problem.">
-            <StepFlow
-              steps={[
-                { icon: Smartphone, title: 'Start on phone', description: 'Activity begins' },
-                { icon: ArrowLeftRight, iconColor: 'var(--icon-orange)', title: 'Switch devices', description: 'Move to the PC' },
-                { icon: HelpCircle, iconColor: 'var(--icon-red)', title: 'Where was I?', description: 'Context is lost' },
-                { icon: Search, iconColor: 'var(--icon-purple)', title: 'Find context', description: 'Manually search or reopen' },
-                { icon: Check, iconColor: 'var(--icon-green)', title: 'Continue', description: 'Finally resume, if at all' },
-              ]}
+          <Section>
+            <EditorialHeading
+              eyebrow="Working experience"
+              heading="See Phone to PC Continuity in action."
+              supporting="A real end-to-end experience continuing a task from phone to Windows PC."
             />
-            <IconCardList
-              items={[
-                {
-                  icon: X,
-                  iconColor: 'var(--icon-red)',
-                  title: 'Sending links or files to oneself',
-                  description: 'Email, cloud storage, or manual copying required',
-                },
-                {
-                  icon: X,
-                  iconColor: 'var(--icon-red)',
-                  title: 'Reopening the correct app and locating context',
-                  description: 'The exact position, state, and session were lost',
-                },
-                {
-                  icon: X,
-                  iconColor: 'var(--icon-red)',
-                  title: 'Reconstructing mental state after switching devices',
-                  description: 'Cognitive overhead disrupted flow and momentum',
-                },
-              ]}
-            />
-            <CalloutList
-              title="This caused:"
-              tone="negative"
-              items={[
-                'Drop-off during high-intent moments',
-                'Cognitive overhead during transitions',
-                "A perception of Windows as disconnected from the user's flow",
-              ]}
-            />
-            <Prose callout kind="insight">
-              The real problem wasn't that users couldn't move between devices. It was
-              that the device transition broke their mental model of the task.
-            </Prose>
+            <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8 items-start mt-8">
+              <VideoBlock src="/videos/phone-to-pc-spotify.mp4" heading="Signal to Resume, demonstrated with Spotify" evidence="shipped" />
+              <ul className="space-y-5">
+                {[
+                  { icon: MapPin, color: 'var(--icon-purple)', title: 'Pick up anywhere', description: 'Continue tasks exactly where you left off.' },
+                  { icon: AppWindow, color: 'var(--icon-blue)', title: 'In the right app', description: 'Deep link you into the right experience.' },
+                  { icon: Target, color: 'var(--icon-teal)', title: 'Context that matters', description: 'Bring the right context so you can continue seamlessly.' },
+                  { icon: Lock, color: 'var(--icon-orange)', title: 'Privacy by design', description: "You're in control of what's shared and when." },
+                ].map((item) => (
+                  <li key={item.title} className="flex items-start gap-3">
+                    <item.icon className="w-5 h-5 shrink-0 mt-0.5" style={{ color: item.color }} aria-hidden="true" />
+                    <div>
+                      <p className="font-semibold text-foreground">{item.title}</p>
+                      <p className="text-muted-foreground text-sm mt-0.5">{item.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Section>
         </Reveal>
 
-        {/* Why This Was a Systems Problem */}
+        {/* 04 — The challenge */}
         <Reveal>
-          <Section title="Continuity couldn't belong to an app.">
-            <Prose>
-              <p>The experience needed to work across:</p>
-            </Prose>
-            <CalloutList
-              marker="•"
-              items={[
-                'First-party and third-party apps',
-                'Different phone manufacturers',
-                'Apps with and without a native PC counterpart',
-                'Different time gaps between phone and PC activity',
-                "Different levels of user intent",
-                'Different PC states',
-              ]}
+          <Section>
+            <EditorialHeading
+              eyebrow="The challenge"
+              heading="Making Windows understand transitions without interrupting."
+              supporting="Users switched between devices dozens of times a day. But Windows had no model for understanding intent across devices and apps."
             />
-            <Prose callout>
-              The design challenge wasn't simply creating a Resume action. It was
-              defining how Windows should behave when it knows something might be worth
-              continuing.
-            </Prose>
-
-            <div className="grid sm:grid-cols-3 gap-3 items-center">
-              <div className="rounded-xl border border-border bg-muted/30 p-5">
-                <Smartphone className="w-6 h-6 mb-2" style={{ color: 'var(--icon-teal)' }} />
-                <p className="font-semibold text-foreground">Phone</p>
-                <p className="text-muted-foreground text-sm mt-1">
-                  Spotify, browser, other activity
+            <div className="mt-8 space-y-8">
+              <div className="rounded-2xl border border-border p-5">
+                <p className="font-semibold text-foreground">
+                  The old model treated continuity as a notification problem.
+                </p>
+                <p className="text-muted-foreground text-sm mt-1.5">
+                  It pushed information to users and expected them to do the hard work.
                 </p>
               </div>
-              <div className="flex justify-center">
-                <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90 sm:rotate-0" />
-              </div>
-              <div className="rounded-xl border border-border bg-muted/30 p-5">
-                <Shield className="w-6 h-6 mb-2 text-primary" />
-                <p className="font-semibold text-foreground">Windows continuity system</p>
-                <p className="text-muted-foreground text-sm mt-1">
-                  Taskbar, hovercard, Resume
-                </p>
-              </div>
+              <StepFlow
+                steps={[
+                  { icon: Smartphone, iconColor: 'var(--icon-teal)', title: 'Start on phone', description: 'Begin a task in an app with specific context.' },
+                  { icon: ArrowRight, iconColor: 'var(--icon-orange)', title: 'Switch devices', description: 'Reach your PC and expect to continue.' },
+                  { icon: Target, iconColor: 'var(--icon-red)', title: '"Where was I?"', description: 'Try to remember what you were doing.' },
+                  { icon: Radar, iconColor: 'var(--icon-purple)', title: 'Search / reopen', description: 'Find the app, content and correct context.' },
+                  { icon: CheckCircle2, iconColor: 'var(--icon-green)', title: 'Continue', description: 'Finally get back to where you left off.' },
+                ]}
+              />
+              <IconCardList
+                columns={3}
+                items={[
+                  {
+                    icon: X,
+                    iconColor: 'var(--icon-red)',
+                    title: 'Notifications, not outcomes',
+                    description: 'The system surfaced information but left the user to connect the dots.',
+                  },
+                  {
+                    icon: X,
+                    iconColor: 'var(--icon-red)',
+                    title: 'Too many steps',
+                    description: 'Reopening the right app and finding the right content created unnecessary work.',
+                  },
+                  {
+                    icon: X,
+                    iconColor: 'var(--icon-red)',
+                    title: 'No system-level intelligence',
+                    description: 'Windows lacked a unified system to sense and act on intent across devices.',
+                  },
+                ]}
+              />
+              <Prose callout>
+                The problem wasn't getting a notification from phone to PC. The problem
+                was knowing what the user was trying to continue.
+              </Prose>
             </div>
-
-            <IconCardList
-              columns={2}
-              items={[
-                {
-                  icon: Clock,
-                  title: 'Continuity was already a baseline expectation',
-                  description:
-                    'Apple normalized OS-level continuity (Handoff, Universal Clipboard) across iPhone, iPad and Mac, setting user expectations for seamless task continuation.',
-                },
-                {
-                  icon: Layers,
-                  iconColor: '#c2410c',
-                  title: 'Windows lacked a system-owned model',
-                  description:
-                    "Continuity signals existed as fragmented app integrations, not a reliable OS behavior. Users couldn't predict where or how to resume a task.",
-                },
-                {
-                  icon: TrendingUp,
-                  iconColor: 'var(--icon-green)',
-                  title: 'The gap had ecosystem consequences',
-                  description:
-                    'Cross-device experiences are directly linked to retention and platform stickiness, not just individual task completion.',
-                },
-                {
-                  icon: Target,
-                  title: 'This called for a strategic response, not a feature',
-                  description:
-                    'Reframing continuity as an OS-level capability designed to scale across first- and third-party apps, including apps without a native PC counterpart.',
-                },
-              ]}
-            />
           </Section>
         </Reveal>
 
-        {/* My Role */}
+        {/* 05 — Our solution */}
         <Reveal>
-          <Section title="My role">
-            <Prose>
-              <p>
-                I led the UX strategy for Phone → PC Continuity, from defining the
-                experience model to shaping the primary entry points and aligning the
-                system across Product, Engineering, Platform teams and external
-                partners, including Samsung, Spotify and WhatsApp.
-              </p>
-            </Prose>
-            <Ownership
-              items={[
-                { dimension: 'vision', description: 'Defined the Windows Continuity experience strategy.' },
-                { dimension: 'system', description: 'Established the interaction model for Phone → PC Resume.' },
-                { dimension: 'experience', description: 'Designed the primary Taskbar-first entry point and progressive disclosure model.' },
-                { dimension: 'collaboration', description: 'Worked across Product, Engineering, Platform teams and external partners.' },
-              ]}
+          <Section>
+            <EditorialHeading
+              eyebrow="Our solution"
+              heading="A system that senses intent and helps you continue."
+              supporting="We built the Windows Continuity System — a platform capability that unifies signals from phone activity, understands intent, and delivers the right experience on PC."
             />
+            <div className="mt-8 space-y-6">
+              <SystemDiagram />
+              <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+                {[
+                  { icon: Shield, label: 'Privacy by design' },
+                  { icon: Smartphone, label: 'On-device signals' },
+                  { icon: User, label: 'User in control' },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <item.icon className="w-4 h-4" style={{ color: 'var(--icon-purple)' }} aria-hidden="true" />
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+            </div>
           </Section>
         </Reveal>
 
-        {/* The Design Question */}
+        {/* 06 — My role & approach */}
         <Reveal>
-          <Section title="So how proactive should Windows be?">
-            <Prose>
-              <p>
-                Too passive, and users have to search for continuity themselves. Too
-                proactive, and Windows interrupts them with activity they may not care
-                about.
-              </p>
-            </Prose>
-            <Prose callout kind="insight">
-              The more confident Windows is about a user's intent, the more proactive it
-              can be.
-            </Prose>
+          <Section>
+            <EditorialHeading
+              eyebrow="My role & approach"
+              heading="I designed the rule, not just the screens."
+              supporting="I led the end-to-end design across strategy, system design, experience definition and cross-team collaboration."
+            />
+            <div className="mt-8">
+              <Ownership
+                items={[
+                  { dimension: 'vision', description: 'Defined the Windows continuity vision.' },
+                  { dimension: 'system', description: 'Established the system behavior.' },
+                  { dimension: 'experience', description: 'Designed the Taskbar experience.' },
+                  { dimension: 'collaboration', description: 'Partnered with Product, Engineering, Platform teams and external partners.' },
+                  { dimension: 'impact', description: 'Shipped a capability now used by hundreds of thousands of people monthly.' },
+                ]}
+              />
+            </div>
           </Section>
         </Reveal>
 
-        {/* Confidence-Driven Continuity */}
+        {/* 07 — Design principle */}
         <Reveal>
-          <div className="rounded-2xl border border-primary/20 bg-accent/10 p-6 space-y-6">
-            <div>
-              <h2 className="flex items-center gap-3 text-3xl md:text-4xl font-bold text-foreground mb-2">
-                <Shield className="w-7 h-7 text-primary" />
-                Confidence-Driven Continuity
-              </h2>
-              <p className="text-foreground">
-                Continuity should respond to confidence, not simply activity.
-              </p>
-            </div>
-            <IconCardList
-              columns={2}
-              items={[
-                {
-                  icon: Zap,
-                  iconColor: 'var(--icon-orange)',
-                  title: 'High confidence: act',
-                  bullets: [
-                    'Recent activity, a clear task',
-                    'User is at the PC, destination is known',
-                    <>Experience: <strong>proactive surfacing</strong> via Taskbar and Resume</>,
-                  ],
-                },
-                {
-                  icon: Clock,
-                  iconColor: 'var(--icon-cyan)',
-                  title: 'Low confidence: stay discoverable',
-                  bullets: [
-                    'Older activity, unclear intent',
-                    'Ambiguous destination',
-                    <>Experience: <strong>stay quiet</strong> and remain discoverable</>,
-                  ],
-                },
-              ]}
+          <Section>
+            <EditorialHeading
+              eyebrow="Design principle"
+              heading="How proactive should Windows be?"
+              supporting="Proactivity is powerful only when it's earned."
             />
-            <div className="rounded-xl border border-primary/30 bg-card p-5 text-center">
-              <p className="font-semibold text-lg text-foreground">
-                Continuity should feel like Windows understands the user's intent, not
-                like Windows is reporting everything the phone did.
-              </p>
+            <div className="mt-8 space-y-6">
+              <ConfidenceSpectrum />
+              <Prose callout kind="insight">
+                The more confident Windows is about a user's intent, the more proactive
+                it can be.
+              </Prose>
             </div>
-          </div>
+          </Section>
         </Reveal>
 
-        {/* Key Design Decisions */}
+        {/* 08 — Design decisions */}
         <Reveal>
-          <Section title="Turning the principle into an experience">
-            <div className="space-y-10">
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-foreground">
-                  01. Taskbar became the primary surface.
-                </h3>
-                <DecisionStrip
-                  decision="Placed Resume where ongoing work already lives, the Taskbar, instead of introducing another notification destination."
-                  why="It stays close to the existing Windows mental model, near active work, with system-owned interaction and lower cognitive overhead."
-                />
-                <ImageBlock
-                  heading="Design framework for Taskbar Resume"
-                  src="/images/casestudy-0/taskbar-framework.webp"
-                  alt="Taskbar Resume design framework"
-                  evidence="shipped"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-foreground">
-                  02. Progressive disclosure instead of immediate interruption.
-                </h3>
-                <DecisionStrip
-                  decision="Reveal context in stages, signal, then context, then action, instead of surfacing everything at once."
-                  why="Users get more context only when they ask for it, so the ambient signal stays quiet until it's wanted."
-                />
-                <StepFlow
-                  variant="numbered"
-                  steps={[
-                    { icon: Smartphone, iconColor: 'var(--icon-teal)', title: 'Signal', description: 'Ambient Taskbar indicator' },
-                    { icon: LayoutPanelLeft, iconColor: 'var(--icon-purple)', title: 'Context', description: 'Hovercard shows origin and action' },
-                    { icon: Target, iconColor: 'var(--icon-orange)', title: 'Action', description: 'Single click to Resume' },
-                  ]}
-                />
-                <VideoBlock
-                  heading="Signal to Resume, demonstrated with Spotify"
-                  src="/videos/phone-to-pc-spotify.mp4"
-                  evidence="shipped"
-                />
-                <ImageBlock
-                  heading="Resume ingress on Taskbar and hovercard, by app availability"
-                  src="/images/casestudy-0/continuity-flow.webp"
-                  alt="Resume continuity variations across app availability"
-                />
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-2xl font-bold text-foreground">
-                  03. Make the destination predictable.
-                </h3>
-                <DecisionStrip
-                  decision="Made the hovercard always answer what is being resumed, where it will open, and what to expect, before the user commits."
-                  why="One of the biggest anxieties in continuity is not knowing what happens after selecting Resume. The user should understand the consequence before committing to it."
-                />
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <ImageBlock
-                    src="/images/casestudy-0/spotify-continuity-1.webp"
-                    alt="Spotify continuity hovercard state"
-                  />
-                  <ImageBlock
-                    src="/images/casestudy-0/spotify-continuity-2.webp"
-                    alt="Spotify continuity hovercard state, expanded"
-                  />
+          <Section>
+            <EditorialHeading
+              eyebrow="Design decisions"
+              heading="Turning the principle into an experience."
+              supporting="Three key design decisions shaped the Phone to PC Continuity experience."
+            />
+            <div className="grid sm:grid-cols-3 gap-4 mt-8 items-start">
+              <DecisionCard data={DECISIONS[0]}>
+                <ImageBlock src="/images/casestudy-0/taskbar-framework.webp" alt="Taskbar Resume design framework" />
+              </DecisionCard>
+              <DecisionCard data={DECISIONS[1]}>
+                <div className="flex items-center justify-center gap-2 rounded-xl bg-muted/30 py-4">
+                  {[
+                    { color: 'var(--icon-teal)', label: 'Signal' },
+                    { color: 'var(--icon-purple)', label: 'Context' },
+                    { color: 'var(--icon-orange)', label: 'Action' },
+                  ].map((step, i, arr) => (
+                    <div key={step.label} className="flex items-center gap-2">
+                      <span className="text-xs font-bold" style={{ color: step.color }}>
+                        {step.label}
+                      </span>
+                      {i < arr.length - 1 && <ArrowRight className="w-3.5 h-3.5 text-muted-foreground" aria-hidden="true" />}
+                    </div>
+                  ))}
                 </div>
-                <ImageBlock
-                  heading="Resume variations communicating what will happen next"
-                  src="/images/casestudy-0/resume-variations.webp"
-                  alt="Resume from phone continuity variations"
-                  evidence="shipped"
-                />
-              </div>
+              </DecisionCard>
+              <DecisionCard data={DECISIONS[2]}>
+                <ImageBlock src="/images/casestudy-0/spotify-continuity-1.webp" alt="Spotify continuity hovercard state" />
+              </DecisionCard>
             </div>
           </Section>
         </Reveal>
 
-        {/* Designing for Different Kinds of Work */}
+        {/* 09 — Scalability */}
         <Reveal>
-          <Section title="One continuity model. Different kinds of work.">
-            <div className="grid sm:grid-cols-3 gap-4">
+          <Section>
+            <EditorialHeading
+              eyebrow="Scalability"
+              heading="One continuity model. Different kinds of work."
+              supporting="The same system can support different kinds of activities across apps and experiences."
+            />
+            <div className="grid sm:grid-cols-3 gap-4 mt-8">
               <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Media</p>
-                <AppScenarioCard
-                  icon={SpotifyIcon}
-                  title="Spotify"
-                  description="Continue playback without rebuilding the context."
-                />
+                <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--icon-green)' }}>
+                  Media
+                </p>
+                <AppScenarioCard icon={SpotifyIcon} title="Spotify" description="Continue music or podcasts where you left off." />
               </div>
               <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Web</p>
-                <AppScenarioCard
-                  icon={BrowserIcon}
-                  title="Browser"
-                  description="Resume the browsing session where the user left off."
-                />
+                <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--icon-blue)' }}>
+                  Web
+                </p>
+                <AppScenarioCard icon={BrowserIcon} title="Browser" description="Get back to the exact page you were reading." />
               </div>
               <div>
-                <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">Productivity</p>
-                <AppScenarioCard
-                  icon={Microsoft365Icon}
-                  title="Microsoft 365"
-                  description="Reopen the relevant work and continue from the appropriate context."
-                />
+                <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--icon-orange)' }}>
+                  Productivity
+                </p>
+                <AppScenarioCard icon={Microsoft365Icon} title="Microsoft 365" description="Resume documents, decks and spreadsheets." />
               </div>
             </div>
-            <Prose>
-              <p>
-                The interaction model remained consistent even though the underlying
-                task and destination differed.
-              </p>
-            </Prose>
-
-            <div>
-              <h3 className="text-lg font-bold text-foreground mb-1">Coming soon</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Additional continuity scenarios in active development
-              </p>
+            <div className="mt-8">
+              <p className="text-sm font-semibold text-foreground mb-4">More scenarios we're enabling</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                 <AppScenarioCard icon={WhatsAppIcon} title="WhatsApp" />
-                <AppScenarioCard icon={ChromeIcon} title="Chrome" />
-                <AppScenarioCard icon={EdgeIcon} title="Edge" />
+                <AppScenarioCard icon={ChromeIcon} title="Google Chrome" />
+                <AppScenarioCard icon={EdgeIcon} title="Microsoft Edge" />
                 <AppScenarioCard icon={SamsungNotesIcon} title="Samsung Notes" />
-                <AppScenarioCard icon={SamsungBrowserIcon} title="Samsung Browser" />
+                <AppScenarioCard icon={SamsungBrowserIcon} title="Samsung Internet" />
               </div>
             </div>
           </Section>
         </Reveal>
 
-        {/* Scaling the Pattern */}
+        {/* 10 — Impact & outcomes */}
         <Reveal>
-          <Section title="One pattern. Many destinations.">
-            <div className="grid sm:grid-cols-3 gap-3 items-center">
-              <div className="rounded-xl border border-border bg-muted/30 p-5">
-                <Smartphone className="w-6 h-6 mb-2" style={{ color: 'var(--icon-teal)' }} />
-                <p className="font-semibold text-foreground">Phone activity</p>
-                <p className="text-muted-foreground text-sm mt-1">Continuity signal</p>
+          <Section>
+            <EditorialHeading
+              eyebrow="Impact & outcomes"
+              heading="Did the model work?"
+              supporting="Early results after GA show strong engagement and meaningful impact."
+            />
+            <div className="grid lg:grid-cols-[1.4fr_1fr] gap-8 items-start mt-8">
+              <div>
+                <StatGrid
+                  columns={3}
+                  stats={[
+                    ...IMPACT_STATS.map((s) => ({ ...s, label: s.label.replace('surfaced to users', 'to users') })),
+                    { value: '3.3×', label: 'Improvement over toasts', sublabel: 'Taskbar Resume vs. standard toasts' },
+                  ]}
+                />
+                <p className="text-xs text-muted-foreground mt-3">*WIP metrics. Subject to change.</p>
               </div>
-              <div className="flex justify-center">
-                <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90 sm:rotate-0" />
-              </div>
-              <div className="rounded-xl border border-border bg-muted/30 p-5">
-                <Layers className="w-6 h-6 mb-2 text-primary" />
-                <p className="font-semibold text-foreground">Windows</p>
-                <p className="text-muted-foreground text-sm mt-1">
-                  Spotify, browser, Microsoft 365, and more
+              <div className="rounded-2xl border border-border p-6" style={{ backgroundColor: tint('var(--icon-purple)', 4) }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'var(--icon-purple)' }}>
+                  What this enabled
                 </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Layers className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--icon-blue)' }} aria-hidden="true" />
+                    <p className="text-sm text-foreground">
+                      Systems design is often about behaviour. Design the rules that shape
+                      how the system behaves.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <TrendingUp className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--icon-green)' }} aria-hidden="true" />
+                    <p className="text-sm text-foreground">
+                      Good platform experiences create rules that scale. When the model
+                      is right, many experiences can flourish.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <Prose>
-              <p>
-                The experience needed to remain coherent even when the destination
-                experience differed. This is what made it a platform behavior rather
-                than a feature tuned for a single app.
-              </p>
-            </Prose>
+            <Takeaway>
+              Windows doesn't need to ask where you want to work next. It can help you
+              pick up where you left off.
+            </Takeaway>
           </Section>
         </Reveal>
 
-        {/* Measured Impact */}
+        {/* 11 — In the news */}
         <Reveal>
-          <Section title="Did the model work?">
-            <h3 className="text-xl font-bold text-foreground">
-              Phone → PC Resume (Retail, May 2025)
-            </h3>
-            <StatGrid
-              columns={3}
-              stats={[
-                { value: '3.1M', label: 'Monthly Resume alerts delivered' },
-                { value: '290K+', label: 'Monthly engaged users' },
+          <Section>
+            <EditorialHeading eyebrow="In the news" heading="The experience beyond the product." />
+            <div className="grid sm:grid-cols-3 gap-4 mt-8">
+              {PRESS_ITEMS.map((item) => (
+                <a
+                  key={item.publication}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-2xl border border-border p-5 block hover:border-primary/40 transition-colors"
+                >
+                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
+                    {item.publication}
+                  </p>
+                  <p className="text-foreground text-sm leading-relaxed mt-2">{item.headline}</p>
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium mt-3" style={{ color: 'var(--icon-purple)' }}>
+                    Read article
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* 12 — Deep links */}
+        <Reveal>
+          <Section>
+            <EditorialHeading eyebrow="Deeplinks" heading="Explore the experience yourself." />
+            <ul className="mt-8 divide-y divide-border border-t border-b border-border">
+              {[
                 {
-                  value: '8.5%',
-                  label: 'Conversion on Resume toasts',
-                  sublabel: 'vs. ~1-2% for standard Windows toasts',
-                },
-              ]}
-            />
-            <Prose>
-              <p>
-                Resume toasts converted at roughly 4.2× the baseline of standard Windows
-                toasts.
-              </p>
-            </Prose>
-
-            <h3 className="text-xl font-bold text-foreground mt-6">
-              Taskbar Resume (early GA / WIP data, GA Jan 2026)
-            </h3>
-            <StatGrid
-              columns={2}
-              stats={[
-                {
-                  value: '~28%',
-                  label: 'Engagement on Taskbar Resume surfaces',
-                  sublabel: 'Early GA / WIP data',
+                  label: 'Windows Blog',
+                  description: 'Open the official announcement',
+                  href: 'https://blogs.windows.com/windows-insider/2026/01/27/releasing-windows-11-builds-26100-7701-and-26200-7701-to-the-release-preview-channel/',
                 },
                 {
-                  value: '3.3×',
-                  label: 'Improvement over toasts',
-                  sublabel: 'Spotify, Browser, and Microsoft 365 online files',
+                  label: 'Product experience',
+                  description: 'Learn more about cross-device Resume',
+                  href: 'https://support.microsoft.com/en-us/windows/cross-device-resume-feature-9ada0c0b-f70f-4806-abac-b7126fa6a053',
                 },
-              ]}
+              ].map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between gap-4 py-4 group"
+                  >
+                    <div>
+                      <p className="font-semibold text-foreground">{link.label}</p>
+                      <p className="text-muted-foreground text-sm mt-0.5">{link.description}</p>
+                    </div>
+                    <ExternalLink
+                      className="w-4 h-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors"
+                      aria-hidden="true"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        </Reveal>
+
+        {/* 13 — The bigger idea */}
+        <Reveal>
+          <Section>
+            <EditorialHeading
+              eyebrow="The bigger idea"
+              heading="From connected devices to a system that moves with the user."
             />
-            <Prose>
-              <p>This validated Taskbar as the strongest surface for high-confidence continuity.</p>
-            </Prose>
-          </Section>
-        </Reveal>
-
-        {/* Ecosystem Signal */}
-        <Reveal>
-          <Section title="An ecosystem signal">
-            <div className="rounded-xl border border-border bg-muted/20 p-5 max-w-md">
-              <p className="text-2xl font-bold text-foreground">+5pt correlation</p>
-              <p className="text-muted-foreground text-sm mt-1">
-                Between Phone Link usage and Windows retention, reinforcing the
-                strategic value of cross-device experiences. Correlation, not a measured
-                causal effect of Resume itself.
-              </p>
-            </div>
-          </Section>
-        </Reveal>
-
-        {/* External Validation */}
-        <Reveal>
-          <Section title="The experience also resonated externally.">
-            <Prose>
+            <Prose className="mt-5">
+              <p>Phone to PC Continuity started as a question about how to resume a task.</p>
               <p>
-                Coverage highlighted the Taskbar as a natural entry point and positioned
-                Resume as part of a broader Windows continuity experience.
+                It became a broader design problem: how can Windows understand what
+                someone was doing, infer where they want to continue, and help without
+                getting in the way?
               </p>
             </Prose>
-            <PressGrid
-              items={showMorePress ? [...PRESS_FEATURED, ...PRESS_MORE] : PRESS_FEATURED}
-              columns={2}
-            />
-            {!showMorePress && (
-              <button
-                type="button"
-                onClick={() => setShowMorePress(true)}
-                className="text-primary font-medium text-sm hover:underline"
-              >
-                View more coverage
-              </button>
-            )}
-
-            <div className="grid sm:grid-cols-2 gap-6 mt-6">
-              <div>
-                <p className="font-semibold text-foreground mb-2">Official Microsoft documentation</p>
-                <LinkList
-                  links={[
-                    {
-                      label: 'Cross-device Resume support page',
-                      href: 'https://support.microsoft.com/en-us/windows/cross-device-resume-feature-9ada0c0b-f70f-4806-abac-b7126fa6a053',
-                    },
-                    {
-                      label: 'Windows Insider Blog: Release Preview update (Jan 27, 2026)',
-                      href: 'https://blogs.windows.com/windows-insider/2026/01/27/releasing-windows-11-builds-26100-7701-and-26200-7701-to-the-release-preview-channel/',
-                    },
-                  ]}
-                />
-              </div>
-              <div>
-                <p className="font-semibold text-foreground mb-2">Independent media coverage</p>
-                <LinkList
-                  links={[
-                    {
-                      label: "The Verge: Windows 11's ability to resume Android apps like Apple Handoff",
-                      href: 'https://www.theverge.com/news/869161/microsoft-windows-11-android-app-resume-feature-release-preview',
-                    },
-                    {
-                      label: 'Android Authority: Windows 11 expands Cross-Device Resume',
-                      href: 'https://www.androidauthority.com/windows-11-cross-device-resume-preview-channel-3636114/',
-                    },
-                    {
-                      label: 'TechRepublic: New Windows 11 features arrive',
-                      href: 'https://www.techrepublic.com/article/news-windows-11-february-2026-update-cross-device-resume/',
-                    },
-                    {
-                      label: 'Windows Latest: Microsoft uses the Windows 11 taskbar to resume Android activities',
-                      href: 'https://www.windowslatest.com/2025/11/25/microsoft-is-using-windows-11-taskbar-to-resume-your-android-activities/',
-                    },
-                  ]}
-                />
-              </div>
-            </div>
+            <Takeaway>
+              The best continuity experience is one users don't have to think about.
+            </Takeaway>
           </Section>
-        </Reveal>
-
-        {/* What Changed */}
-        <Reveal>
-          <Section title="What changed">
-            <BeforeAfterInline
-              before={{ label: 'Connected devices', sublabel: 'Users had to reconstruct context between them.' }}
-              after={{ label: 'A system that moves with the user', sublabel: 'Windows can help users pick up where they left off.' }}
-            />
-            <Prose>
-              <p>
-                Phone → PC Resume established a system-level continuity pattern that can
-                extend across devices, apps and future directions such as bidirectional
-                continuity.
-              </p>
-            </Prose>
-            <div className="rounded-xl border border-primary/30 p-5 text-center">
-              <p className="font-semibold text-lg text-foreground">
-                Windows moved from a collection of connected devices to a system that
-                moves with the user.
-              </p>
-            </div>
-          </Section>
-        </Reveal>
-
-        {/* What I Learned */}
-        <Reveal>
-          <Section title="What this taught me">
-            <div className="grid sm:grid-cols-1 gap-4">
-              <PrincipleBlock number={1} title="Systems design is often about behavior" iconColor="var(--icon-blue)">
-                The important design decision wasn't the appearance of the Resume
-                surface. It was deciding when Windows should act.
-              </PrincipleBlock>
-              <PrincipleBlock number={2} title="Good platform experiences create rules that scale" iconColor="var(--icon-purple)">
-                A clear interaction model made it possible to support very different
-                scenarios without reinventing the experience each time.
-              </PrincipleBlock>
-              <PrincipleBlock number={3} title="Proactivity needs restraint" iconColor="var(--icon-orange)">
-                The more intelligent a system becomes, the more important it is to know
-                when not to interrupt.
-              </PrincipleBlock>
-            </div>
-          </Section>
-        </Reveal>
-
-        {/* My Contribution */}
-        <Reveal>
-          <Section title="My contribution">
-            <Prose callout>
-              I helped define the experience model, align cross-functional teams around
-              it, and turn an ambiguous continuity problem into a scalable system
-              pattern that shipped across Windows.
-            </Prose>
-          </Section>
-        </Reveal>
-
-        {/* Closing */}
-        <Reveal>
-          <Takeaway>
-            Windows doesn't need to ask where you want to work next. It can help you
-            pick up where you left off.
-          </Takeaway>
         </Reveal>
 
         <Reveal>
