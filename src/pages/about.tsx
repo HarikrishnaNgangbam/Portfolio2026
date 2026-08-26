@@ -327,11 +327,11 @@ function AboutPage() {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             What I've learned along the way.
           </h2>
-          <div className="grid sm:grid-cols-2 gap-4 mt-8">
+          <div className="grid sm:grid-cols-2 gap-4 mt-8 items-start">
             {LESSONS.map((item) => (
-              <div key={item.title} className="relative rounded-2xl p-6" style={{ backgroundColor: tint(item.color, 5) }}>
-                <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-muted-foreground/50" aria-hidden="true" />
-                <div className="flex items-start gap-4 pr-6">
+              <div key={item.title} className="relative rounded-2xl p-5" style={{ backgroundColor: tint(item.color, 5) }}>
+                <ArrowUpRight className="absolute top-5 right-5 w-4 h-4 text-muted-foreground/50" aria-hidden="true" />
+                <div className="flex items-start gap-3 pr-6">
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 overflow-hidden bg-background"
                     style={{ border: `1px solid ${tint(item.color, 30)}` }}
@@ -363,10 +363,10 @@ function AboutPage() {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
             What leadership has taught me.
           </h2>
-          <div className="grid lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid lg:grid-cols-3 gap-4 mt-8 items-start">
             {/* Leadership changed the question */}
-            <div className="rounded-2xl p-6" style={{ backgroundColor: tint('var(--icon-pink)', 5) }}>
-              <Users2 className="w-5 h-5 mb-3" style={{ color: 'var(--icon-pink)' }} />
+            <div className="rounded-2xl p-5" style={{ backgroundColor: tint('var(--icon-pink)', 5) }}>
+              <Users2 className="w-5 h-5 mb-2" style={{ color: 'var(--icon-pink)' }} />
               <h3 className="font-bold text-foreground leading-snug">Leadership changed the question.</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mt-2">
                 Designing the right experience wasn't always the hardest problem. Creating the
@@ -385,8 +385,8 @@ function AboutPage() {
             </div>
 
             {/* Clarity is a leadership tool */}
-            <div className="rounded-2xl p-6" style={{ backgroundColor: tint('var(--icon-cyan)', 5) }}>
-              <Target className="w-5 h-5 mb-3" style={{ color: 'var(--icon-cyan)' }} />
+            <div className="rounded-2xl p-5" style={{ backgroundColor: tint('var(--icon-cyan)', 5) }}>
+              <Target className="w-5 h-5 mb-2" style={{ color: 'var(--icon-cyan)' }} />
               <h3 className="font-bold text-foreground leading-snug">Clarity is a leadership tool.</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mt-2">
                 I supported seven products with finite capacity, a stretch that taught me lessons
@@ -401,8 +401,8 @@ function AboutPage() {
             </div>
 
             {/* Design should have a seat at the decision table */}
-            <div className="rounded-2xl p-6" style={{ backgroundColor: tint('var(--icon-purple)', 5) }}>
-              <ShieldCheck className="w-5 h-5 mb-3" style={{ color: 'var(--icon-purple)' }} />
+            <div className="rounded-2xl p-5" style={{ backgroundColor: tint('var(--icon-purple)', 5) }}>
+              <ShieldCheck className="w-5 h-5 mb-2" style={{ color: 'var(--icon-purple)' }} />
               <h3 className="font-bold text-foreground leading-snug">
                 Design should have a seat at the decision table.
               </h3>
@@ -455,9 +455,9 @@ function AboutPage() {
                 />
               </div>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-2xl border border-border p-6">
-                <ClipboardCheck className="w-5 h-5 mb-3" style={{ color: 'var(--icon-blue)' }} />
+            <div className="grid sm:grid-cols-2 gap-4 items-start">
+              <div className="rounded-2xl border border-border p-5">
+                <ClipboardCheck className="w-5 h-5 mb-2" style={{ color: 'var(--icon-blue)' }} />
                 <ul className="space-y-2.5">
                   <CheckItem>AI-assisted prototyping &amp; exploration</CheckItem>
                   <CheckItem>Partnering with PMs to explore ideas independently</CheckItem>
@@ -465,8 +465,8 @@ function AboutPage() {
                   <CheckItem>Building governance and shared understanding</CheckItem>
                 </ul>
               </div>
-              <div className="rounded-2xl p-6" style={{ backgroundColor: tint('var(--icon-purple)', 8) }}>
-                <Sparkles className="w-5 h-5 mb-3" style={{ color: 'var(--icon-purple)' }} />
+              <div className="rounded-2xl p-5" style={{ backgroundColor: tint('var(--icon-purple)', 8) }}>
+                <Sparkles className="w-5 h-5 mb-2" style={{ color: 'var(--icon-purple)' }} />
                 <p className="font-bold text-foreground leading-snug">
                   AI should expand design capacity, not dilute it.
                 </p>
@@ -499,7 +499,7 @@ function AboutPage() {
               that feels simpler.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6 items-start">
             <LabelChip icon={Hammer} color="var(--icon-orange)" label="DIY projects" />
             <LabelChip icon={Sofa} color="var(--icon-blue)" label="Furniture & shelves" />
             <LabelChip icon={CircuitBoard} color="var(--icon-green)" label="Prototypes & experiments" />
