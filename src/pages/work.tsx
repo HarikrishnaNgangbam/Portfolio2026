@@ -232,7 +232,7 @@ function WorkPage() {
 
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 md:pt-12 md:pb-16">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-0 lg:gap-10 items-center">
           <Reveal>
             <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-purple)' }}>
               My Work
@@ -334,7 +334,7 @@ function WorkPage() {
       </section>
 
       {/* Closing CTA */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 border-t border-border">
         <Reveal>
           <CtaBand
             variant="panel"
