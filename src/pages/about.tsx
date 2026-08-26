@@ -19,13 +19,15 @@ import {
   ClipboardCheck,
   ShieldCheck,
   Check,
+  ArrowUpRight,
+  Eye,
+  Flag,
 } from 'lucide-react';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
-import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { tint } from '@/lib/color';
@@ -171,6 +173,32 @@ function CheckItem({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Same heading + paragraph shape as the shared EditorialColumn, with a
+ * small line icon above — built locally rather than adding an icon slot to
+ * EditorialColumn itself, since that component is also used by Home and
+ * Resume.
+ */
+function GuidingPrinciple({
+  icon: Icon,
+  color,
+  heading,
+  children,
+}: {
+  icon: IconComponent;
+  color: string;
+  heading: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <Icon className="w-5 h-5 mb-2" style={{ color }} />
+      <h3 className="text-xl font-bold text-foreground">{heading}</h3>
+      <p className="text-muted-foreground leading-relaxed mt-2">{children}</p>
+    </div>
+  );
+}
+
 function AboutPage() {
   return (
     <div style={ABOUT_THEME_VARS} className="bg-background text-foreground">
@@ -301,24 +329,27 @@ function AboutPage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4 mt-8">
             {LESSONS.map((item) => (
-              <div key={item.title} className="rounded-2xl p-6" style={{ backgroundColor: tint(item.color, 5) }}>
-                <div className="flex items-center gap-3 mb-3">
+              <div key={item.title} className="relative rounded-2xl p-6" style={{ backgroundColor: tint(item.color, 5) }}>
+                <ArrowUpRight className="absolute top-6 right-6 w-4 h-4 text-muted-foreground/50" aria-hidden="true" />
+                <div className="flex items-start gap-4 pr-6">
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 overflow-hidden bg-background"
+                    className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 overflow-hidden bg-background"
                     style={{ border: `1px solid ${tint(item.color, 30)}` }}
                   >
                     {item.logo ? (
-                      <ImageWithFallback src={item.logo} alt={item.logoAlt ?? ''} className="w-4 h-4 object-contain" />
+                      <ImageWithFallback src={item.logo} alt={item.logoAlt ?? ''} className="w-6 h-6 object-contain" />
                     ) : (
-                      <item.icon className="w-4 h-4" style={{ color: item.color }} />
+                      <item.icon className="w-6 h-6" style={{ color: item.color }} />
                     )}
                   </div>
-                  <h3 className="font-bold text-foreground leading-snug">{item.title}</h3>
-                </div>
-                <div className="space-y-2 text-muted-foreground text-sm leading-relaxed">
-                  {item.paragraphs.map((p, i) => (
-                    <p key={i}>{p}</p>
-                  ))}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-foreground leading-snug">{item.title}</h3>
+                    <div className="space-y-2 text-muted-foreground text-sm leading-relaxed mt-2">
+                      {item.paragraphs.map((p, i) => (
+                        <p key={i}>{p}</p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -481,21 +512,28 @@ function AboutPage() {
         <Reveal>
           <NarrativeSection heading="What guides me every day">
             <div className="grid sm:grid-cols-3 gap-8">
-              <EditorialColumn heading="Clarity">
+              <GuidingPrinciple icon={Eye} color="var(--icon-purple)" heading="Clarity">
                 Make complexity visible so teams can make better decisions.
-              </EditorialColumn>
-              <EditorialColumn heading="Empathy">
+              </GuidingPrinciple>
+              <GuidingPrinciple icon={Heart} color="var(--icon-pink)" heading="Empathy">
                 Understand the people affected by the system, especially those whose voices are
                 easiest to miss.
-              </EditorialColumn>
-              <EditorialColumn heading="Ownership">
+              </GuidingPrinciple>
+              <GuidingPrinciple icon={Flag} color="var(--icon-orange)" heading="Ownership">
                 Designers should participate in product decisions and own outcomes, not just
                 deliverables.
-              </EditorialColumn>
+              </GuidingPrinciple>
             </div>
-            <p className="text-lg font-medium italic" style={{ color: 'var(--icon-purple)' }}>
-              That's the kind of designer I'm trying to become better at being.
-            </p>
+            <div className="text-center pt-10">
+              <p
+                className="font-serif text-3xl md:text-4xl font-semibold italic leading-snug max-w-2xl mx-auto"
+                style={{ color: 'var(--icon-purple)' }}
+              >
+                That's the kind of designer
+                <br />
+                I'm trying to become better at being.
+              </p>
+            </div>
           </NarrativeSection>
         </Reveal>
       </section>
