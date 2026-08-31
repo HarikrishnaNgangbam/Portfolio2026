@@ -1,375 +1,378 @@
-# Portfolio AI Workflow
+# Portfolio2026 — AI Working Workflow
 
-> Source of truth for the ongoing Portfolio website redesign.
+> **Source of truth for how we work on the Portfolio website.**
 >
-> User = design owner · ChatGPT = design brain/critic · Claude = implementation executor
+> **User = design owner · ChatGPT = design brain / critic · Claude = implementation executor**
 
-## 1. Roles
+## 1. Purpose
 
-### User
-The user is a design owner and active decision-maker.
+This document is the master operating rulebook for the Portfolio2026 redesign.
 
-- Provides references, preferences, corrections, and design feedback.
-- Approves or rejects design directions.
-- Can override ChatGPT's recommendations.
-- Provides implementation screenshots when requested for visual QA.
+It defines:
+- who makes decisions
+- how design and narrative decisions are made
+- how Claude is used
+- how approved references are protected
+- how iterations are reviewed
+- where detailed visual, narrative, and implementation rules live
 
-### ChatGPT
-ChatGPT is the design strategist, critic, and prompt writer.
+The detailed rules are maintained in:
+- `DESIGN_LANGUAGE.md` — how the portfolio should look
+- `PORTFOLIO_NARRATIVE.md` — what the portfolio should communicate
+- `IMPLEMENTATION_RULES.md` — how changes should be built
+- `REFERENCE_INDEX.md` — which screens/pages are approved references
 
-- Analyzes reference images and decodes their visual language.
-- Makes recommendations and challenges weak choices.
-- Maintains consistency across the portfolio.
-- Reviews Claude's implementation reports.
-- Decides whether visual inspection is necessary.
-- Requests only the specific screenshots needed for visual QA.
-- Produces concise, directly copyable Claude prompts.
-- Protects against unnecessary redesigns and token usage.
-
-### Claude
-Claude is the implementation executor.
-
-- Inspects the existing GitHub implementation.
-- Executes approved design instructions.
-- Preserves existing functionality and content unless explicitly instructed otherwise.
-- Reports implementation and verification results.
-- Does not independently redesign approved decisions.
+Claude must read and follow all four before substantial implementation work.
 
 ---
 
-## 2. Standard Workflow
+## 2. Roles
 
-1. User and ChatGPT establish the design direction.
-2. ChatGPT analyzes references and proposes the implementation approach.
-3. ChatGPT provides a directly copyable Claude prompt.
-4. User gives the prompt to Claude, with reference assets when appropriate.
-5. Claude implements and reports back.
-6. User pastes Claude's response into this conversation.
-7. ChatGPT evaluates Claude's response before requesting anything else.
-8. Only if visual verification is genuinely necessary, ChatGPT asks the user for specific screenshots.
-9. User captures only the requested page/section/viewport screenshots and shares them.
-10. ChatGPT critiques the rendered implementation against the reference and approved direction.
-11. ChatGPT provides a small, targeted follow-up Claude prompt only if changes are justified.
-12. Repeat only when necessary.
-13. Once approved, Claude commits and pushes the final implementation.
-14. ChatGPT treats the approved page as locked unless the user later requests a change.
+### User — Design Owner
 
-### Screenshot rule
+The user has final authority over:
+- visual direction
+- narrative
+- UX decisions
+- information architecture
+- what is approved or rejected
+- what becomes locked
 
-Do **not** routinely ask Claude to capture screenshots.
+### ChatGPT — Design Brain / Critic
 
-Preferred flow:
+ChatGPT is responsible for:
+- understanding the portfolio strategy
+- discussing narrative
+- developing design directions
+- evaluating implementation
+- identifying deviations
+- protecting locked decisions
+- creating concise, directly copyable Claude execution prompts
 
-**Claude implementation → Claude response → ChatGPT assessment → user screenshots only if needed.**
+### Claude — Implementation Executor
 
-When screenshots are requested, ChatGPT specifies:
-- exact page or section
-- desktop/mobile/tablet viewport when useful
-- full-page or cropped screenshot as needed
+Claude is responsible for:
+- inspecting the repository
+- implementing explicitly agreed changes
+- reusing the existing architecture
+- following the project documentation
+- reporting what it changed
 
-Avoid unnecessary screenshots.
+Claude is **not** the design decision-maker.
 
----
-
-## 3. Token Conservation
-
-Claude token usage is a priority.
-
-### Prefer
-- Small, focused prompts.
-- Surgical changes.
-- Existing components and data where appropriate.
-- Existing assets.
-- One clear implementation objective per prompt.
-- Verification proportional to the change.
-- "No change necessary" when no genuine issue exists.
-
-### Avoid
-- Repeated broad visual audits without a reason.
-- Asking Claude to capture screenshots unless necessary.
-- Repeating already-established decisions.
-- Reopening locked decisions.
-- Speculative visual tweaks.
-- Unnecessary refactors.
-- Unrelated component changes.
-- New dependencies unless genuinely required.
-- Fabricated content, metrics, or claims.
-
-Verification should be proportional to the change. Shared/global changes warrant broader regression checks; local changes generally do not.
+> **We decide. Claude executes.**
 
 ---
 
-## 4. Claude Prompt Standard
+## 3. Source-of-Truth Hierarchy
 
-Every Claude implementation prompt supplied by ChatGPT must be directly copyable.
+When sources conflict, use this order:
 
-Prompts should:
-1. State the objective.
-2. Explain important visual/design constraints.
-3. Identify what must remain unchanged.
-4. Reference existing assets/data instead of inventing replacements.
-5. Specify responsive expectations when relevant.
-6. Request proportional verification.
-7. Avoid unnecessary narrative.
-8. Minimize Claude token consumption.
+1. Explicitly locked user decision
+2. Approved reference in `REFERENCE_INDEX.md`
+3. `DESIGN_LANGUAGE.md`
+4. `PORTFOLIO_NARRATIVE.md`
+5. `IMPLEMENTATION_RULES.md`
+6. Existing repository patterns
+7. General design conventions
 
-Preferred structure:
-
-1. Objective
-2. Existing/reference context
-3. Required changes
-4. Constraints / preserve
-5. Responsive requirements
-6. Verification
-7. Delivery/reporting
+A generic UI convention must never override a locked project decision.
 
 ---
 
-## 5. Visual QA Principles
+## 4. Standard Workflow
 
-ChatGPT is the primary visual critic.
+### Phase 1 — Inspect
 
-Assess:
-- Composition
-- Spacing
-- Proportions
-- Typography
-- Alignment
-- Color
-- Visual hierarchy
-- Image treatment
-- Card proportions
-- Responsive behavior
-- Consistency with the established design language
+Before a substantial change:
+- inspect the current implementation
+- identify affected components
+- identify reusable components
+- check existing assets
+- check current responsive behaviour
+- check the live/deployed state when relevant
 
-Request a change only when:
-1. The issue is genuinely visible.
-2. It materially reduces quality or consistency.
-3. The intended fix is clear.
-4. The fix will not disturb an already-balanced composition.
+### Phase 2 — Discuss
 
-A clean "no changes necessary" result is valid and preferred. Do not endlessly optimize a page after it reaches a strong, coherent state.
+User + ChatGPT decide:
+- what problem we are solving
+- what the narrative should be
+- what the visual direction should be
+- what is changing
+- what must remain unchanged
 
----
+### Phase 3 — Lock
 
-## 6. Design Ownership
+Explicit decisions become locked when approved.
 
-The user has final authority over design decisions.
+Approved visual references are recorded in `REFERENCE_INDEX.md`.
 
-ChatGPT should:
-- Make strong recommendations.
-- Explain trade-offs.
-- Challenge weak decisions when useful.
-- Preserve user preferences once established.
+### Phase 4 — Execute
 
-ChatGPT must not assume its recommendation overrides user feedback.
+ChatGPT creates a focused Claude prompt.
 
----
+The prompt should be directly copy-pasteable and contain only the information Claude needs to execute the agreed change.
 
-## 7. Current Design Language
+### Phase 5 — Review
 
-The portfolio uses an editorial product-design language:
+After implementation:
+- inspect Claude's summary
+- inspect the resulting implementation/live page
+- compare against the agreed narrative
+- compare against the design language
+- compare against the specific approved reference where one exists
 
-- Warm/off-white backgrounds.
-- Dark serif display typography.
-- Restrained sans-serif body typography.
-- Subtle pastel accent colors.
-- Generous but intentional whitespace.
-- Strong typographic hierarchy.
-- Thin borders/dividers where appropriate.
-- Restrained rounded corners.
-- Minimal shadows and decoration.
-- Content-led compositions rather than generic SaaS UI.
-- Responsive layouts designed intentionally rather than simply compressed.
+### Phase 6 — Refine
 
-The portfolio should feel senior, editorial, considered, human, and product/design-led.
+If something is wrong:
+1. identify the exact deviation
+2. explain the intended correction
+3. reference the relevant locked rule
+4. issue a targeted correction prompt
 
-Avoid generic SaaS aesthetics, excessive gradients/shadows, over-decoration, dense dashboard-like layouts, unnecessary animation, and visual gimmicks without a clear purpose.
+Do not restart the entire design unless the user explicitly decides to.
 
 ---
 
-## 8. Global Decisions
+## 5. Claude Token Conservation
 
-### Header
-The current minimal header is global across the portfolio:
-- `HK°` wordmark
-- Work
-- About
-- Resume
-- Contact
-- Active-route purple underline
-- Gear icon
+Claude is an execution resource, not the place for open-ended exploration.
 
-### Gear / Settings
-Preserve the Gear icon and its Settings/design-system functionality.
+Prefer:
+- small prompts
+- narrow scope
+- surgical changes
+- existing components
+- existing assets
+- explicit acceptance criteria
 
-### Profile image
-The existing profile image is an approved asset and should be preserved unless the user explicitly requests a replacement.
+Avoid asking Claude to:
+- rethink the whole portfolio
+- explore broad alternatives
+- redesign approved pages
+- refactor unrelated code
+- rebuild working components
+- regenerate existing assets
+- perform unnecessary audits
 
-### Global components
-Do not modify shared components to solve a page-local problem unless there is a genuine architectural reason. Prefer page-local variants/components when a treatment is page-specific.
-
----
-
-## 9. Locked / Established Page Decisions
-
-### Home
-Established visual baseline. Preserve the approved profile image, global header, editorial serif hero, warm visual language, color-tinted content tiles, project treatment, career timeline, CTA/footer treatment, and Gear/Settings functionality.
-
-Do not casually redesign Home while working on another page.
-
-### About
-**LOCKED.**
-
-Latest approved commits:
-- `5673a4c` — mobile "Outside the screen" chip layout fix.
-- `f90e03f` — mobile "What guides me every day" heading-wrap fix.
-
-The page has been checked at 1440px, 1024px, 390px, and intermediate responsive widths. No further changes were justified in the latest QA pass.
-
-Treat About as the visual-quality baseline and do not modify it unless the user explicitly asks.
-
-### Work
-The Work page uses a **vertically stacked editorial project composition**.
-
-Do **not** revert to a conventional horizontal project-card grid.
-
-Projects should feel like editorial case-study previews:
-- Strong project imagery.
-- Clear project title.
-- Company/context.
-- Description.
-- Capability/category information.
-- Evidence/metrics when credible data exists.
-- Clear case-study route/CTA.
-
-### Project metrics
-The Phone to PC project establishes the desired visual treatment for project metrics/evidence.
-
-Rules:
-- Reuse existing credible project data.
-- Metrics may differ in number by project.
-- Do not invent or estimate metrics.
-- Do not force metrics into projects without credible evidence.
-- Consistency comes from presentation, not fabricated uniformity.
-
-### Case studies
-The Kopdar case-study page follows a vertically stacked editorial composition.
-
-Do **not** use a primary left/right two-column narrative layout.
-
-Each section generally flows:
-**eyebrow → title → narrative → supporting visual/diagram/evidence**
-
-Full-width diagrams, flows, product-screen galleries, and visual cards are appropriate. Preserve the established light editorial visual language, typography, spacing, and restrained purple/accent treatment.
-
-### Contact
-Develop Contact from the established portfolio design language and existing reference decisions rather than introducing an unrelated visual system.
+A prompt should tell Claude what to **build/update/refine**, not ask Claude what the portfolio should become.
 
 ---
 
-## 10. Content Integrity
+## 6. Reference Protection
 
-Never invent:
-- Career history.
-- Metrics.
-- Project outcomes.
-- Company claims.
-- Personal/biographical statements.
+An approved reference is a source of truth, not loose inspiration.
 
-Use existing portfolio content and approved user-provided material.
+When a reference exists:
+- study its hierarchy
+- study its spacing
+- study typography scale
+- study visual treatment
+- study content density
+- study composition
+- preserve the approved visual language
 
-If reference imagery contains unsupported copy, ask the user or omit it rather than fabricate it.
+Do not:
+- silently improve a locked composition
+- reinterpret an approved reference into a familiar UI pattern
+- substitute a two-column layout because it is easier to implement
+- treat an exploratory mockup as approved
 
-Career dates currently established:
-- Earlier Career: 2014–2017
-- Gojek: 2017–2022
-- Microsoft: 2024–Present
-
-Do not replace these with more granular internal experience dates unless explicitly requested.
-
----
-
-## 11. Assets and References
-
-When the user provides a reference image:
-- Decode its visual language first.
-- Distinguish visual inspiration from structural requirements.
-- Follow explicit user instructions when they intentionally differ from the reference.
-
-Example: a Work reference may show horizontal project cards while the approved implementation direction is vertically stacked editorial projects. In that case:
-- Reference supplies visual DNA.
-- User's explicit structural direction takes precedence.
-
-Do not ask Claude to generate new assets when existing repository assets are sufficient.
-
-If a required visual asset is unavailable, surface the gap rather than silently inventing one.
+If the desired change conflicts with a locked reference, stop and bring the decision back to User + ChatGPT.
 
 ---
 
-## 12. Micro-interactions and Motion
+## 7. The Critical Layout Rule
 
-Motion is a secondary refinement layer.
+> **Hierarchy is vertical. Orientation is flexible.**
 
-Do not introduce micro-interactions while a page's static layout is still being established.
+Every major section should generally establish:
 
-Once static pages are stable, motion can be evaluated systematically.
+**EYEBROW → TITLE → CONTENT / NARRATIVE → EVIDENCE / VISUAL**
 
-Interactions should:
-- reinforce hierarchy or affordance
-- remain restrained
-- feel consistent across pages
-- avoid gimmicks
-- work well on touch/mobile devices
+The content itself may then be:
+- horizontal
+- vertical
+- a grid
+- a timeline
+- a full-width visual
+- a diagram
+- cards
+- mixed composition
 
-Motion should ideally become part of the broader design system rather than being added randomly page by page.
+### Explicitly prohibited interpretation
 
----
+"No left/right layout" does **not** mean that all content must be vertically stacked.
 
-## 13. Technical Safety
+It means do not use a persistent section-level pattern of:
 
-When Claude implements changes:
-- Preserve existing routes and functionality.
-- Preserve Settings/Gear functionality.
-- Avoid unnecessary dependencies.
-- Avoid unrelated refactors.
-- Check responsive overflow when layout changes.
-- Check affected routes after shared-component changes.
-- Keep diffs focused.
+**Narrative / title on LEFT | evidence / content on RIGHT**
 
-Before final delivery:
-- Review git diff.
-- Remove temporary scripts/files.
-- Remove temporary dependencies.
-- Commit and push only approved changes.
-- Confirm working-tree state.
+Horizontal content inside a vertically established section is allowed.
 
 ---
 
-## 14. Page Status
+## 8. Visual Direction
 
-| Page | Status | Notes |
-|---|---|---|
-| Home | Established | Approved visual baseline |
-| About | Locked | Latest approved commit `f90e03f` |
-| Work | In progress | Vertical editorial project composition |
-| Contact | Pending | Build from established design language |
-| Resume | Existing | Preserve unless explicitly redesigned |
-| Case studies | In progress | Kopdar uses vertical editorial composition |
-| Design System / Settings | Existing | Gear functionality must remain |
+The portfolio uses:
+- light, warm surfaces
+- editorial typography
+- restrained colour
+- generous whitespace
+- purposeful visual evidence
+- sophisticated, personal, contemporary presentation
 
-Update this table as the project progresses.
+Avoid:
+- dashboard aesthetics
+- presentation-deck aesthetics
+- generic SaaS styling
+- excessive cards
+- excessive borders
+- excessive symmetry
+- dense module grids
+- decorative UI patterns
+
+Detailed rules live in `DESIGN_LANGUAGE.md`.
 
 ---
 
-## 15. Recovery / Continuity
 
-If this project is resumed in a new ChatGPT conversation:
+## 8A. Page Composition Protection
 
-1. Upload this file.
-2. Provide the current repository/state if necessary.
-3. State that this file is the portfolio project's source of truth.
-4. Continue from Page Status and Locked / Established Decisions.
-5. Do not assume old conversation context is available.
+A recurring left-rail/right-content structure is explicitly prohibited.
 
-This file exists specifically to preserve the workflow, design decisions, and project continuity.
+Do not interpret "horizontal content is allowed" as permission to make every section a two-column layout.
+
+Before approving a page, inspect its wireframe independently of styling:
+- If multiple sections repeat **intro on left + content on right**, reject the composition.
+- Require meaningful variation between section structures.
+- Horizontal content is allowed only when it serves the content and does not become the page-wide template.
+
+> **Hierarchy is vertical. Orientation is flexible. Page composition must have rhythm.**
+
+
+
+## 8B. Mandatory Wireframe-First Review
+
+Before generating or approving a visual design:
+
+1. Lock verified content.
+2. Establish each section's vertical hierarchy.
+3. Review the entire page as a wireframe without visual styling.
+4. Reject repeated left-intro/right-content architecture.
+5. Introduce deliberate variation in content composition.
+6. Apply the design language.
+7. Run the final rulebook audit.
+
+Do not jump directly from content to a polished visual.
+
+### Content Verification Rule
+
+When the task concerns an existing page, use only verified content from the repository, live implementation, or explicitly supplied source.
+
+Never invent metrics, outcomes, project descriptions, career facts, labels, or marketing copy to fill visual space.
+
+If content is unavailable, leave it unresolved rather than fabricating it.
+
+### Generation Gate
+
+A visual should not be generated for approval if:
+- content has not been verified,
+- the wireframe has not been checked,
+- repeated left-intro/right-content architecture remains,
+- compositional variation is insufficient,
+- cards have become the dominant page grammar,
+- or the visual language audit fails.
+
+## 9. Narrative Direction
+
+The portfolio's central thesis is:
+
+> **I design through complexity.**
+
+The site should demonstrate how the designer thinks and makes decisions, not simply list deliverables.
+
+Detailed narrative lives in `PORTFOLIO_NARRATIVE.md`.
+
+---
+
+## 10. Implementation Discipline
+
+Implementation should:
+- reuse existing components
+- preserve unrelated pages
+- preserve locked decisions
+- avoid invented content/metrics
+- maintain accessibility
+- maintain responsive behaviour
+- maintain performance
+- pass build/type checks
+
+Detailed implementation rules live in `IMPLEMENTATION_RULES.md`.
+
+---
+
+## 11. Locked vs Exploratory
+
+### LOCKED
+- Explicitly approved decisions
+- Approved reference screens
+- Approved narrative
+- Established design language
+
+### EXPLORATORY
+- Concepts under discussion
+- Unapproved mockups
+- Alternative compositions
+- Experiments
+
+Exploratory work must never silently become a new source of truth.
+
+---
+
+## 12. Visual QA
+
+A page is not correct merely because it looks good.
+
+Check both:
+
+### A. System fit
+Does it follow `DESIGN_LANGUAGE.md`?
+
+### B. Reference fit
+Where an approved reference exists, does it respect that reference?
+
+A visually polished design can still be wrong for this portfolio.
+
+---
+
+## 13. Regression / Rollback
+
+If a change makes an approved page or component worse:
+- identify the last approved state
+- revert or restore that state
+- then make the smaller required change
+
+Do not continue iterating from a known-bad baseline simply because work has already been done.
+
+---
+
+## 14. Completion Standard
+
+A change is complete when:
+- the agreed narrative is represented
+- the approved visual language is preserved
+- the relevant reference is respected
+- the prohibited layout patterns are absent
+- no unsupported claims were introduced
+- responsive behaviour works
+- the build works
+- unrelated areas remain intact
+
+---
+
+## 15. Quick Start for Claude
+
+Before implementation:
+
+> Read `PORTFOLIO_AI_WORKFLOW.md`, `DESIGN_LANGUAGE.md`, `PORTFOLIO_NARRATIVE.md`, `IMPLEMENTATION_RULES.md`, and the relevant entries in `REFERENCE_INDEX.md`. Treat approved references and explicit user decisions as locked. Implement only the requested change. Do not independently redesign or reinterpret the project.
