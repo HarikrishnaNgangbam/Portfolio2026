@@ -134,52 +134,6 @@ Do not restart the entire design unless the user explicitly decides to.
 
 ---
 
-## 4A. Pre-Generation Layout Verification
-
-> **Strengthened rule, added after design review.** Applies to the design-generation and design-review stages (Phase 2 — Discuss, Phase 4 — Execute, Phase 5 — Review) for any visual, wireframe, mockup, or implementation plan.
-
-Before generating a visual, wireframe, mockup, or implementation plan, explicitly verify:
-
-1. The section hierarchy is vertically established as **Eyebrow → Title → Content → Evidence**.
-2. Horizontal content is treated as an internal content arrangement, NOT as a page-level two-column structure.
-3. The design does not repeatedly use left narrative + right evidence.
-4. No visible section numbers are introduced.
-5. Different sections are allowed to use different compositions according to their content.
-6. The composition should be judged by whether it improves the narrative, not by whether it conforms to a reusable layout template.
-
-### Mandatory pre-flight rejection test
-
-FAIL the design if:
-- multiple sections use the same left-text/right-image pattern;
-- horizontal content has been interpreted as a two-column page;
-- the section hierarchy is not vertically ordered;
-- visible section numbers appear;
-- cards or columns have been introduced merely to organize content rather than because the content requires them.
-
-The AI must correct these issues before presenting a visual or implementation recommendation.
-
-### Extended pre-generation checklist (final layout validation)
-
-> **Strengthened rule, added after final layout validation.**
-
-Before generating a visual, explicitly:
-
-1. Identify the Eyebrow.
-2. Identify the Title.
-3. Identify the Content.
-4. Identify the Evidence.
-5. Confirm they establish a vertical narrative hierarchy.
-6. Decide independently how the Content/Evidence should be composed.
-7. Do not begin from a generic "text + image" template.
-
-FAIL the proposed visual if the first visual interpretation is: *"read the text on the left, then look at the visual on the right."*
-
-FAIL if multiple sections appear to be instances of the same generic "text + visual" component.
-
-The AI should ask **"What does this content need visually?"** rather than **"Which reusable section template should contain this content?"**
-
-> **CONTENT DRIVES COMPOSITION. COMPOSITION DOES NOT DRIVE CONTENT.**
-
 ## 5. Claude Token Conservation
 
 Claude is an execution resource, not the place for open-ended exploration.
@@ -248,7 +202,7 @@ The content itself may then be:
 
 ### Explicitly prohibited interpretation
 
-"No left/right layout" does **not** mean that all content must be vertically stacked.
+“No left/right layout” does **not** mean that all content must be vertically stacked.
 
 It means do not use a persistent section-level pattern of:
 

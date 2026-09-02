@@ -58,7 +58,7 @@ export const PROJECTS: ProjectSummary[] = [
     title: 'Kopdar Initiative: Scaling Driver Engagement for Gojek',
     subtitle: 'Community Engagement Platform',
     description:
-      'Improving efficiency, consistency, and community connection across Indonesia. Transformed how thousands of drivers connect through face-to-face sessions, increasing attendance 3.2× and reducing admin time 65%.',
+      'Improving efficiency, consistency, and community connection across Indonesia. Redesigned how thousands of drivers connect through face-to-face sessions, cutting effort per session by 20% and reaching 2× more drivers with the same team.',
     tags: ['System Design', 'Community Engagement', 'Super App'],
     coverImage: '/images/shared/project-kopdar-cover.webp',
     coverAlt: 'Gojek motorcycle driver in green jacket representing driver community',
@@ -70,7 +70,7 @@ export const PROJECTS: ProjectSummary[] = [
       description:
         "Turning fragmented field operations into a product ecosystem that could evolve with Gojek's rapidly growing network.",
       capabilities: ['Ecosystem', 'Operations', 'Scale'],
-      evidence: '3.2× higher attendance · 65% less admin time',
+      evidence: '20% less effort per Kopdar · 2× drivers reached',
     },
   },
   {

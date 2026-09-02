@@ -21,7 +21,7 @@ function Beat({
       <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color }}>
         {eyebrow}
       </p>
-      <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">
         {children}
       </h2>
       {supporting && (
