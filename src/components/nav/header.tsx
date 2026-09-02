@@ -28,15 +28,8 @@ function Header() {
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between max-w-7xl mx-auto h-[72px]">
-            <Link
-              to="/"
-              aria-label="Harikrishna Ngangbam, Home"
-              className="flex items-baseline font-serif text-xl font-bold text-foreground shrink-0"
-            >
-              HK
-              <span aria-hidden="true" style={{ color: 'var(--icon-red)' }}>
-                °
-              </span>
+            <Link to="/" aria-label="Harikrishna Ngangbam, Home" className="flex items-center shrink-0">
+              <img src="/images/shared/logo-mark.svg" alt="" className="h-8 w-auto" />
             </Link>
 
             {/* Desktop layout */}
