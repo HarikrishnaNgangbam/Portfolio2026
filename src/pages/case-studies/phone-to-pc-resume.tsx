@@ -53,6 +53,7 @@ import {
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { tint } from '@/lib/color';
+import { assetUrl } from '@/lib/asset-url';
 import type { IconComponent } from '@/lib/utils';
 
 /**
@@ -305,7 +306,7 @@ function GifVideo({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="rounded-2xl overflow-hidden border border-border">
       <video
-        src={src}
+        src={assetUrl(src)}
         autoPlay
         muted
         loop

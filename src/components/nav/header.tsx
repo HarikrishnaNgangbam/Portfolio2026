@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Settings, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { assetUrl } from '@/lib/asset-url';
 import { NAV_ITEMS } from '@/data/nav';
 import { SettingsModal } from './settings-modal';
 
@@ -29,7 +30,7 @@ function Header() {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between max-w-7xl mx-auto h-[72px]">
             <Link to="/" aria-label="Harikrishna Ngangbam, Home" className="flex items-center shrink-0">
-              <img src="/images/shared/logo-mark.svg" alt="" className="h-8 w-auto" />
+              <img src={assetUrl('/images/shared/logo-mark.svg')} alt="" className="h-8 w-auto" />
             </Link>
 
             {/* Desktop layout */}
