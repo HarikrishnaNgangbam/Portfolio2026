@@ -281,21 +281,21 @@ const DECISIONS: DecisionRowData[] = [
     number: '01',
     title: 'Taskbar became the primary surface.',
     description: 'Always available, contextual and near the point of action.',
-    video: '/videos/phone-to-pc-taskbar-alert.mp4',
+    video: '/public/videos/phone-to-pc-taskbar-alert.mp4',
     alt: 'Phone to PC Resume alert appearing on the Taskbar',
   },
   {
     number: '02',
     title: 'Progressive disclosure instead of immediate interruption.',
     description: 'Signal → Context → Action.',
-    video: '/videos/phone-to-pc-hovercard-disclosure.mp4',
+    video: '/public/videos/phone-to-pc-hovercard-disclosure.mp4',
     alt: 'Phone to PC Resume hovercard revealing context progressively',
   },
   {
     number: '03',
     title: 'Make the destination predictable.',
     description: 'Answer what, where and what to expect.',
-    video: '/videos/phone-to-pc-alert-details.mp4',
+    video: '/public/videos/phone-to-pc-alert-details.mp4',
     alt: 'Phone to PC Resume alert showing destination details',
   },
 ];
@@ -449,7 +449,7 @@ function PhoneToPcResumePage() {
                 <EvidenceLabel kind="shipped" />
               </div>
               <GifVideo
-                src="/videos/phone-to-pc-spotify-demo.mp4"
+                src="/public/videos/phone-to-pc-spotify-demo.mp4"
                 alt="Signal to Resume, demonstrated with Spotify"
               />
             </div>

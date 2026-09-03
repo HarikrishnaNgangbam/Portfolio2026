@@ -36,6 +36,25 @@ const DesignSystemPage = lazy(() =>
   import('@/pages/design-system').then((m) => ({ default: m.DesignSystemPage })),
 );
 
+// Family Safety's standalone artifact pages — small, rarely-visited
+// documentation pages, so code-split the same way as the case studies.
+const IdeationToPrototypeWorkflowPage = lazy(() =>
+  import('@/pages/artifacts/ideation-to-prototype-workflow').then((m) => ({
+    default: m.IdeationToPrototypeWorkflowPage,
+  })),
+);
+const PmChecklistPage = lazy(() =>
+  import('@/pages/artifacts/pm-checklist').then((m) => ({ default: m.PmChecklistPage })),
+);
+const DesignOfficeHoursPage = lazy(() =>
+  import('@/pages/artifacts/design-office-hours').then((m) => ({ default: m.DesignOfficeHoursPage })),
+);
+const EngineeringReadinessFrameworkPage = lazy(() =>
+  import('@/pages/artifacts/engineering-readiness-framework').then((m) => ({
+    default: m.EngineeringReadinessFrameworkPage,
+  })),
+);
+
 function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
@@ -74,6 +93,38 @@ function App() {
                   <FamilySafetyPage />
                 </Suspense>
               </CaseStudyGate>
+            }
+          />
+          <Route
+            path="/work/family-safety/ideation-to-prototype-workflow"
+            element={
+              <Suspense fallback={null}>
+                <IdeationToPrototypeWorkflowPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/work/family-safety/pm-checklist"
+            element={
+              <Suspense fallback={null}>
+                <PmChecklistPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/work/family-safety/design-office-hours"
+            element={
+              <Suspense fallback={null}>
+                <DesignOfficeHoursPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/work/family-safety/engineering-readiness-framework"
+            element={
+              <Suspense fallback={null}>
+                <EngineeringReadinessFrameworkPage />
+              </Suspense>
             }
           />
           <Route
