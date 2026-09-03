@@ -6,6 +6,9 @@ import {
   ArtifactSubLabel,
   ChecklistItem,
   ChecklistList,
+  ChecklistStep,
+  ChecklistStepList,
+  DontList,
   WarningNote,
   DoDontColumns,
 } from './artifact-layout';
@@ -38,152 +41,198 @@ function PmChecklistPage() {
       </ArtifactSection>
 
       <div className="space-y-12">
-        <ArtifactStep number="01" title="Before You Start / Ideation Readiness">
-          <ChecklistList>
-            <ChecklistItem>Define the problem statement</ChecklistItem>
-            <ChecklistItem>Write HMW questions</ChecklistItem>
-            <ChecklistItem>Identify user scenarios or jobs-to-be-done</ChecklistItem>
-            <ChecklistItem>Define success criteria</ChecklistItem>
-            <ChecklistItem>Align with stakeholders on scope</ChecklistItem>
-          </ChecklistList>
+        <ArtifactStep number="1" title="Before You Start (Ideation Readiness)">
+          <ChecklistStepList>
+            <ChecklistStep title="Define the problem statement">
+              What user problem are you solving? Be specific and user-centered.
+            </ChecklistStep>
+            <ChecklistStep title='Write "How Might We" (HMW) questions'>
+              Frame the problem as opportunities (e.g., "How might we help parents set limits without feeling restrictive?").
+            </ChecklistStep>
+            <ChecklistStep title="Identify user scenarios or jobs-to-be-done">
+              What are users trying to accomplish? What's the context?
+            </ChecklistStep>
+            <ChecklistStep title="Define success criteria">
+              How will you know if the solution works? What metrics matter?
+            </ChecklistStep>
+            <ChecklistStep title="Align with stakeholders on scope">
+              Ensure everyone agrees on what you're exploring and why.
+            </ChecklistStep>
+          </ChecklistStepList>
           <WarningNote>
             Don't proceed without clear problem framing. Unclear problems lead to unfocused prototypes.
           </WarningNote>
         </ArtifactStep>
 
-        <ArtifactStep number="02" title="Set Up Your Prototype">
-          <ChecklistList>
-            <ChecklistItem>Locate the Family Safety Portal Master Prototype</ChecklistItem>
-            <ChecklistItem>Duplicate the entire file; never edit the master</ChecklistItem>
-            <ChecklistItem>Rename using [Feature/Project Name] – [Your Name] – [Date]</ChecklistItem>
-            <ChecklistItem>Add a cover page with problem statement and goals</ChecklistItem>
-          </ChecklistList>
+        <ArtifactStep number="2" title="Set Up Your Prototype">
+          <ChecklistStepList>
+            <ChecklistStep title="Locate the Family Safety Portal Master Prototype">
+              Find it in the shared Figma project. If you can't find it, ask Design.
+            </ChecklistStep>
+            <ChecklistStep title="Duplicate the entire file (don't edit the master)">
+              Right-click → Duplicate. Never modify the master directly.
+            </ChecklistStep>
+            <ChecklistStep title="Rename your copy with clear naming convention">
+              Format: [Feature/Project Name] – [Your Name] – [Date]. Example: "Screen Time Redesign – Alex Chen – 2025-02-09".
+            </ChecklistStep>
+            <ChecklistStep title="Add a cover page with problem statement and goals">
+              Create a first page that explains what you're exploring and why.
+            </ChecklistStep>
+          </ChecklistStepList>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="rounded-xl border p-4" style={{ borderColor: 'color-mix(in srgb, var(--icon-green) 30%, transparent)', backgroundColor: 'color-mix(in srgb, var(--icon-green) 6%, transparent)' }}>
               <div className="flex items-center gap-2 mb-1.5">
                 <CheckCircle2 className="w-4 h-4" style={{ color: 'var(--icon-green)' }} aria-hidden="true" />
-                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-green)' }}>Good naming</p>
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-green)' }}>Good naming example</p>
               </div>
               <p className="text-sm text-foreground font-mono">Geofencing Alerts – Jordan Kim – 2025-02-09</p>
             </div>
             <div className="rounded-xl border p-4" style={{ borderColor: 'color-mix(in srgb, var(--icon-red) 30%, transparent)', backgroundColor: 'color-mix(in srgb, var(--icon-red) 6%, transparent)' }}>
               <div className="flex items-center gap-2 mb-1.5">
                 <XCircle className="w-4 h-4" style={{ color: 'var(--icon-red)' }} aria-hidden="true" />
-                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-red)' }}>Bad naming</p>
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--icon-red)' }}>Bad naming examples</p>
               </div>
-              <p className="text-sm text-foreground font-mono">"Copy of Family Safety", "Test", "New Design"</p>
+              <p className="text-sm text-foreground font-mono">"Copy of Family Safety" · "Test" · "New Design"</p>
             </div>
           </div>
         </ArtifactStep>
 
-        <ArtifactStep number="03" title="Explore &amp; Design">
-          <div>
-            <ArtifactSubLabel>Do this</ArtifactSubLabel>
-            <ChecklistList>
-              <ChecklistItem>Work with existing components only</ChecklistItem>
-              <ChecklistItem>Rearrange flows and screens</ChecklistItem>
-              <ChecklistItem>Update content and labels</ChecklistItem>
-              <ChecklistItem>Design edge cases</ChecklistItem>
-              <ChecklistItem>Create clickable prototypes</ChecklistItem>
-              <ChecklistItem>Add annotations for complex interactions</ChecklistItem>
-              <ChecklistItem>Document open questions and assumptions</ChecklistItem>
-            </ChecklistList>
-          </div>
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-red)' }}>Don't do this</p>
-            <ul className="space-y-1.5">
-              {[
-                'Create custom components / detach system components',
-                'Change colors, fonts, or spacing outside system tokens',
-                'Invent new interaction patterns without Design consultation',
-                'Skip empty / error / loading states',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2.5 py-1 text-sm text-foreground">
-                  <XCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--icon-red)' }} aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <ArtifactStep number="3" title="Explore &amp; Design">
+          <ChecklistStepList>
+            <ChecklistStep title="Work with existing components only">
+              Use what's in the master. Don't create new components or modify component structures.
+            </ChecklistStep>
+            <ChecklistStep title="Rearrange flows and screens as needed">
+              Copy, duplicate, and reorganize screens to explore different user journeys.
+            </ChecklistStep>
+            <ChecklistStep title="Update content and labels for your scenario">
+              Change text, images, and data to match your use case. Make it realistic.
+            </ChecklistStep>
+            <ChecklistStep title="Design for edge cases">
+              What happens when there's no data? An error? Offline? Design these states.
+            </ChecklistStep>
+            <ChecklistStep title="Create clickable prototypes">
+              Link screens together so reviewers can experience the flow interactively.
+            </ChecklistStep>
+            <ChecklistStep title="Add annotations for complex interactions">
+              Note behaviors, animations, or logic that aren't obvious from the visuals.
+            </ChecklistStep>
+            <ChecklistStep title="Document open questions and assumptions">
+              Create a list of things you're unsure about or need design guidance on.
+            </ChecklistStep>
+          </ChecklistStepList>
+          <DontList
+            items={[
+              'Create custom components or detach from system components',
+              'Change colors, fonts, or spacing outside of system tokens',
+              'Invent new interaction patterns without design consultation',
+              'Skip edge cases (empty, error, loading states)',
+            ]}
+          />
         </ArtifactStep>
 
-        <ArtifactStep number="04" title="Prepare for Design Office Hours">
-          <ChecklistList>
-            <ChecklistItem>Schedule a DOH session</ChecklistItem>
-            <ChecklistItem>Test the prototype</ChecklistItem>
-            <ChecklistItem>Prepare top 3–5 questions</ChecklistItem>
-            <ChecklistItem>Identify uncertain areas</ChecklistItem>
-            <ChecklistItem>Create a summary slide/page</ChecklistItem>
-          </ChecklistList>
+        <ArtifactStep number="4" title="Prepare for Design Office Hours">
+          <ChecklistStepList>
+            <ChecklistStep title="Schedule a Design Office Hours session">
+              Book time on the Design calendar. Include your prototype link and agenda.
+            </ChecklistStep>
+            <ChecklistStep title="Test your prototype before the session">
+              Click through all flows yourself. Fix broken links and incomplete screens.
+            </ChecklistStep>
+            <ChecklistStep title="Prepare your list of questions">
+              What do you need design input on? Prioritize your top 3-5 questions.
+            </ChecklistStep>
+            <ChecklistStep title="Identify areas where you're uncertain">
+              Flag screens or interactions where you need validation or guidance.
+            </ChecklistStep>
+            <ChecklistStep title="Create a summary slide or page">
+              Problem, proposed solution, key decisions, and questions — all on one page for context.
+            </ChecklistStep>
+          </ChecklistStepList>
           <div>
             <ArtifactSubLabel>What to expect in DOH</ArtifactSubLabel>
             <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
-              <li>30-minute session</li>
-              <li>PM + designer</li>
-              <li>Review system components and behaviours</li>
+              <li>30-minute session with a designer</li>
+              <li>Review system component usage and behaviors</li>
               <li>Validate interaction patterns and edge cases</li>
-              <li>Ends in Proceed / Iterate / Escalate</li>
+              <li>Receive one of three outcomes: Proceed / Iterate / Escalate</li>
             </ul>
           </div>
         </ArtifactStep>
 
-        <ArtifactStep number="05" title="After DOH">
+        <ArtifactStep number="5" title="After DOH — Next Steps">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-green)' }}>Proceed</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-green)' }}>If you received "Proceed"</p>
             <ChecklistList>
-              <ChecklistItem>Share prototype with Engineering</ChecklistItem>
-              <ChecklistItem>Designer merges changes into master</ChecklistItem>
-              <ChecklistItem>Document decisions</ChecklistItem>
+              <ChecklistItem>Share prototype with Engineering for spec review</ChecklistItem>
+              <ChecklistItem>Designer will merge your changes into the master prototype</ChecklistItem>
+              <ChecklistItem>Document decisions in project wiki or spec</ChecklistItem>
               <ChecklistItem>Proceed to implementation planning</ChecklistItem>
             </ChecklistList>
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-orange)' }}>Iterate</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-orange)' }}>If you received "Iterate"</p>
             <ChecklistList>
-              <ChecklistItem>Review feedback</ChecklistItem>
-              <ChecklistItem>Update prototype</ChecklistItem>
-              <ChecklistItem>Follow-up DOH or async review if needed</ChecklistItem>
+              <ChecklistItem>Review the specific feedback and required changes</ChecklistItem>
+              <ChecklistItem>Update your prototype based on guidance</ChecklistItem>
+              <ChecklistItem>Schedule a follow-up DOH session if needed (or async review)</ChecklistItem>
             </ChecklistList>
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-red)' }}>Escalate</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-red)' }}>If you received "Escalate"</p>
             <ChecklistList>
-              <ChecklistItem>Understand the escalation reason</ChecklistItem>
-              <ChecklistItem>Designer brings the issue to design leadership / system owners</ChecklistItem>
-              <ChecklistItem>Pause exploration until a decision is made</ChecklistItem>
-              <ChecklistItem>Explore alternatives in parallel</ChecklistItem>
+              <ChecklistItem>Understand what needs escalation (new component, pattern conflict, etc.)</ChecklistItem>
+              <ChecklistItem>Designer will bring the issue to design leadership or system owners</ChecklistItem>
+              <ChecklistItem>Pause exploration until decision is made</ChecklistItem>
+              <ChecklistItem>Explore alternative approaches in the meantime</ChecklistItem>
             </ChecklistList>
           </div>
         </ArtifactStep>
+
+        <ArtifactStep number="6" title="Quick Reference">
+          <DoDontColumns
+            dos={[
+              'Always duplicate, never edit master',
+              'Use existing components only',
+              'Design all edge cases',
+              'Get DOH approval before engineering',
+              'Document your decisions',
+              'Ask questions early and often',
+            ]}
+            donts={[
+              'Create new components',
+              'Modify the master directly',
+              'Change system tokens',
+              'Skip DOH review',
+              'Share incomplete prototypes with Engineering',
+              'Explore without clear problem framing',
+            ]}
+          />
+        </ArtifactStep>
       </div>
 
-      <ArtifactSection title="Quick reference">
-        <DoDontColumns
-          dos={[
-            'Always duplicate, never edit master',
-            'Existing components only',
-            'Design all edge cases',
-            'DOH before Engineering',
-            'Document decisions',
-            'Ask questions early',
-          ]}
-          donts={[
-            'New components',
-            'Modify master',
-            'Change system tokens',
-            'Skip DOH',
-            'Share incomplete prototypes',
-            'Explore without clear problem framing',
-          ]}
-        />
-      </ArtifactSection>
-
-      <ArtifactSection title="Need help">
-        <ul className="space-y-2 text-sm">
-          <li><span className="font-semibold text-foreground">Quick questions</span> — #family-safety-design</li>
-          <li><span className="font-semibold text-foreground">Bigger questions</span> — ad-hoc DOH or design lead</li>
-          <li><span className="font-semibold text-foreground">System component questions</span> — Fluent 2 documentation / #design-system-support</li>
-        </ul>
+      <ArtifactSection title="Need help?">
+        <p>Stuck or unsure about something? Here's how to get unblocked:</p>
+        <div className="space-y-4 mt-2">
+          <div>
+            <p className="font-semibold text-foreground">For quick questions</p>
+            <p className="text-sm">
+              Post in the #family-safety-design Slack channel. Designers monitor it and can provide quick guidance.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-foreground">For bigger questions</p>
+            <p className="text-sm">
+              Schedule an ad-hoc DOH session or ping the design lead directly. We'd rather you ask than guess.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-foreground">For system component questions</p>
+            <p className="text-sm">
+              Refer to the Fluent 2 Design System documentation or ask in #design-system-support.
+            </p>
+          </div>
+        </div>
       </ArtifactSection>
     </ArtifactPageShell>
   );

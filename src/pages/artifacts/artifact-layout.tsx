@@ -166,6 +166,55 @@ function ChecklistList({ children }: { children: React.ReactNode }) {
   return <ul className="space-y-1">{children}</ul>;
 }
 
+/**
+ * A checklist row that pairs a bold action title with its explanatory
+ * sentence beneath — the shape most of the PM Checklist and Engineering
+ * Checklist's numbered items take in the source material. `ChecklistItem`
+ * above stays for the many simpler single-line bullets (Goals, Key
+ * Principles, Success Indicators) that don't have a separate description.
+ */
+function ChecklistStep({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <li className="flex items-start gap-3 py-1.5">
+      <CheckCircle2 className="w-4 h-4 shrink-0 mt-1" style={{ color: 'var(--icon-green)' }} aria-hidden="true" />
+      <div>
+        <p className="text-foreground text-sm font-semibold leading-snug">{title}</p>
+        <p className="text-muted-foreground text-sm mt-0.5 leading-relaxed">{children}</p>
+      </div>
+    </li>
+  );
+}
+
+function ChecklistStepList({ children }: { children: React.ReactNode }) {
+  return <ul className="space-y-3">{children}</ul>;
+}
+
+/**
+ * A red-tinted, bordered "Don't Do This" block — stronger than a plain list
+ * of X-marked bullets, so critical guardrails read as a contained warning
+ * rather than ordinary body copy.
+ */
+function DontList({ title = "Don't Do This", items }: { title?: string; items: string[] }) {
+  return (
+    <div
+      className="rounded-xl border p-4"
+      style={{ borderColor: 'color-mix(in srgb, var(--icon-red) 30%, transparent)', backgroundColor: 'color-mix(in srgb, var(--icon-red) 6%, transparent)' }}
+    >
+      <p className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: 'var(--icon-red)' }}>
+        {title}
+      </p>
+      <ul className="space-y-1.5">
+        {items.map((item) => (
+          <li key={item} className="flex items-start gap-2 text-sm text-foreground">
+            <XCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--icon-red)' }} aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /** A tinted, bordered warning note for the "Warning:"/"Don't proceed without..." callouts preserved from the source. */
 function WarningNote({ children }: { children: React.ReactNode }) {
   return (
@@ -225,12 +274,30 @@ function OutcomeTrio({ proceed, iterate, escalate }: { proceed: OutcomeItem; ite
   );
 }
 
-/** A restrained two-column Do / Don't checklist, used for quick-reference summaries. */
-function DoDontColumns({ dos, donts }: { dos: string[]; donts: string[] }) {
+/**
+ * A boxed, two-column Do / Don't reference — used where the source itself
+ * frames a "Do This" / "Don't Do This" pair as a quick-reference summary.
+ * Both columns get a tinted, bordered container so the two groups read as
+ * immediately contrasting at a glance, not just a color change on plain text.
+ */
+function DoDontColumns({
+  dos,
+  donts,
+  doTitle = 'Do This',
+  dontTitle = "Don't Do This",
+}: {
+  dos: string[];
+  donts: string[];
+  doTitle?: string;
+  dontTitle?: string;
+}) {
   return (
-    <div className="grid sm:grid-cols-2 gap-6">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-green)' }}>Do</p>
+    <div className="grid sm:grid-cols-2 gap-4">
+      <div
+        className="rounded-xl border p-4"
+        style={{ borderColor: 'color-mix(in srgb, var(--icon-green) 30%, transparent)', backgroundColor: 'color-mix(in srgb, var(--icon-green) 6%, transparent)' }}
+      >
+        <p className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: 'var(--icon-green)' }}>{doTitle}</p>
         <ul className="space-y-1.5">
           {dos.map((d) => (
             <li key={d} className="flex items-start gap-2 text-sm text-foreground">
@@ -240,8 +307,11 @@ function DoDontColumns({ dos, donts }: { dos: string[]; donts: string[] }) {
           ))}
         </ul>
       </div>
-      <div>
-        <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--icon-red)' }}>Don't</p>
+      <div
+        className="rounded-xl border p-4"
+        style={{ borderColor: 'color-mix(in srgb, var(--icon-red) 30%, transparent)', backgroundColor: 'color-mix(in srgb, var(--icon-red) 6%, transparent)' }}
+      >
+        <p className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: 'var(--icon-red)' }}>{dontTitle}</p>
         <ul className="space-y-1.5">
           {donts.map((d) => (
             <li key={d} className="flex items-start gap-2 text-sm text-foreground">
@@ -262,6 +332,9 @@ export {
   ArtifactSubLabel,
   ChecklistItem,
   ChecklistList,
+  ChecklistStep,
+  ChecklistStepList,
+  DontList,
   WarningNote,
   ArtifactQuote,
   OutcomeTrio,

@@ -19,7 +19,7 @@ function IdeationToPrototypeWorkflowPage() {
       heading="Ideation → Prototype Workflow"
       supporting="Master workflow documentation for democratised design exploration with quality governance."
     >
-      <ArtifactSection title="Overview">
+      <ArtifactSection title="Workflow overview">
         <p>
           This workflow enables Product Managers to explore design solutions
           independently while maintaining system quality through structured
@@ -75,46 +75,47 @@ function IdeationToPrototypeWorkflowPage() {
               <ArtifactSubLabel>Actions</ArtifactSubLabel>
               <ChecklistList>
                 <ChecklistItem>Duplicate the Family Safety Portal Master Prototype</ChecklistItem>
-                <ChecklistItem>Rename: [Project Name] – [PM Name] – [Date]</ChecklistItem>
+                <ChecklistItem>Rename with clear naming convention: [Project Name] – [PM Name] – [Date]</ChecklistItem>
                 <ChecklistItem>Work only with approved components from the design system</ChecklistItem>
                 <ChecklistItem>Modify flows, not component structures</ChecklistItem>
               </ChecklistList>
             </div>
             <div>
               <ArtifactSubLabel>Critical rules</ArtifactSubLabel>
-              <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
-                <li>Never create net-new components</li>
-                <li>Never modify the master prototype directly</li>
-                <li>Maintain system tokens (colors, spacing, typography)</li>
-                <li>Document your exploration rationale</li>
-              </ul>
+              <ChecklistList>
+                <ChecklistItem>Never create net-new components</ChecklistItem>
+                <ChecklistItem>Never modify the master prototype directly</ChecklistItem>
+                <ChecklistItem>Maintain system tokens (colors, spacing, typography)</ChecklistItem>
+                <ChecklistItem>Document your exploration rationale</ChecklistItem>
+              </ChecklistList>
             </div>
           </ArtifactStep>
 
           <ArtifactStep number="03" title="Design Office Hours (DOH)">
-            <p className="text-muted-foreground">Present the exploration for designer-led system and behaviour review.</p>
+            <p className="text-muted-foreground">Present your exploration for designer-led system and behavior review.</p>
             <div>
               <ArtifactSubLabel>What to prepare</ArtifactSubLabel>
               <ChecklistList>
-                <ChecklistItem>Interactive prototype with proposed changes</ChecklistItem>
+                <ChecklistItem>Interactive prototype with your proposed changes</ChecklistItem>
                 <ChecklistItem>List of key decisions or questions</ChecklistItem>
-                <ChecklistItem>Edge cases considered</ChecklistItem>
-                <ChecklistItem>Specific feedback areas needing guidance</ChecklistItem>
+                <ChecklistItem>Edge cases you've considered (error states, empty states, etc.)</ChecklistItem>
+                <ChecklistItem>Specific feedback areas you need guidance on</ChecklistItem>
               </ChecklistList>
             </div>
             <div>
               <ArtifactSubLabel>What gets reviewed</ArtifactSubLabel>
-              <ul className="space-y-1.5 text-sm text-muted-foreground list-disc list-inside">
-                <li>System component usage and alignment</li>
-                <li>Interaction patterns and behaviour consistency</li>
-                <li>Edge case coverage</li>
-                <li>Accessibility and usability considerations</li>
-                <li>Platform consistency</li>
-              </ul>
+              <ChecklistList>
+                <ChecklistItem>System component usage and alignment</ChecklistItem>
+                <ChecklistItem>Interaction patterns and behavior consistency</ChecklistItem>
+                <ChecklistItem>Edge case coverage (loading, error, empty states)</ChecklistItem>
+                <ChecklistItem>Accessibility and usability considerations</ChecklistItem>
+                <ChecklistItem>Platform consistency (does this feel like Windows?)</ChecklistItem>
+              </ChecklistList>
             </div>
           </ArtifactStep>
 
           <ArtifactStep number="04" title="Decision Checkpoint">
+            <p className="text-muted-foreground">Receive clear outcome: Proceed, Iterate, or Escalate.</p>
             <OutcomeTrio
               proceed={{ label: 'Proceed', description: 'System-aligned, ready for engineering handoff.' }}
               iterate={{ label: 'Iterate', description: 'Needs refinement, specific changes identified.' }}
@@ -126,13 +127,17 @@ function IdeationToPrototypeWorkflowPage() {
           </ArtifactStep>
 
           <ArtifactStep number="05" title="Execute &amp; Document">
-            <ChecklistList>
-              <ChecklistItem>Designer merges approved changes back into master prototype</ChecklistItem>
-              <ChecklistItem>Update prototype documentation with new flows</ChecklistItem>
-              <ChecklistItem>Create engineering specs or annotations as needed</ChecklistItem>
-              <ChecklistItem>Share prototype link in engineering handoff</ChecklistItem>
-              <ChecklistItem>Document decisions and rationale in project wiki</ChecklistItem>
-            </ChecklistList>
+            <p className="text-muted-foreground">Merge approved changes and prepare for engineering handoff.</p>
+            <div>
+              <ArtifactSubLabel>Final steps</ArtifactSubLabel>
+              <ChecklistList>
+                <ChecklistItem>Designer merges approved changes back to master prototype</ChecklistItem>
+                <ChecklistItem>Update prototype documentation with new flows</ChecklistItem>
+                <ChecklistItem>Create engineering specs or annotations as needed</ChecklistItem>
+                <ChecklistItem>Share prototype link in engineering handoff</ChecklistItem>
+                <ChecklistItem>Document decisions and rationale in project wiki</ChecklistItem>
+              </ChecklistList>
+            </div>
           </ArtifactStep>
         </div>
       </div>
