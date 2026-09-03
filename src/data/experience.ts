@@ -15,7 +15,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'Senior Product Designer',
     company: 'Microsoft - Windows',
-    companyLogo: '/images/logos/microsoft-windows.webp',
+    companyLogo: '/images/logos/microsoft-mark.svg',
     companyLogoAlt: 'Microsoft - Windows logo',
     dates: 'Aug 2024 - Present',
     location: 'Hyderabad, India',
@@ -29,7 +29,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'Head of Design',
     company: 'RED.HEALTH',
-    companyLogo: '/images/logos/red-health.webp',
+    companyLogo: '/images/logos/red-health.png',
     companyLogoAlt: 'RED.HEALTH logo',
     dates: 'Jun 2024 - Aug 2024',
     resumeBullets: [
@@ -40,7 +40,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'Principal Product Designer',
     company: 'Funding Societies',
-    companyLogo: '/images/logos/funding-societies.webp',
+    companyLogo: '/images/logos/funding-societies.svg',
     companyLogoAlt: 'Funding Societies logo',
     dates: 'Feb 2023 - Nov 2023',
     resumeBullets: [
@@ -50,7 +50,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'Design Manager',
     company: 'Gojek Tech',
-    companyLogo: '/images/logos/gojek-tech.webp',
+    companyLogo: '/images/logos/gojek.svg',
     companyLogoAlt: 'Gojek Tech logo',
     dates: 'Nov 2017 - Nov 2022',
     narrativeSummary:
@@ -64,7 +64,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'Industrial Designer',
     company: 'Godrej & Boyce',
-    companyLogo: '/images/logos/godrej-boyce.webp',
+    companyLogo: '/images/logos/godrej-boyce.svg',
     companyLogoAlt: 'Godrej & Boyce logo',
     dates: 'Mar 2016 - Nov 2017',
     resumeBullets: [
@@ -74,7 +74,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
   {
     role: 'UX Design Intern',
     company: 'Samsung R&D Institute',
-    companyLogo: '/images/logos/samsung-rd.webp',
+    companyLogo: '/images/logos/samsung.png',
     companyLogoAlt: 'Samsung R&D Institute logo',
     dates: 'Apr 2014 - Dec 2014',
     resumeBullets: [
@@ -97,7 +97,7 @@ export const EDUCATION: EducationEntry[] = [
   {
     degree: 'Master of Design, ID',
     school: 'National Institute of Design',
-    logo: '/images/logos/nid.webp',
+    logo: '/images/logos/nid.svg',
     logoAlt: 'National Institute of Design logo',
   },
   {
