@@ -1,5 +1,6 @@
 import { useStorageState } from './use-storage-state';
 import { PROJECTS, type ProjectSummary } from '@/data/projects';
+import { SETTINGS_PASSWORD } from './settings-session';
 
 export interface ProjectOverride {
   order: number;
@@ -13,8 +14,28 @@ export type ProjectOverrideMap = Record<string, ProjectOverride>;
 
 const STORAGE_KEY = 'portfolio:project-overrides';
 
-function defaultOverride(order: number): ProjectOverride {
-  return { order, hidden: false, deleted: false, protected: false, password: '' };
+/**
+ * Per-slug protection defaults, applied only until the owner sets an
+ * explicit override for that project (see `getOverride` below). A fresh
+ * visitor's browser has no localStorage entry at all, so without this a
+ * project the owner intends to keep protected would be openly visible to
+ * anyone who hasn't already opened Settings on that exact browser. Only
+ * PC → Phone is listed here — every other project keeps the original
+ * unprotected-by-default behavior.
+ */
+const PROTECTED_BY_DEFAULT: Partial<Record<string, string>> = {
+  'pc-to-phone-resume': SETTINGS_PASSWORD,
+};
+
+function defaultOverride(order: number, slug: string): ProjectOverride {
+  const defaultPassword = PROTECTED_BY_DEFAULT[slug];
+  return {
+    order,
+    hidden: false,
+    deleted: false,
+    protected: defaultPassword !== undefined,
+    password: defaultPassword ?? '',
+  };
 }
 
 /** Merges stored overrides on top of the base project data, defined order included. */
@@ -23,7 +44,7 @@ function useProjectOverrides() {
 }
 
 function getOverride(overrides: ProjectOverrideMap, slug: string, fallbackOrder: number): ProjectOverride {
-  return overrides[slug] ?? defaultOverride(fallbackOrder);
+  return overrides[slug] ?? defaultOverride(fallbackOrder, slug);
 }
 
 export interface ManagedProject {
