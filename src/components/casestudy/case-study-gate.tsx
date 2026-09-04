@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from 'react';
-import { Lock, Eye, EyeOff, ArchiveX } from 'lucide-react';
+import { Lock, ArchiveX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button, buttonVariants } from '@/design-system/ui/button';
+import { PasswordField } from '@/design-system/ui/password-field';
 import { useProjectAccess } from '@/lib/project-settings-store';
 import { useSettingsUnlocked, useUnlockedCaseStudies } from '@/lib/settings-session';
 
@@ -20,7 +21,6 @@ function CaseStudyGate({ slug, children }: CaseStudyGateProps) {
   const [settingsUnlocked] = useSettingsUnlocked();
   const [unlockedCaseStudies, setUnlockedCaseStudies] = useUnlockedCaseStudies();
   const [input, setInput] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
 
   if (access.deleted) {
@@ -66,29 +66,18 @@ function CaseStudyGate({ slug, children }: CaseStudyGateProps) {
           This case study requires a password to view.
         </p>
         <form onSubmit={handleSubmit}>
-          <div className="relative mb-2">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                setError(false);
-              }}
-              placeholder="Enter password"
-              aria-label="Case study password"
-              autoFocus
-              className={`w-full rounded-md border bg-transparent px-4 py-2 text-sm text-foreground outline-none ring-2 ring-transparent focus:ring-primary/40 ${error ? 'border-destructive' : 'border-primary/50'}`}
-            />
-            <button
-              type="button"
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-              onClick={() => setShowPassword((v) => !v)}
-            >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </button>
-          </div>
-          {error && <p className="text-destructive text-sm mb-2">Incorrect password</p>}
+          <PasswordField
+            value={input}
+            onChange={(value) => {
+              setInput(value);
+              setError(false);
+            }}
+            error={error}
+            ariaLabel="Case study password"
+            autoFocus
+            className="mb-2"
+            errorClassName="mb-2"
+          />
           <Button type="submit" className="w-full mt-4">
             Unlock
           </Button>

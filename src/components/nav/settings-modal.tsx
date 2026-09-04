@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
-import { Lock, LockOpen, Eye, EyeOff, X, Palette, ShieldCheck, LayoutList } from 'lucide-react';
+import { Lock, LockOpen, X, Palette, ShieldCheck, LayoutList } from 'lucide-react';
 import { Button } from '@/design-system/ui/button';
+import { PasswordField } from '@/design-system/ui/password-field';
 import { cn } from '@/lib/utils';
 import { useFocusTrap } from '@/lib/use-focus-trap';
 import { useSettingsUnlocked, SETTINGS_PASSWORD } from '@/lib/settings-session';
@@ -23,7 +24,6 @@ const TABS: { id: Tab; label: string; icon: typeof Palette }[] = [
 
 function SettingsModal({ open, onClose }: SettingsModalProps) {
   const [unlocked, setUnlocked] = useSettingsUnlocked();
-  const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
   const [tab, setTab] = useState<Tab>('design-system');
@@ -73,31 +73,17 @@ function SettingsModal({ open, onClose }: SettingsModalProps) {
             Enter the settings password to continue
           </p>
           <form onSubmit={handleSubmit}>
-            <div className="relative mb-4">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  setError(false);
-                }}
-                placeholder="Enter password"
-                aria-label="Settings password"
-                className={cn(
-                  'w-full rounded-md border bg-transparent px-4 py-2 text-sm text-foreground outline-none ring-2 ring-transparent focus:ring-primary/40',
-                  error ? 'border-destructive' : 'border-primary/50',
-                )}
-              />
-              <button
-                type="button"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                onClick={() => setShowPassword((v) => !v)}
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            {error && <p className="text-destructive text-sm -mt-2 mb-4">Incorrect password</p>}
+            <PasswordField
+              value={input}
+              onChange={(value) => {
+                setInput(value);
+                setError(false);
+              }}
+              error={error}
+              ariaLabel="Settings password"
+              className="mb-4"
+              errorClassName="-mt-2 mb-4"
+            />
             <div className="flex gap-3">
               <Button type="button" variant="outline" className="flex-1" onClick={handleClose}>
                 Cancel
