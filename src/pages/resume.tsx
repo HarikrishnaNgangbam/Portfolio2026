@@ -3,6 +3,7 @@ import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { buttonVariants } from '@/design-system/ui/button';
 import { MarkerList } from '@/design-system/ui/marker-list';
+import { NarrativeSection } from '@/design-system/ui/narrative-section';
 import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
 import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
@@ -103,7 +104,7 @@ function ResumePage() {
       {/* Experience — one continuous chronology, no "Earlier" split */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Experience</h2>
+          <NarrativeSection heading="Experience" />
           <div className="mt-8">
             {EXPERIENCE.map((exp, i) => (
               <Reveal key={exp.company} delay={i * 40}>
@@ -148,7 +149,7 @@ function ResumePage() {
       {/* Capabilities — 3-column first row, 2-column second row so Leadership and Emerging get full-width columns */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Capabilities</h2>
+          <NarrativeSection heading="Capabilities" />
           <div className="grid lg:grid-cols-3 gap-x-10 gap-y-10 mt-8">
             {CAPABILITIES_ROW_1.map((category) => (
               <div key={category}>
@@ -175,7 +176,7 @@ function ResumePage() {
       {/* Education */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Education</h2>
+          <NarrativeSection heading="Education" />
           <div className="grid sm:grid-cols-2 gap-y-8 mt-8 sm:divide-x sm:divide-border">
             {EDUCATION.map((edu) => (
               <div key={edu.degree} className="flex items-center gap-6 sm:px-10 sm:first:pl-0">
