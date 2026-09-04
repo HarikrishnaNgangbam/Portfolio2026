@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Construction } from 'lucide-react';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Badge } from '@/design-system/ui/badge';
+import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
 import type { IconComponent } from '@/lib/utils';
 
@@ -128,7 +129,7 @@ function CaseStudyHero({
           title
         )}
       </Heading>
-      <p className="text-lg text-muted-foreground leading-relaxed mt-4">{subtitle}</p>
+      <LeadParagraph className="mt-4">{subtitle}</LeadParagraph>
       {description && (
         <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">{description}</p>
       )}
