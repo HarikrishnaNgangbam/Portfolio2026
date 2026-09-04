@@ -98,6 +98,7 @@ function Header() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setMobileOpen(false)}
+                    aria-current={active ? 'page' : undefined}
                     className={cn(
                       'px-3 py-3 rounded-lg text-sm font-medium transition-colors duration-200',
                       active ? 'text-foreground bg-muted' : 'text-muted-foreground hover:bg-muted',
