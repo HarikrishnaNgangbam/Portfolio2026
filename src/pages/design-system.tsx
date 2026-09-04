@@ -18,17 +18,14 @@ import { Badge } from '@/design-system/ui/badge';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
-import { IconList } from '@/design-system/ui/icon-list';
-import { DotList } from '@/design-system/ui/dot-list';
+import { MarkerList } from '@/design-system/ui/marker-list';
 import { CardHeading } from '@/design-system/ui/card-heading';
 import { ContactInfoCard } from '@/design-system/ui/contact-info-card';
-import { ExperienceCard } from '@/design-system/ui/experience-card';
+import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
 import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { PrincipleBlock } from '@/design-system/ui/principle-block';
-import { CareerNarrative } from '@/design-system/ui/career-narrative';
 import { ProjectCard } from '@/components/portfolio/project-card';
-import { ProjectSignal } from '@/components/portfolio/project-signal';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
@@ -331,7 +328,7 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="Badge" purpose="Color-cycled tag pill (hash-stable per label) — for ordinary tags, not project classification. See ProjectSignal in Portfolio for that distinction.">
+        <ComponentDemo name="Badge" purpose="Color-cycled tag pill (hash-stable per label) — for ordinary tags and project capability labels.">
           <div className="flex flex-wrap gap-2">
             <Badge>Task Continuity</Badge>
             <Badge>Vibe Coding</Badge>
@@ -399,19 +396,9 @@ function DesignSystemPage() {
 
       {/* PORTFOLIO */}
       <ShowcaseSection id="portfolio" title="Portfolio" description="Project listing and career components.">
-        <ComponentDemo name="ProjectSignal" purpose="Immediately communicates the type of design problem a project represents — a design classification, not a filter chip, so it reads as plain tracked text rather than a colored pill.">
-          <div className="space-y-2">
-            <ProjectSignal items={['Systems', 'Platform', 'Shipped']} />
-            <ProjectSignal items={['0→1', 'Vision', 'Cross-platform']} />
-            <ProjectSignal items={['Leadership', 'AI', 'Design Operations']} />
-            <ProjectSignal items={['Ecosystem', 'Operations', 'Scale']} />
-          </div>
-        </ComponentDemo>
-
-        <ComponentDemo name="ProjectCard" purpose="Project card that links to its case study. `work` variant (default, full case-study framing) vs `narrative` variant (Home's Selected Work framing). Both now use ProjectSignal for their classification, not Badge.">
-          <div className="space-y-4">
-            <ProjectCard project={PROJECTS[0]} />
-            <ProjectCard project={PROJECTS[0]} variant="narrative" number={1} />
+        <ComponentDemo name="ProjectCard" purpose="Grid-friendly vertical project card (image on top, metadata below) used by Home's Selected Work section.">
+          <div className="max-w-xs">
+            <ProjectCard project={PROJECTS[0]} number={1} />
           </div>
         </ComponentDemo>
 
@@ -428,29 +415,22 @@ function DesignSystemPage() {
           </CtaBand>
         </ComponentDemo>
 
-        <ComponentDemo name="ExperienceCard" purpose="Work-history card with logo, dates, and bullets.">
-          <ExperienceCard
-            role="Senior Product Designer"
-            company="Microsoft - Windows"
-            companyLogo="/images/logos/microsoft-windows.webp"
-            companyLogoAlt="Microsoft - Windows logo"
-            dates="Aug 2024 - Present"
-            location="Hyderabad, India"
-            bullets={['Lead UX strategy for Windows cross-device continuity']}
-          />
-        </ComponentDemo>
-
-        <ComponentDemo name="CareerNarrative" purpose="Condensed career-chapter card — Home's 'Career across scale and systems' section.">
-          <CareerNarrative
-            company="Microsoft"
-            companyLogo="/images/logos/microsoft-windows.webp"
-            companyLogoAlt="Microsoft - Windows logo"
-            role="Senior Product Designer, Microsoft"
-            dates="Aug 2024 - Present"
-          >
-            Designing cross-device experiences across Windows, phones and connected
-            ecosystems.
-          </CareerNarrative>
+        <ComponentDemo name="ExperienceHeaderRow" purpose="Presentational logo + primary label + right-aligned dates row shared by Resume's experience list and Home's career timeline. No card, bullet or timeline logic — those stay page-specific.">
+          <div className="grid sm:grid-cols-2 gap-8">
+            <ExperienceHeaderRow
+              label="Senior Product Designer"
+              dates="Aug 2024 - Present"
+              labelClassName="text-xl"
+              datesClassName="shrink-0 tabular-nums"
+            />
+            <ExperienceHeaderRow
+              logo="/images/logos/microsoft-windows.webp"
+              logoAlt="Microsoft - Windows logo"
+              label="Microsoft"
+              dates="Aug 2024 - Present"
+              labelClassName="text-lg"
+            />
+          </div>
         </ComponentDemo>
 
         <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Contact.">
@@ -520,17 +500,20 @@ function DesignSystemPage() {
           </Quote>
         </ComponentDemo>
 
-        <ComponentDemo name="IconList" purpose="Checkmark bullet list — used for Resume/Home experience bullets.">
-          <IconList
-            items={[
-              'Lead UX strategy for Windows cross-device continuity',
-              'Spearheaded multiple AI-Lead Design exploration sprints',
-            ]}
-          />
-        </ComponentDemo>
-
-        <ComponentDemo name="DotList" purpose="Simple dot bullet list — used on the About page.">
-          <DotList items={['Design Leadership & Strategy', 'Systems & Experience Architecture', 'Execution Excellence']} />
+        <ComponentDemo name="MarkerList" purpose="Canonical marker-list primitive — 'check' for role/experience highlights (Experience cards), 'dot' for skills/capabilities columns (Resume).">
+          <div className="grid sm:grid-cols-2 gap-8">
+            <MarkerList
+              marker="check"
+              items={[
+                'Lead UX strategy for Windows cross-device continuity',
+                'Spearheaded multiple AI-Lead Design exploration sprints',
+              ]}
+            />
+            <MarkerList
+              marker="dot"
+              items={['Design Leadership & Strategy', 'Systems & Experience Architecture', 'Execution Excellence']}
+            />
+          </div>
         </ComponentDemo>
 
         <ComponentDemo name="CardHeading" purpose="Icon + title row for About/Resume content cards.">
@@ -548,7 +531,7 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="NarrativeSection" purpose="Heading + optional supporting paragraph — the editorial section shape used throughout Home and About.">
+        <ComponentDemo name="NarrativeSection" purpose="Canonical section-heading primitive for Home, About and Contact — heading + optional supporting paragraph, keeping the font-serif/size/weight treatment consistent across all three pages.">
           <NarrativeSection
             heading="Complexity comes in different forms."
             supportingText="I've spent my career learning to design not just for the person using a product, but for the systems, teams and organizations that make the experience possible."
@@ -557,13 +540,16 @@ function DesignSystemPage() {
           </NarrativeSection>
         </ComponentDemo>
 
-        <ComponentDemo name="EditorialColumn" purpose="Plain heading + short paragraph, no card — used for Home's Complexity/Problems sections and About's closing Philosophy.">
-          <div className="grid sm:grid-cols-2 gap-8">
-            <EditorialColumn heading="People" hook="Some users are easy to overlook.">
-              At Gojek, I spent years designing for drivers, agents and merchants.
-            </EditorialColumn>
-            <EditorialColumn heading="Clarity">
+        <ComponentDemo name="EditorialColumn" purpose="Canonical icon + heading + description primitive — 'plain' for About's guiding principles, 'tinted' for Home's icon columns, 'bordered' for Contact's interest rows. Optional hook (below heading) and eyebrow (above heading).">
+          <div className="grid sm:grid-cols-3 gap-6">
+            <EditorialColumn heading="Clarity" hook="Some users are easy to overlook.">
               Make complexity visible so teams can make better decisions.
+            </EditorialColumn>
+            <EditorialColumn icon={Award} color="var(--icon-blue)" variant="tinted" heading="Products">
+              Features, flows, states, platforms and dependencies.
+            </EditorialColumn>
+            <EditorialColumn icon={Target} color="var(--icon-orange)" variant="bordered" eyebrow="0 → 1 & strategy" heading="Figuring out what should exist.">
+              Finding opportunities and turning ambiguity into something a team can build.
             </EditorialColumn>
           </div>
         </ComponentDemo>

@@ -22,6 +22,8 @@ import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
+import { NarrativeSection } from '@/design-system/ui/narrative-section';
+import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { EMAIL_HREF, LINKEDIN_URL, LOCATION } from '@/data/contact';
 import { tint } from '@/lib/color';
 import { cn, type IconComponent } from '@/lib/utils';
@@ -248,9 +250,7 @@ function ContactPage() {
       {/* Contact options — compact editorial row, not boxed cards */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            Start wherever makes sense.
-          </h2>
+          <NarrativeSection heading="Start wherever makes sense." />
           <div className="grid sm:grid-cols-3 gap-8 sm:gap-6 mt-8 sm:divide-x sm:divide-border">
             {CONTACT_OPTIONS.map((option, i) => {
               const content = (
@@ -299,24 +299,19 @@ function ContactPage() {
       {/* Areas of interest */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            The kinds of problems I'm drawn to.
-          </h2>
+          <NarrativeSection heading="The kinds of problems I'm drawn to." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 items-start">
             {INTERESTS.map((item) => (
-              <div key={item.category} className="rounded-2xl border border-border p-6">
-                <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center mb-4"
-                  style={{ backgroundColor: tint(item.color, 18) }}
-                >
-                  <item.icon className="w-5 h-5" style={{ color: item.color }} aria-hidden="true" />
-                </div>
-                <p className="text-sm font-semibold" style={{ color: item.color }}>
-                  {item.category}
-                </p>
-                <h3 className="font-bold text-foreground leading-snug mt-1">{item.hook}</h3>
-                <p className="text-muted-foreground leading-relaxed mt-2 text-sm">{item.description}</p>
-              </div>
+              <EditorialColumn
+                key={item.category}
+                icon={item.icon}
+                color={item.color}
+                variant="bordered"
+                eyebrow={item.category}
+                heading={item.hook}
+              >
+                {item.description}
+              </EditorialColumn>
             ))}
           </div>
         </Reveal>

@@ -25,6 +25,7 @@ import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
+import { parseEvidenceStats } from '@/lib/parse-evidence-stats';
 import { HOME_PROJECT_ORDER, type ProjectSummary } from '@/data/projects';
 import { EMAIL_HREF, LINKEDIN_URL } from '@/data/contact';
 import { tint } from '@/lib/color';
@@ -115,14 +116,7 @@ function ProjectSection({
 }) {
   const narrative = project.narrative;
   const capabilities = narrative?.capabilities ?? project.tags;
-  const stats = narrative?.evidence
-    ?.split('·')
-    .map((chunk) => chunk.trim())
-    .filter(Boolean)
-    .map((chunk) => {
-      const [value, ...labelWords] = chunk.split(' ');
-      return { value, label: labelWords.join(' ') };
-    });
+  const stats = parseEvidenceStats(narrative?.evidence);
 
   return (
     <Link

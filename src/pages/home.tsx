@@ -17,6 +17,9 @@ import {
 import { Seo } from '@/components/seo';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
+import { NarrativeSection } from '@/design-system/ui/narrative-section';
+import { EditorialColumn } from '@/design-system/ui/editorial-column';
+import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
@@ -134,32 +137,6 @@ const CAREER_TIMELINE = [
   },
 ];
 
-/** Icon + heading + short paragraph column, shared by the Complexity and Problems sections below. Home-local: EditorialColumn (the sitewide equivalent used on About) is left untouched. */
-function IconColumn({
-  icon: Icon,
-  color,
-  title,
-  children,
-}: {
-  icon: IconComponent;
-  color: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-2xl p-5" style={{ backgroundColor: tint(color, 6) }}>
-      <div
-        className="w-10 h-10 rounded-full flex items-center justify-center mb-4"
-        style={{ backgroundColor: tint(color, 18) }}
-      >
-        <Icon className="w-5 h-5" style={{ color }} />
-      </div>
-      <h3 className="font-bold text-foreground leading-snug">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed mt-2 text-sm">{children}</p>
-    </div>
-  );
-}
-
 function HomePage() {
   const effectiveProjects = useEffectiveProjects();
   const projects = HOME_PROJECT_ORDER.map((slug) =>
@@ -241,21 +218,19 @@ function HomePage() {
       {/* Complexity comes in different forms */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            Complexity comes in different forms.
-          </h2>
+          <NarrativeSection heading="Complexity comes in different forms." />
           <div className="grid md:grid-cols-3 gap-8 mt-6">
-            <IconColumn icon={Users} color="var(--icon-blue)" title="People">
+            <EditorialColumn icon={Users} color="var(--icon-blue)" variant="tinted" heading="People">
               Different needs, mental models, constraints and emotions all interact. Designing for
               real people is never simple.
-            </IconColumn>
-            <IconColumn icon={Package} color="var(--icon-purple)" title="Products">
+            </EditorialColumn>
+            <EditorialColumn icon={Package} color="var(--icon-purple)" variant="tinted" heading="Products">
               Features, flows, states, platforms and dependencies. The more powerful the product,
               the more complex it becomes.
-            </IconColumn>
-            <IconColumn icon={Building2} color="var(--icon-orange)" title="Organizations">
+            </EditorialColumn>
+            <EditorialColumn icon={Building2} color="var(--icon-orange)" variant="tinted" heading="Organizations">
               Teams, priorities, politics, processes and scale. Design has to navigate all of it.
-            </IconColumn>
+            </EditorialColumn>
           </div>
         </Reveal>
       </section>
@@ -263,7 +238,7 @@ function HomePage() {
       {/* How I lead */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">How I lead</h2>
+          <NarrativeSection heading="How I lead" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
             {LEAD_PRINCIPLES.map((p, i) => (
               <div
@@ -288,13 +263,11 @@ function HomePage() {
       {/* Selected Work */}
       <section id="selected-work" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t scroll-mt-24">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            A few problems I've had the privilege to work on
-          </h2>
+          <NarrativeSection heading="A few problems I've had the privilege to work on" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
             {projects.map((project, i) => (
               <Reveal key={project.slug} delay={i * 80}>
-                <ProjectCard project={project} variant="compact" number={i + 1} headingLevel="h3" />
+                <ProjectCard project={project} number={i + 1} headingLevel="h3" />
               </Reveal>
             ))}
           </div>
@@ -313,14 +286,12 @@ function HomePage() {
       {/* Problems I like */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            I'm drawn to problems where...
-          </h2>
+          <NarrativeSection heading="I'm drawn to problems where..." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
             {PROBLEMS_I_LIKE.map((item) => (
-              <IconColumn key={item.title} icon={item.icon} color={item.color} title={item.title}>
+              <EditorialColumn key={item.title} icon={item.icon} color={item.color} variant="tinted" heading={item.title}>
                 {item.description}
-              </IconColumn>
+              </EditorialColumn>
             ))}
           </div>
         </Reveal>
@@ -329,9 +300,7 @@ function HomePage() {
       {/* Career across scale and systems */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            A career that taught me to think in systems
-          </h2>
+          <NarrativeSection heading="A career that taught me to think in systems" />
           <div className="mt-10">
             {CAREER_TIMELINE.map((entry, i) => (
               <div key={entry.company} className="grid grid-cols-[1.5rem_1fr] gap-4">
@@ -343,19 +312,13 @@ function HomePage() {
                   {i < CAREER_TIMELINE.length - 1 && <span className="w-px flex-1 mt-1 bg-border" />}
                 </div>
                 <div className={i < CAREER_TIMELINE.length - 1 ? 'pb-10' : ''}>
-                  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
-                      {entry.logo && (
-                        <ImageWithFallback
-                          src={entry.logo}
-                          alt={entry.logoAlt ?? ''}
-                          className="h-[0.9em] w-auto object-contain"
-                        />
-                      )}
-                      {entry.company}
-                    </h3>
-                    <span className="text-sm text-muted-foreground">{entry.dates}</span>
-                  </div>
+                  <ExperienceHeaderRow
+                    logo={entry.logo}
+                    logoAlt={entry.logoAlt}
+                    label={entry.company}
+                    dates={entry.dates}
+                    labelClassName="text-lg"
+                  />
                   {'role' in entry && entry.role && (
                     <p className="text-sm text-muted-foreground mt-1">{entry.role}</p>
                   )}

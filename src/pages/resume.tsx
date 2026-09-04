@@ -3,7 +3,8 @@ import { Download, ArrowRight } from 'lucide-react';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { buttonVariants } from '@/design-system/ui/button';
-import { DotList } from '@/design-system/ui/dot-list';
+import { MarkerList } from '@/design-system/ui/marker-list';
+import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { CtaBand } from '@/components/portfolio/cta-band';
@@ -118,10 +119,12 @@ function ResumePage() {
                     className="h-7"
                   />
                   <div className="min-w-0 w-full">
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                      <h3 className="font-bold text-xl text-foreground">{exp.role}</h3>
-                      <span className="text-sm text-muted-foreground shrink-0 tabular-nums">{exp.dates}</span>
-                    </div>
+                    <ExperienceHeaderRow
+                      label={exp.role}
+                      dates={exp.dates}
+                      labelClassName="text-xl"
+                      datesClassName="shrink-0 tabular-nums"
+                    />
                     <p className="text-muted-foreground text-sm mt-0.5">
                       {exp.company}
                       {exp.location && ` · ${exp.location}`}
@@ -151,7 +154,7 @@ function ResumePage() {
               <div key={category}>
                 <h3 className="text-lg font-bold text-foreground">{category}</h3>
                 <div className="mt-3">
-                  <DotList items={SKILLS[category]} />
+                  <MarkerList items={SKILLS[category]} marker="dot" />
                 </div>
               </div>
             ))}
@@ -161,7 +164,7 @@ function ResumePage() {
               <div key={category} className={category === 'Leadership' ? 'lg:col-span-2' : undefined}>
                 <h3 className="text-lg font-bold text-foreground">{category}</h3>
                 <div className="mt-3">
-                  <DotList items={SKILLS[category]} />
+                  <MarkerList items={SKILLS[category]} marker="dot" />
                 </div>
               </div>
             ))}

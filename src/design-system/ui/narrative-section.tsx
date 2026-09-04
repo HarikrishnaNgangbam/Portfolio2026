@@ -10,10 +10,13 @@ export interface NarrativeSectionProps {
 }
 
 /**
- * Heading + optional supporting paragraph + content, the shape repeated by
- * every editorial section on Home and About. Keeps heading typography
- * (size, weight, spacing) consistent without each page re-declaring the
- * same className string.
+ * Heading + optional supporting paragraph + content — the canonical
+ * section-heading primitive for Home, About and Contact, keeping heading
+ * typography (font, size, weight) consistent without each page
+ * re-declaring the same className string. `font-serif` matches the
+ * warm-editorial heading treatment used across those three pages; omitting
+ * it here previously made this component's own output inconsistent with
+ * the exact pattern it exists to standardize.
  */
 function NarrativeSection({
   heading,
@@ -25,7 +28,7 @@ function NarrativeSection({
   return (
     <div className={cn('space-y-8', className)}>
       <div>
-        <Heading className="text-3xl md:text-4xl font-bold text-foreground">
+        <Heading className="font-serif text-3xl md:text-4xl font-bold text-foreground">
           {heading}
         </Heading>
         {supportingText && (

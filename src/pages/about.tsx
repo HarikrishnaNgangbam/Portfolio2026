@@ -28,6 +28,7 @@ import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
+import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
 import { tint } from '@/lib/color';
@@ -183,32 +184,6 @@ function CheckItem({ children }: { children: React.ReactNode }) {
   );
 }
 
-/**
- * Same heading + paragraph shape as the shared EditorialColumn, with a
- * small line icon above — built locally rather than adding an icon slot to
- * EditorialColumn itself, since that component is also used by Home and
- * Resume.
- */
-function GuidingPrinciple({
-  icon: Icon,
-  color,
-  heading,
-  children,
-}: {
-  icon: IconComponent;
-  color: string;
-  heading: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <Icon className="w-6 h-6 mb-3" style={{ color }} />
-      <h3 className="text-xl font-bold text-foreground">{heading}</h3>
-      <p className="text-muted-foreground leading-relaxed mt-2">{children}</p>
-    </div>
-  );
-}
-
 function AboutPage() {
   return (
     <div style={ABOUT_THEME_VARS} className="bg-background text-foreground">
@@ -278,9 +253,7 @@ function AboutPage() {
       {/* Journey */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            From the edge of the system to the platform.
-          </h2>
+          <NarrativeSection heading="From the edge of the system to the platform." />
 
           {/* Desktop: connected row */}
           <div className="hidden md:block relative mt-10">
@@ -334,9 +307,7 @@ function AboutPage() {
       {/* What I've learned along the way */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            What I've learned along the way.
-          </h2>
+          <NarrativeSection heading="What I've learned along the way." />
           <div className="grid sm:grid-cols-2 gap-4 mt-8 items-start">
             {LESSONS.map((item) => (
               <div key={item.title} className="relative rounded-2xl p-5" style={{ backgroundColor: tint(item.color, 5) }}>
@@ -370,9 +341,7 @@ function AboutPage() {
       {/* What leadership has taught me */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            What leadership has taught me.
-          </h2>
+          <NarrativeSection heading="What leadership has taught me." />
           <div className="grid lg:grid-cols-3 gap-4 mt-8 items-start">
             {/* Leadership changed the question */}
             <div className="rounded-2xl p-5" style={{ backgroundColor: tint('var(--icon-pink)', 5) }}>
@@ -450,9 +419,7 @@ function AboutPage() {
       {/* AI */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            AI is changing the equation again.
-          </h2>
+          <NarrativeSection heading="AI is changing the equation again." />
           <div className="grid md:grid-cols-[auto_1fr] gap-6 md:gap-8 mt-8 items-center">
             <div className="hidden md:block relative w-32 h-32 shrink-0">
               <div className="absolute inset-4 rounded-2xl border-2 rotate-6" style={{ borderColor: tint('var(--icon-purple)', 25) }} />
@@ -493,9 +460,7 @@ function AboutPage() {
       {/* Outside the screen */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-            Outside the screen, I like making things.
-          </h2>
+          <NarrativeSection heading="Outside the screen, I like making things." />
           <div className="space-y-4 mt-6 text-muted-foreground leading-relaxed max-w-2xl">
             <p>
               Sometimes that's a product prototype. Sometimes it's a piece of furniture, a shelf,
@@ -529,17 +494,17 @@ function AboutPage() {
         <Reveal>
           <NarrativeSection heading={'What guides me every day'}>
             <div className="grid sm:grid-cols-3 gap-8">
-              <GuidingPrinciple icon={Eye} color="var(--icon-purple)" heading="Clarity">
+              <EditorialColumn icon={Eye} color="var(--icon-purple)" heading="Clarity">
                 Make complexity visible so teams can make better decisions.
-              </GuidingPrinciple>
-              <GuidingPrinciple icon={Heart} color="var(--icon-pink)" heading="Empathy">
+              </EditorialColumn>
+              <EditorialColumn icon={Heart} color="var(--icon-pink)" heading="Empathy">
                 Understand the people affected by the system, especially those whose voices are
                 easiest to miss.
-              </GuidingPrinciple>
-              <GuidingPrinciple icon={Flag} color="var(--icon-orange)" heading="Ownership">
+              </EditorialColumn>
+              <EditorialColumn icon={Flag} color="var(--icon-orange)" heading="Ownership">
                 Designers should participate in product decisions and own outcomes, not just
                 deliverables.
-              </GuidingPrinciple>
+              </EditorialColumn>
             </div>
             <div className="text-center pt-10">
               <p
