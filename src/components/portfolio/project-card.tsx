@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { Lock } from 'lucide-react';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Badge } from '@/design-system/ui/badge';
 import { parseEvidenceStats } from '@/lib/parse-evidence-stats';
+import { useCaseStudyLocked } from '@/lib/project-settings-store';
 import type { ProjectSummary } from '@/data/projects';
 
 export interface ProjectCardProps {
@@ -20,6 +22,7 @@ function ProjectCard({ project, headingLevel: Heading = 'h3', number }: ProjectC
   const narrative = project.narrative;
   const tags = narrative?.capabilities ?? project.tags;
   const stats = parseEvidenceStats(narrative?.evidence);
+  const locked = useCaseStudyLocked(project.slug);
 
   return (
     <Link
@@ -30,6 +33,15 @@ function ProjectCard({ project, headingLevel: Heading = 'h3', number }: ProjectC
         {number != null && (
           <span className="absolute top-2.5 left-2.5 z-10 flex items-center justify-center w-6 h-6 rounded-full bg-background/90 text-[11px] font-bold text-foreground">
             {String(number).padStart(2, '0')}
+          </span>
+        )}
+        {locked && (
+          <span
+            className="absolute top-2.5 right-2.5 z-10 flex items-center justify-center w-6 h-6 rounded-full bg-background/90 text-foreground"
+            aria-label="Password protected"
+            title="Password protected"
+          >
+            <Lock className="w-3 h-3" />
           </span>
         )}
         <ImageWithFallback

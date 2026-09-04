@@ -32,7 +32,7 @@ import { tint } from '@/lib/color';
 import { useEffectiveProjects } from '@/lib/project-settings-store';
 import { EXPERIENCE, EARLIER_COMPANIES } from '@/data/experience';
 import { HOME_PROJECT_ORDER, type ProjectSummary } from '@/data/projects';
-import { EMAIL_HREF, LINKEDIN_URL } from '@/data/contact';
+import { EMAIL_HREF, LINKEDIN_URL, LOCATION } from '@/data/contact';
 
 const MICROSOFT = EXPERIENCE.find((e) => e.company === 'Microsoft - Windows')!;
 const GOJEK = EXPERIENCE.find((e) => e.company === 'Gojek Tech')!;
@@ -176,7 +176,7 @@ function HomePage() {
               <PillCtaLink href="#selected-work" label="Explore my work" />
               <div className="flex items-center gap-2 text-muted-foreground text-sm">
                 <MapPin className="w-4 h-4" style={{ color: 'var(--icon-orange)' }} />
-                Manipur, India
+                {LOCATION}
               </div>
             </div>
             <div className="flex items-start gap-3 mt-6 rounded-2xl border p-4 max-w-md">

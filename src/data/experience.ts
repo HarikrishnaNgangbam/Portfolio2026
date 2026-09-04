@@ -83,8 +83,15 @@ export const EXPERIENCE: ExperienceEntry[] = [
   },
 ];
 
-/** Companies grouped under Home's "Earlier" career-narrative card, in reverse-chronological order. */
-export const EARLIER_COMPANIES = ['Samsung', 'Godrej & Boyce', 'Funding Societies', 'RED.HEALTH'];
+/**
+ * Companies grouped under Home's "Earlier" career-narrative card, in
+ * reverse-chronological order. Deliberately only the pre-Gojek roles (both
+ * 2014-2017): Funding Societies (2023) and RED.HEALTH (2024) fall between
+ * Gojek and Microsoft chronologically, not before them, so folding them into
+ * this "2014 - 2017" bucket would misstate their timing. They still appear,
+ * correctly dated, in the full chronology on the Resume page.
+ */
+export const EARLIER_COMPANIES = ['Samsung', 'Godrej & Boyce'];
 
 export interface EducationEntry {
   degree: string;

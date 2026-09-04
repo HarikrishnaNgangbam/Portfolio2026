@@ -7,6 +7,7 @@ import {
   Calendar,
   FileText,
   Layers,
+  Lock,
   Mail,
   Share2,
   Sparkles,
@@ -25,7 +26,7 @@ import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
-import { useEffectiveProjects } from '@/lib/project-settings-store';
+import { useEffectiveProjects, useCaseStudyLocked } from '@/lib/project-settings-store';
 import { parseEvidenceStats } from '@/lib/parse-evidence-stats';
 import { HOME_PROJECT_ORDER, type ProjectSummary } from '@/data/projects';
 import { EMAIL_HREF, LINKEDIN_URL } from '@/data/contact';
@@ -118,6 +119,7 @@ function ProjectSection({
   const narrative = project.narrative;
   const capabilities = narrative?.capabilities ?? project.tags;
   const stats = parseEvidenceStats(narrative?.evidence);
+  const locked = useCaseStudyLocked(project.slug);
 
   return (
     <Link
@@ -131,6 +133,12 @@ function ProjectSection({
         >
           {String(index).padStart(2, '0')}
         </span>
+        {locked && (
+          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/95 shadow-sm text-xs font-semibold text-muted-foreground">
+            <Lock className="w-3.5 h-3.5" />
+            Protected
+          </span>
+        )}
         <ImageWithFallback
           src={project.coverImage}
           alt={project.coverAlt}

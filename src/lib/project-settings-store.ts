@@ -1,6 +1,6 @@
 import { useStorageState } from './use-storage-state';
 import { PROJECTS, type ProjectSummary } from '@/data/projects';
-import { SETTINGS_PASSWORD } from './settings-session';
+import { SETTINGS_PASSWORD, useSettingsUnlocked, useUnlockedCaseStudies } from './settings-session';
 
 export interface ProjectOverride {
   order: number;
@@ -102,4 +102,17 @@ function useProjectAccess(slug: string): ProjectOverride {
   return getOverride(overrides, slug, baseIndex);
 }
 
-export { useManagedProjects, useEffectiveProjects, useProjectAccess, moveProject };
+/**
+ * True when a visitor would currently hit the password gate on this case
+ * study — mirrors CaseStudyGate's own unlock check, so Home/Work can show a
+ * lock indicator on a protected project's card before the visitor clicks
+ * into it and finds out the hard way.
+ */
+function useCaseStudyLocked(slug: string): boolean {
+  const access = useProjectAccess(slug);
+  const [settingsUnlocked] = useSettingsUnlocked();
+  const [unlockedCaseStudies] = useUnlockedCaseStudies();
+  return access.protected && !settingsUnlocked && !unlockedCaseStudies.includes(slug);
+}
+
+export { useManagedProjects, useEffectiveProjects, useProjectAccess, useCaseStudyLocked, moveProject };
