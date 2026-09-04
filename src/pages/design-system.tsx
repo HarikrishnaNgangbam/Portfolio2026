@@ -72,7 +72,7 @@ const ICON_TOKENS = [
 
 const SEMANTIC_TOKENS: { name: string; usage: string }[] = [
   { name: '--color-insight', usage: 'A callout naming what was learned' },
-  { name: '--color-decision', usage: 'DecisionStrip, and "decision" callouts' },
+  { name: '--color-decision', usage: 'DecisionStrip' },
   { name: '--color-outcome', usage: 'Results, impact, "outcome" callouts' },
   { name: '--color-evidence', usage: 'Product exploration evidence' },
   { name: '--color-warning', usage: 'Caveats, "note" callouts' },
@@ -485,11 +485,10 @@ function DesignSystemPage() {
           />
         </ComponentDemo>
 
-        <ComponentDemo name="Prose callout kinds" purpose="Semantic callout types (insight / decision / outcome / note) layered onto the existing neutral callout — omit `kind` for the plain treatment used everywhere else.">
+        <ComponentDemo name="Prose callout kinds" purpose="Semantic callout types (insight / outcome / note) layered onto the existing neutral callout — omit `kind` for the plain treatment used everywhere else.">
           <div className="space-y-3">
             <Prose callout>A plain callout, unchanged from before — no kind specified.</Prose>
             <Prose callout kind="insight">An insight worth pulling out of the narrative.</Prose>
-            <Prose callout kind="decision">A lighter-weight decision note, for when DecisionStrip is too heavy.</Prose>
             <Prose callout kind="outcome">What actually happened as a result.</Prose>
             <Prose callout kind="note">A caveat or scoping note.</Prose>
           </div>
@@ -502,20 +501,11 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="MarkerList" purpose="Canonical marker-list primitive — 'check' for role/experience highlights (Experience cards), 'dot' for skills/capabilities columns (Resume).">
-          <div className="grid sm:grid-cols-2 gap-8">
-            <MarkerList
-              marker="check"
-              items={[
-                'Lead UX strategy for Windows cross-device continuity',
-                'Spearheaded multiple AI-Lead Design exploration sprints',
-              ]}
-            />
-            <MarkerList
-              marker="dot"
-              items={['Design Leadership & Strategy', 'Systems & Experience Architecture', 'Execution Excellence']}
-            />
-          </div>
+        <ComponentDemo name="MarkerList" purpose="Canonical dot marker-list primitive for skills/capabilities columns (Resume).">
+          <MarkerList
+            marker="dot"
+            items={['Design Leadership & Strategy', 'Systems & Experience Architecture', 'Execution Excellence']}
+          />
         </ComponentDemo>
 
         <ComponentDemo name="AcrylicCard" purpose="Translucent glass card — base (interactive) and surface (static) variants.">

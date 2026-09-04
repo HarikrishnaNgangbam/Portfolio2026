@@ -1,10 +1,9 @@
 import { cn } from '@/lib/utils';
 
-export type CalloutKind = 'insight' | 'decision' | 'outcome' | 'note';
+export type CalloutKind = 'insight' | 'outcome' | 'note';
 
 const CALLOUT_KIND_META: Record<CalloutKind, { label: string; color: string }> = {
   insight: { label: 'Insight', color: 'var(--color-insight)' },
-  decision: { label: 'Decision', color: 'var(--color-decision)' },
   outcome: { label: 'Outcome', color: 'var(--color-outcome)' },
   note: { label: 'Note', color: 'var(--color-warning)' },
 };
