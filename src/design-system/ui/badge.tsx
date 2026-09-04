@@ -61,4 +61,4 @@ function Badge({ className, children, ...props }: BadgeProps) {
   );
 }
 
-export { Badge, hashColor, PALETTE };
+export { Badge };
