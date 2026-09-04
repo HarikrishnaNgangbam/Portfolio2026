@@ -23,7 +23,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
       'Designing cross-device experiences across Windows, phones and connected ecosystems, while exploring how AI can make those experiences more adaptive and intelligent.',
     resumeBullets: [
       "Connected Experience & Ecosystem: Lead UX strategy for Windows cross-device continuity, shaping how users seamlessly move, resume, and complete tasks across PCs, phones, and connected devices.",
-      'AI-Driven Experience Innovation: Spearheaded multiple AI-Lead Design exploration sprints and workshops.',
+      'AI-Driven Experience Innovation: Spearheaded multiple AI-Led Design exploration sprints and workshops.',
     ],
   },
   {
@@ -44,7 +44,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
     companyLogoAlt: 'Funding Societies logo',
     dates: 'Feb 2023 - Nov 2023',
     resumeBullets: [
-      'Principal Product Designer: Responsible for leading the design & feature of Product Growth Team.',
+      'Principal Product Designer: Responsible for leading the design & features of the Product Growth Team.',
     ],
   },
   {
@@ -56,8 +56,8 @@ export const EXPERIENCE: ExperienceEntry[] = [
     narrativeSummary:
       'Designing products for drivers, agents, merchants and customers during a period of extraordinary growth, and leading teams as the design organization scaled.',
     resumeBullets: [
-      "Leadership & Ownership: Led a team of four Product Designer. Owned product and experience vision for Gojek's Care Platform and Communication Platform.",
-      "Designed and scaled the entire Gojek's Customer Support Ecosystem. Built the GoAgent - SuperApp for agents.",
+      "Leadership & Ownership: Led a team of four Product Designers. Owned product and experience vision for Gojek's Care Platform and Communication Platform.",
+      "Designed and scaled Gojek's entire Customer Support Ecosystem. Built the GoAgent - SuperApp for agents.",
       'Improved support accuracy and operational efficiency across Consumer, Driver, Merchant, and Agent verticals.',
     ],
   },
@@ -68,7 +68,7 @@ export const EXPERIENCE: ExperienceEntry[] = [
     companyLogoAlt: 'Godrej & Boyce logo',
     dates: 'Mar 2016 - Nov 2017',
     resumeBullets: [
-      'Design Manager (R&D Appliance): Responsible for the design & growth of Refrigerator Portfolio.',
+      'Industrial Designer (R&D Appliance): Responsible for the design & growth of Refrigerator Portfolio.',
     ],
   },
   {
