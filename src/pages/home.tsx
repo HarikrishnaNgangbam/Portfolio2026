@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
 import {
   MapPin,
-  ArrowRight,
   Sparkles,
   Eye,
   Share2,
@@ -20,10 +18,12 @@ import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
 import { EditorialColumn } from '@/design-system/ui/editorial-column';
 import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
+import { PillCtaLink } from '@/design-system/ui/pill-cta-link';
+import { CtaLinkRow } from '@/design-system/ui/cta-link-row';
+import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
-import { buttonVariants } from '@/design-system/ui/button';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
@@ -173,13 +173,7 @@ function HomePage() {
               Systems Thinking · Product Strategy · AI · 0→1 · Design Leadership
             </p>
             <div className="flex flex-wrap items-center gap-6 mt-5">
-              <a
-                href="#selected-work"
-                className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
-              >
-                Explore my work
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <PillCtaLink href="#selected-work" label="Explore my work" />
               <div className="flex items-center gap-2 text-muted-foreground text-sm">
                 <MapPin className="w-4 h-4" style={{ color: 'var(--icon-orange)' }} />
                 Manipur, India
@@ -272,13 +266,7 @@ function HomePage() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <Link
-              to="/work"
-              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
-            >
-              View all projects
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <ArrowLink to="/work" label="View all projects" />
           </div>
         </Reveal>
       </section>
@@ -329,13 +317,7 @@ function HomePage() {
               </div>
             ))}
           </div>
-          <Link
-            to="/resume"
-            className="inline-flex items-center gap-2 text-primary font-medium mt-2 hover:gap-3 transition-all"
-          >
-            View full career
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <ArrowLink to="/resume" label="View full career" className="mt-2" />
         </Reveal>
       </section>
 
@@ -345,40 +327,17 @@ function HomePage() {
           <CtaBand
             variant="panel"
             heading="Have a complex problem worth exploring?"
-            button={
-              <Link
-                to="/contact"
-                className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
-              >
-                Let's talk
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            }
+            button={<PillCtaLink to="/contact" label="Let's talk" />}
             links={
               <div className="space-y-3">
-                <a
+                <CtaLinkRow
                   href={LINKEDIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
-                  LinkedIn
-                </a>
-                <a
-                  href={EMAIL_HREF}
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                  Email
-                </a>
-                <Link
-                  to="/resume"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <FileText className="w-4 h-4" />
-                  Resume
-                </Link>
+                  external
+                  icon={<Linkedin className="w-4 h-4" />}
+                  label="LinkedIn"
+                />
+                <CtaLinkRow href={EMAIL_HREF} icon={<Mail className="w-4 h-4" />} label="Email" />
+                <CtaLinkRow to="/resume" icon={<FileText className="w-4 h-4" />} label="Resume" />
               </div>
             }
           >

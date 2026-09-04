@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight,
   ArrowUpRight,
   Box,
   Briefcase,
@@ -20,7 +19,9 @@ import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
 import { Badge } from '@/design-system/ui/badge';
-import { buttonVariants } from '@/design-system/ui/button';
+import { PillCtaLink } from '@/design-system/ui/pill-cta-link';
+import { CtaLinkRow } from '@/design-system/ui/cta-link-row';
+import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
 import { Seo } from '@/components/seo';
@@ -184,13 +185,7 @@ function ProjectSection({
           </div>
         )}
 
-        <div
-          className="inline-flex items-center gap-2 font-medium mt-6 group-hover:gap-3 transition-all"
-          style={{ color: accentColor }}
-        >
-          View case study
-          <ArrowRight className="w-4 h-4" />
-        </div>
+        <ArrowLink nested label="View case study" color={accentColor} className="mt-6" />
       </div>
     </Link>
   );
@@ -336,40 +331,22 @@ function WorkPage() {
             heading="Want the details?"
             button={
               filteredProjects[0] && (
-                <Link
+                <PillCtaLink
                   to={`/work/${filteredProjects[0].slug}`}
-                  className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
-                >
-                  Explore all case studies
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+                  label="Explore all case studies"
+                />
               )
             }
             links={
               <div className="space-y-3">
-                <Link
-                  to="/resume"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <FileText className="w-4 h-4" />
-                  View my Resume
-                </Link>
-                <a
+                <CtaLinkRow to="/resume" icon={<FileText className="w-4 h-4" />} label="View my Resume" />
+                <CtaLinkRow
                   href={LINKEDIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
-                  Explore more on LinkedIn
-                </a>
-                <a
-                  href={EMAIL_HREF}
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                  Send me an Email
-                </a>
+                  external
+                  icon={<Linkedin className="w-4 h-4" />}
+                  label="Explore more on LinkedIn"
+                />
+                <CtaLinkRow href={EMAIL_HREF} icon={<Mail className="w-4 h-4" />} label="Send me an Email" />
               </div>
             }
           >

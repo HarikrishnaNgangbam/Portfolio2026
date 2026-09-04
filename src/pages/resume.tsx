@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
-import { Download, ArrowRight } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { buttonVariants } from '@/design-system/ui/button';
 import { MarkerList } from '@/design-system/ui/marker-list';
 import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
+import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { CtaBand } from '@/components/portfolio/cta-band';
@@ -196,15 +196,7 @@ function ResumePage() {
           <CtaBand
             variant="plain"
             heading="Have a project worth exploring?"
-            links={
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
-              >
-                Let's start a conversation
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            }
+            links={<ArrowLink to="/contact" label="Let's start a conversation" />}
           />
         </Reveal>
       </section>

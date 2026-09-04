@@ -17,7 +17,8 @@ import {
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { DotPattern } from '@/design-system/ui/dot-pattern';
-import { buttonVariants } from '@/design-system/ui/button';
+import { PillCtaLink } from '@/design-system/ui/pill-cta-link';
+import { CtaLinkRow } from '@/design-system/ui/cta-link-row';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { Reveal } from '@/components/reveal';
@@ -223,13 +224,7 @@ function ContactPage() {
               </LeadParagraph>
             </div>
             <div className="flex flex-wrap items-center gap-5 mt-7">
-              <a
-                href={EMAIL_HREF}
-                className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
-              >
-                Let's talk
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <PillCtaLink href={EMAIL_HREF} label="Let's talk" />
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4" style={{ color: 'var(--icon-purple)' }} aria-hidden="true" />
                 {LOCATION}
@@ -363,40 +358,25 @@ function ContactPage() {
                 figuring out?
               </>
             }
-            button={
-              <a
-                href={EMAIL_HREF}
-                className={cn(buttonVariants(), 'rounded-full bg-foreground text-background hover:bg-foreground/90')}
-              >
-                Let's talk
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            }
+            button={<PillCtaLink href={EMAIL_HREF} label="Let's talk" />}
             links={
               <div className="space-y-3">
-                <a
+                <CtaLinkRow
                   href={LINKEDIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" aria-hidden="true" />
-                  LinkedIn
-                </a>
-                <a
+                  external
+                  icon={<Linkedin className="w-4 h-4" aria-hidden="true" />}
+                  label="LinkedIn"
+                />
+                <CtaLinkRow
                   href={EMAIL_HREF}
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <Mail className="w-4 h-4" aria-hidden="true" />
-                  Email
-                </a>
-                <Link
+                  icon={<Mail className="w-4 h-4" aria-hidden="true" />}
+                  label="Email"
+                />
+                <CtaLinkRow
                   to="/resume"
-                  className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors"
-                >
-                  <FileText className="w-4 h-4" aria-hidden="true" />
-                  Resume
-                </Link>
+                  icon={<FileText className="w-4 h-4" aria-hidden="true" />}
+                  label="Resume"
+                />
               </div>
             }
           >

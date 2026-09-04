@@ -11,9 +11,14 @@ import {
   Check,
   GitCompare,
   Workflow,
+  FileText,
   Image as ImageIcon,
 } from 'lucide-react';
+import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { Button } from '@/design-system/ui/button';
+import { PillCtaLink } from '@/design-system/ui/pill-cta-link';
+import { CtaLinkRow } from '@/design-system/ui/cta-link-row';
+import { ArrowLink } from '@/design-system/ui/arrow-link';
 import { Badge } from '@/design-system/ui/badge';
 import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { H1 } from '@/design-system/ui/h1';
@@ -325,6 +330,27 @@ function DesignSystemPage() {
             <Button size="icon" aria-label="Icon button">
               <Mail className="w-4 h-4" />
             </Button>
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="PillCtaLink" purpose="Primary 'go do the main thing' pill CTA — buttonVariants() plus the site's one fixed override and a trailing arrow. Renders a router Link (`to`) or a plain anchor (`href`).">
+          <div className="flex flex-wrap gap-3">
+            <PillCtaLink to="/work" label="Explore my work" />
+            <PillCtaLink href="#top" label="Let's talk" />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="ArrowLink" purpose="Secondary 'see more' text link with a trailing arrow that widens its gap on hover. `nested` renders a plain non-interactive wrapper with `group-hover:gap-3` for use inside an already-clickable ancestor (Work's project rows), and `color` overrides the default text-primary tint.">
+          <div className="flex flex-wrap items-center gap-6">
+            <ArrowLink to="/work" label="View all projects" />
+            <ArrowLink nested label="View case study" color="var(--icon-teal)" />
+          </div>
+        </ComponentDemo>
+
+        <ComponentDemo name="CtaLinkRow" purpose="Icon + label secondary link used inside CtaBand's `links` slot. Icon is passed pre-rendered so each call site keeps its own exact attributes. Renders a router Link (`to`) or an anchor (`href`, optionally `external`).">
+          <div className="space-y-3">
+            <CtaLinkRow to="/resume" icon={<FileText className="w-4 h-4" />} label="Resume" />
+            <CtaLinkRow href="#top" external icon={<Linkedin className="w-4 h-4" />} label="LinkedIn" />
           </div>
         </ComponentDemo>
 
