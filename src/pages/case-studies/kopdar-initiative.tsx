@@ -19,6 +19,7 @@ import {
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Section } from '@/components/casestudy/section';
+import { Beat } from '@/components/casestudy/beat';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
@@ -56,37 +57,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': KD_GREEN,
   '--ring': KD_GREEN,
 } as React.CSSProperties;
-
-/**
- * Small uppercase eyebrow + serif heading + optional supporting line —
- * mirrors the locked Phone → PC case study's EditorialHeading pattern
- * verbatim (same classes/tokens) so section headings read as the same
- * typographic family. Kept local rather than imported since Phone → PC's
- * version is a private function in that file and is not exported; the
- * shared `Section` component itself intentionally keeps a plain (non-serif)
- * heading option for case studies that don't opt into this treatment.
- */
-function EditorialHeading({
-  eyebrow,
-  eyebrowColor,
-  heading,
-  supporting,
-}: {
-  eyebrow: string;
-  eyebrowColor?: string;
-  heading: React.ReactNode;
-  supporting?: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: eyebrowColor }}>
-        {eyebrow}
-      </p>
-      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">{heading}</h2>
-      {supporting && <p className="text-muted-foreground leading-relaxed mt-3 max-w-2xl">{supporting}</p>}
-    </div>
-  );
-}
 
 /**
  * A major narrative-pause moment — a big centered, tinted statement, distinct
@@ -285,7 +255,7 @@ function KopdarInitiativePage() {
           <Section>
             <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 items-start">
               <div>
-                <EditorialHeading eyebrow="Overview" eyebrowColor={KD_GREEN} heading="A human program was becoming an operational problem." />
+                <Beat eyebrow="Overview" color={KD_GREEN}>A human program was becoming an operational problem.</Beat>
                 <Prose className="mt-5">
                   <p>
                     Kopdar, Kopi Darat, was one of Gojek's ways of bringing drivers
@@ -323,7 +293,7 @@ function KopdarInitiativePage() {
         {/* The human side — short interlude, not a competing hero moment */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="The human side" eyebrowColor={KD_GREEN} heading="Kopdar was about people." />
+            <Beat eyebrow="The human side" color={KD_GREEN}>Kopdar was about people.</Beat>
             <p className="text-foreground font-medium mt-6 max-w-xl">
               The product wasn't replacing the relationship between PKs and drivers. It
               needed to protect the time and attention that made that relationship
@@ -342,7 +312,7 @@ function KopdarInitiativePage() {
         {/* The friction */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="The friction" eyebrowColor={KD_RED} heading="One job. Six places to do it." />
+            <Beat eyebrow="The friction" color={KD_RED}>One job. Six places to do it.</Beat>
             <div className="mt-8">
               <Prose>
                 <p>
@@ -383,11 +353,9 @@ function KopdarInitiativePage() {
         {/* The reframe */}
         <Reveal>
           <Section>
-            <EditorialHeading
-              eyebrow="The reframe"
-              eyebrowColor={KD_TEAL}
-              heading="I wasn't designing an event tool. I was redesigning the operating system around the event."
-            />
+            <Beat eyebrow="The reframe" color={KD_TEAL}>
+              I wasn't designing an event tool. I was redesigning the operating system around the event.
+            </Beat>
             <div className="mt-6">
               <Prose>
                 <p>
@@ -413,7 +381,7 @@ function KopdarInitiativePage() {
         {/* My role */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="My role" eyebrowColor={KD_TEAL} heading="I designed the system, not just the screens." />
+            <Beat eyebrow="My role" color={KD_TEAL}>I designed the system, not just the screens.</Beat>
             <div className="mt-8">
               <IconCardList
                 columns={2}
@@ -436,7 +404,7 @@ function KopdarInitiativePage() {
         {/* Discovery */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Discovery" eyebrowColor={KD_PURPLE} heading="The system had to start with the field." />
+            <Beat eyebrow="Discovery" color={KD_PURPLE}>The system had to start with the field.</Beat>
             <div className="mt-8">
               <div className="grid sm:grid-cols-3 gap-4">
                 <div>
@@ -502,7 +470,7 @@ function KopdarInitiativePage() {
         {/* Field notes */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Field notes" eyebrowColor={KD_PURPLE} heading="The field changed what we thought the product needed to be." />
+            <Beat eyebrow="Field notes" color={KD_PURPLE}>The field changed what we thought the product needed to be.</Beat>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {[
                 { icon: WifiOff, observation: 'Unreliable connectivity', implication: "Offline capture couldn't be an edge case." },
@@ -538,24 +506,26 @@ function KopdarInitiativePage() {
         {/* Design principle — intentionally short, no diagram */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Design principle"
-              eyebrowColor={KD_TEAL}
-              heading="Automate the work. Protect the relationship."
+              color={KD_TEAL}
               supporting="Every design decision was evaluated against one question: does this remove operational burden without taking humanity out of the interaction?"
-            />
+            >
+              Automate the work. Protect the relationship.
+            </Beat>
           </Section>
         </Reveal>
 
         {/* The system */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="The system"
-              eyebrowColor={KD_TEAL}
-              heading="One system. One continuous loop."
+              color={KD_TEAL}
               supporting="Instead of treating planning, attendance, reporting and follow-up as separate products, the system connected them into one continuous operating loop."
-            />
+            >
+              One system. One continuous loop.
+            </Beat>
             <div className="mt-8">
               <ImageBlock
                 src="/images/casestudy-3/solution-one-system-loop.png"
@@ -586,7 +556,7 @@ function KopdarInitiativePage() {
         {/* Four design decisions */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Design decisions" eyebrowColor={KD_TEAL} heading="Four decisions made the system work." />
+            <Beat eyebrow="Design decisions" color={KD_TEAL}>Four decisions made the system work.</Beat>
             <div className="mt-8">
               <div className="space-y-12">
                 {KEY_DECISIONS.map((decision, i) => (
@@ -643,7 +613,7 @@ function KopdarInitiativePage() {
         {/* Research / iteration */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Iteration" eyebrowColor={KD_TEAL} heading="Research didn't validate the design. It changed it." />
+            <Beat eyebrow="Iteration" color={KD_TEAL}>Research didn't validate the design. It changed it.</Beat>
             <div className="mt-8 space-y-10">
               {ITERATION_STORIES.map((story, i) => (
                 <div key={story.category} className={i > 0 ? 'pt-10 border-t border-border' : undefined}>
@@ -674,7 +644,7 @@ function KopdarInitiativePage() {
         {/* Impact */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Impact" eyebrowColor={KD_GREEN} heading="Less operational work. More capacity for engagement." />
+            <Beat eyebrow="Impact" color={KD_GREEN}>Less operational work. More capacity for engagement.</Beat>
             <div className="mt-8">
               <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: KD_GREEN }}>
                 Directly observed
@@ -730,7 +700,7 @@ function KopdarInitiativePage() {
         {/* Leadership learnings */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Learnings" eyebrowColor={KD_TEAL} heading="What Kopdar taught me about designing at scale." />
+            <Beat eyebrow="Learnings" color={KD_TEAL}>What Kopdar taught me about designing at scale.</Beat>
             <div className="space-y-3 mt-8">
               <div className="rounded-xl border border-border bg-muted/30 p-4">
                 <p className="font-bold text-foreground">Design the system around the human moment.</p>

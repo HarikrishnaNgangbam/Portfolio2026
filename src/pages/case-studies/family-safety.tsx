@@ -18,6 +18,7 @@ import {
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Section } from '@/components/casestudy/section';
+import { Beat } from '@/components/casestudy/beat';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Takeaway } from '@/components/casestudy/takeaway';
@@ -43,35 +44,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': 'var(--icon-blue)',
   '--ring': 'var(--icon-blue)',
 } as React.CSSProperties;
-
-/**
- * Small uppercase eyebrow + serif heading + optional supporting line —
- * mirrors the locked Phone → PC case study's EditorialHeading pattern
- * verbatim so this page's section headings read as the same typographic
- * family. Kept local since Phone → PC's version is a private, non-exported
- * function in that file.
- */
-function EditorialHeading({
-  eyebrow,
-  eyebrowColor = 'var(--icon-blue)',
-  heading,
-  supporting,
-}: {
-  eyebrow: string;
-  eyebrowColor?: string;
-  heading: React.ReactNode;
-  supporting?: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: eyebrowColor }}>
-        {eyebrow}
-      </p>
-      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">{heading}</h2>
-      {supporting && <p className="text-muted-foreground leading-relaxed mt-3 max-w-2xl">{supporting}</p>}
-    </div>
-  );
-}
 
 /**
  * A major narrative-pause moment — a big centered, tinted statement, distinct
@@ -329,7 +301,7 @@ function FamilySafetyPage() {
         {/* 02 — Overview / context */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Overview" heading="A small team, a growing surface area." />
+            <Beat eyebrow="Overview" color="var(--icon-blue)">A small team, a growing surface area.</Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 Family Safety's design work was owned by three PMs and one
@@ -350,7 +322,7 @@ function FamilySafetyPage() {
         {/* 03 — What changed: the evidence matrix, with the impact number as its capstone */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="What changed" eyebrowColor="var(--icon-green)" heading="The workflow changed more than throughput." />
+            <Beat eyebrow="What changed" color="var(--icon-green)">The workflow changed more than throughput.</Beat>
             <div className="mt-8">
               <ChangeMatrix />
             </div>
@@ -378,7 +350,7 @@ function FamilySafetyPage() {
         {/* 04 — The challenge */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="The challenge" heading="Family Safety was becoming a scale problem." />
+            <Beat eyebrow="The challenge" color="var(--icon-blue)">Family Safety was becoming a scale problem.</Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 Family Safety spans multiple platforms and surfaces, and needs
@@ -400,11 +372,9 @@ function FamilySafetyPage() {
         {/* 05 — My role: editorial, not a card grid */}
         <Reveal>
           <Section>
-            <EditorialHeading
-              eyebrow="My role"
-              eyebrowColor="var(--icon-teal)"
-              heading="I wasn't just designing the work. I was redesigning how the team designed."
-            />
+            <Beat eyebrow="My role" color="var(--icon-teal)">
+              I wasn't just designing the work. I was redesigning how the team designed.
+            </Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 As Design Lead, I was accountable for the quality of everything
@@ -435,7 +405,7 @@ function FamilySafetyPage() {
         {/* 06 — The design problem: argument before evidence */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="The design problem" eyebrowColor="var(--icon-purple)" heading="AI made prototyping faster. It also made inconsistency easier." />
+            <Beat eyebrow="The design problem" color="var(--icon-purple)">AI made prototyping faster. It also made inconsistency easier.</Beat>
             <Prose className="mt-5">
               <p className="max-w-xl">
                 AI removed one bottleneck. It introduced another. The problem
@@ -460,7 +430,7 @@ function FamilySafetyPage() {
         {/* 07 — The leadership move: the signature moment */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="The leadership move" heading="Instead of gatekeeping exploration, I redesigned the gate." />
+            <Beat eyebrow="The leadership move" color="var(--icon-blue)">Instead of gatekeeping exploration, I redesigned the gate.</Beat>
             <div className="mt-8">
               <NarrativeStatement supporting="The old model made Design the bottleneck between every idea and engineering. The new one made Design the steward of a system PMs could explore inside safely.">
                 I redesigned the gate, not the people.
@@ -475,7 +445,7 @@ function FamilySafetyPage() {
         {/* 08 — Creating structure */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Creating structure" eyebrowColor="var(--icon-teal)" heading="The solution was an operating model, not another design process." />
+            <Beat eyebrow="Creating structure" color="var(--icon-teal)">The solution was an operating model, not another design process.</Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 Three things had to work together: a capability for fast
@@ -507,11 +477,13 @@ function FamilySafetyPage() {
         {/* 09 — The governance loop: one coherent system model */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="The governance loop"
-              heading="One system, four checkpoints."
+              color="var(--icon-blue)"
               supporting="The gate itself was made of checklists, not opinions."
-            />
+            >
+              One system, four checkpoints.
+            </Beat>
             <div className="mt-8">
               <FlowChain
                 steps={[
@@ -531,7 +503,7 @@ function FamilySafetyPage() {
         {/* 10 — Design Office Hours */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Design Office Hours" heading="Design Office Hours became the review PMs actually wanted." />
+            <Beat eyebrow="Design Office Hours" color="var(--icon-blue)">Design Office Hours became the review PMs actually wanted.</Beat>
             <div className="mt-8">
               <ImageBlock
                 src="/images/casestudy-2/design-office-hours-quality-backbone.webp"
@@ -559,7 +531,7 @@ function FamilySafetyPage() {
         {/* 11 — AI as leverage: heading → narrative → flow diagram → screenshot → takeaway */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="AI as leverage" eyebrowColor="var(--icon-purple)" heading="AI became the exploration engine, not the decision-maker." />
+            <Beat eyebrow="AI as leverage" color="var(--icon-purple)">AI became the exploration engine, not the decision-maker.</Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 Vibe coding let PMs turn an idea into something clickable in
@@ -622,7 +594,7 @@ function FamilySafetyPage() {
         {/* 12 — From one prototype to many explorations */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Ideation to prototype" heading="I didn't just create a prototype. I created the runway." />
+            <Beat eyebrow="Ideation to prototype" color="var(--icon-blue)">I didn't just create a prototype. I created the runway.</Beat>
             <Prose className="mt-5">
               <p className="max-w-2xl">
                 The master prototype used approved components and tokens
@@ -654,7 +626,7 @@ function FamilySafetyPage() {
         {/* 13 — What changed for the team, plus outcome */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="What changed for the team" eyebrowColor="var(--icon-orange)" heading="Design's role shifted. Its importance didn't." />
+            <Beat eyebrow="What changed for the team" color="var(--icon-orange)">Design's role shifted. Its importance didn't.</Beat>
             <div className="grid sm:grid-cols-3 gap-4 mt-8">
               {[
                 { from: 'Pixel maker', to: 'System steward', icon: ShieldCheck, color: 'var(--icon-blue)' },
@@ -695,7 +667,7 @@ function FamilySafetyPage() {
         {/* 14 — Artifacts, quiet and editorial */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Reference" heading="Artifacts" />
+            <Beat eyebrow="Reference" color="var(--icon-blue)">Artifacts</Beat>
             <div className="rounded-2xl border border-border p-2 space-y-1 mt-8">
               {[
                 { title: 'Ideation to Prototype workflow (Master)', file: 'Master workflow documentation for the Ideation to Prototype process', color: 'var(--icon-blue)', href: '/work/family-safety/ideation-to-prototype-workflow' },

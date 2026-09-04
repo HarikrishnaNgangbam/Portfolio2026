@@ -25,7 +25,7 @@ function Beat({
         {children}
       </h2>
       {supporting && (
-        <p className="text-muted-foreground leading-relaxed mt-3">{supporting}</p>
+        <p className="text-muted-foreground leading-relaxed mt-3 max-w-2xl">{supporting}</p>
       )}
     </div>
   );

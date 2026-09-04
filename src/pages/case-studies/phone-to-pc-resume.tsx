@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { Section } from '@/components/casestudy/section';
+import { Beat } from '@/components/casestudy/beat';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { StepFlow } from '@/components/casestudy/step-flow';
@@ -73,29 +74,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': 'var(--icon-purple)',
   '--ring': 'var(--icon-purple)',
 } as React.CSSProperties;
-
-/** Small uppercase eyebrow + serif heading + optional supporting line, matching Home/About/Work's section heading pattern. Built locally rather than added to the shared Section component, which is used by other case studies that keep their existing plain-heading treatment. */
-function EditorialHeading({
-  eyebrow,
-  eyebrowColor = 'var(--icon-purple)',
-  heading,
-  supporting,
-}: {
-  eyebrow: string;
-  eyebrowColor?: string;
-  heading: React.ReactNode;
-  supporting?: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: eyebrowColor }}>
-        {eyebrow}
-      </p>
-      <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground leading-tight">{heading}</h2>
-      {supporting && <p className="text-muted-foreground leading-relaxed mt-3 max-w-2xl">{supporting}</p>}
-    </div>
-  );
-}
 
 /**
  * A major narrative-pause moment — a big centered lavender-washed statement,
@@ -413,7 +391,7 @@ function PhoneToPcResumePage() {
           <Section>
             <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 items-start">
               <div>
-                <EditorialHeading eyebrow="Overview" heading="Pick up where you left off" />
+                <Beat eyebrow="Overview" color="var(--icon-purple)">Pick up where you left off</Beat>
                 <Prose className="mt-5">
                   <p>
                     You start something on your phone. You get to your PC. You expect to
@@ -439,11 +417,13 @@ function PhoneToPcResumePage() {
         {/* 03 — Working experience */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Working experience"
-              heading="From Phone to PC, without missing a beat"
+              color="var(--icon-purple)"
               supporting="A real end-to-end experience continuing a task from phone to Windows PC."
-            />
+            >
+              From Phone to PC, without missing a beat
+            </Beat>
             <div className="mt-8">
               <div className="flex items-center justify-between gap-3 mb-3">
                 <p className="font-semibold text-foreground">Signal to Resume, demonstrated with Spotify</p>
@@ -474,11 +454,13 @@ function PhoneToPcResumePage() {
         {/* 04 — The challenge */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="The challenge"
-              heading="Making Windows understand transitions without interrupting."
+              color="var(--icon-purple)"
               supporting="Users switched between devices dozens of times a day. But Windows had no model for understanding intent across devices and apps."
-            />
+            >
+              Making Windows understand transitions without interrupting.
+            </Beat>
             <div className="mt-8 space-y-10">
               <NarrativeStatement supporting="People could sometimes continue their work between phone and PC, but continuity was trapped inside the individual apps or websites that supported it.">
                 Continuity existed. But it was trapped inside apps.
@@ -577,11 +559,13 @@ function PhoneToPcResumePage() {
         {/* 05 — Our solution */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Our solution"
-              heading="A system that senses intent and helps you continue."
+              color="var(--icon-purple)"
               supporting="We built the Windows Continuity System — a platform capability that unifies signals from phone activity, understands intent, and delivers the right experience on PC."
-            />
+            >
+              A system that senses intent and helps you continue.
+            </Beat>
             <div className="mt-8 space-y-6">
               <SystemDiagram />
               <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
@@ -603,11 +587,13 @@ function PhoneToPcResumePage() {
         {/* 06 — My role & approach */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="My role & approach"
-              heading="I designed the rule, not just the screens."
+              color="var(--icon-purple)"
               supporting="I led the end-to-end design across strategy, system design, experience definition and cross-team collaboration."
-            />
+            >
+              I designed the rule, not just the screens.
+            </Beat>
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-8">
               {ROLE_CONTRIBUTIONS.map((item) => (
                 <div key={item.title} className="rounded-xl border border-border bg-muted/30 p-5">
@@ -623,11 +609,13 @@ function PhoneToPcResumePage() {
         {/* 07 — Design principle */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Design principle"
-              heading="How proactive should Windows be?"
+              color="var(--icon-purple)"
               supporting="Proactivity is powerful only when it's earned."
-            />
+            >
+              How proactive should Windows be?
+            </Beat>
             <div className="mt-8 space-y-8">
               <ConfidenceSpectrum />
               <NarrativeStatement>
@@ -641,11 +629,13 @@ function PhoneToPcResumePage() {
         {/* 08 — Design decisions */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Design decisions"
-              heading="Turning the principle into an experience."
+              color="var(--icon-purple)"
               supporting="Three key design decisions shaped the Phone to PC Continuity experience."
-            />
+            >
+              Turning the principle into an experience.
+            </Beat>
             <div className="mt-8 space-y-12">
               {DECISIONS.map((decision, i) => (
                 <div key={decision.number} className={i > 0 ? 'pt-12 border-t border-border' : undefined}>
@@ -659,11 +649,13 @@ function PhoneToPcResumePage() {
         {/* 09 — Scalability */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Scalability"
-              heading="One continuity model. Different kinds of work."
+              color="var(--icon-purple)"
               supporting="The same system can support different kinds of activities across apps and experiences."
-            />
+            >
+              One continuity model. Different kinds of work.
+            </Beat>
             <div className="grid sm:grid-cols-3 gap-4 mt-8 items-start">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--icon-green)' }}>
@@ -733,11 +725,13 @@ function PhoneToPcResumePage() {
         {/* 10 — Impact & outcomes */}
         <Reveal>
           <Section>
-            <EditorialHeading
+            <Beat
               eyebrow="Impact & outcomes"
-              heading="Did the model work?"
+              color="var(--icon-purple)"
               supporting="Early results after GA show strong engagement and meaningful impact."
-            />
+            >
+              Did the model work?
+            </Beat>
             <div className="mt-8">
               <StatGrid
                 columns={4}
@@ -776,7 +770,7 @@ function PhoneToPcResumePage() {
         {/* 11 — In the news */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="In the news" heading="The experience beyond the product." />
+            <Beat eyebrow="In the news" color="var(--icon-purple)">The experience beyond the product.</Beat>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
               {PRESS_ITEMS.map((item) => {
                 const content = (
@@ -824,7 +818,7 @@ function PhoneToPcResumePage() {
         {/* 12 — Deep links */}
         <Reveal>
           <Section>
-            <EditorialHeading eyebrow="Related links" heading="Explore the experience yourself." />
+            <Beat eyebrow="Related links" color="var(--icon-purple)">Explore the experience yourself.</Beat>
             <ul className="mt-8 divide-y divide-border border-t border-b border-border">
               {[
                 {
