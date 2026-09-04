@@ -6,7 +6,7 @@ export interface AcrylicCardProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
 }
 
-/** The translucent "glass" card used throughout the site for project, experience, and contact cards. */
+/** The translucent "glass" card used for CtaBand's `surface` variant and the settings panel's Design System entry. */
 function AcrylicCard({
   className,
   variant = 'base',

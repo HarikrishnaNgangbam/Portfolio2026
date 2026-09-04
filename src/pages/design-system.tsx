@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Mail,
-  MapPin,
   Briefcase,
   Award,
   Smartphone,
@@ -9,10 +8,8 @@ import {
   Target,
   X,
   Check,
-  GitCompare,
   Workflow,
   FileText,
-  Image as ImageIcon,
 } from 'lucide-react';
 import { Linkedin } from '@/design-system/ui/icons/linkedin';
 import { Button } from '@/design-system/ui/button';
@@ -24,12 +21,9 @@ import { AcrylicCard } from '@/design-system/ui/acrylic-card';
 import { H1 } from '@/design-system/ui/h1';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
 import { MarkerList } from '@/design-system/ui/marker-list';
-import { CardHeading } from '@/design-system/ui/card-heading';
-import { ContactInfoCard } from '@/design-system/ui/contact-info-card';
 import { ExperienceHeaderRow } from '@/design-system/ui/experience-header-row';
 import { NarrativeSection } from '@/design-system/ui/narrative-section';
 import { EditorialColumn } from '@/design-system/ui/editorial-column';
-import { PrincipleBlock } from '@/design-system/ui/principle-block';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { CtaBand } from '@/components/portfolio/cta-band';
 import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
@@ -45,15 +39,9 @@ import { Prose } from '@/components/casestudy/prose';
 import { Takeaway } from '@/components/casestudy/takeaway';
 import { DecisionStrip } from '@/components/casestudy/decision-strip';
 import { EvidenceLabel, type EvidenceKind } from '@/components/casestudy/evidence-label';
-import { Placeholder } from '@/components/casestudy/placeholder';
 import { StepFlow } from '@/components/casestudy/step-flow';
-import { BeforeAfter, BeforeAfterCompact, BeforeAfterInline } from '@/components/casestudy/before-after';
 import { StatGrid } from '@/components/casestudy/stat-grid';
-import { Quote } from '@/components/casestudy/quote';
-import { ChecklistSection } from '@/components/casestudy/checklist-section';
 import { AppScenarioCard } from '@/components/casestudy/app-scenario-card';
-import { LinkList } from '@/components/casestudy/link-list';
-import { PressGrid } from '@/components/casestudy/press-grid';
 import { SpotifyIcon } from '@/design-system/ui/icons/brands';
 import { Switch } from '@/design-system/ui/switch';
 import { Footer } from '@/components/nav/footer';
@@ -459,12 +447,6 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="ContactInfoCard" purpose="Icon + label + value card used on Contact.">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <ContactInfoCard icon={Mail} iconColor="var(--icon-orange)" label="Email" value="hello@example.com" />
-            <ContactInfoCard icon={MapPin} iconColor="var(--icon-green)" label="Location" value="Imphal, India" />
-          </div>
-        </ComponentDemo>
       </ShowcaseSection>
 
       {/* EDITORIAL */}
@@ -484,7 +466,7 @@ function DesignSystemPage() {
           </Section>
         </ComponentDemo>
 
-        <ComponentDemo name="Beat" purpose="A standalone eyebrow + headline unit for a secondary beat nested inside an already-titled section. Prefer Section's own eyebrow/title/supporting props for a section's primary heading.">
+        <ComponentDemo name="Beat" purpose="Eyebrow + serif headline unit — the canonical section-heading treatment across the Phone → PC, Kopdar and Family Safety case studies. Also usable as a standalone secondary beat nested inside an already-titled section; prefer Section's own eyebrow/title/supporting props for a section's primary heading where the plain (non-serif) treatment is wanted instead.">
           <Beat eyebrow="Field notes" color="var(--icon-teal)">
             What we found wasn't what we expected.
           </Beat>
@@ -520,12 +502,6 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="Quote" purpose="Attributed pull-quote in large editorial type, attribution kept secondary. Used sparingly.">
-          <Quote attribution="PKM, Jakarta Region">
-            This changed how we work. We're building a smarter, more connected community.
-          </Quote>
-        </ComponentDemo>
-
         <ComponentDemo name="MarkerList" purpose="Canonical marker-list primitive — 'check' for role/experience highlights (Experience cards), 'dot' for skills/capabilities columns (Resume).">
           <div className="grid sm:grid-cols-2 gap-8">
             <MarkerList
@@ -542,12 +518,6 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="CardHeading" purpose="Icon + title row for About/Resume content cards.">
-          <CardHeading icon={Award} iconColor="var(--icon-blue)">
-            Skills & Expertise
-          </CardHeading>
-        </ComponentDemo>
-
         <ComponentDemo name="AcrylicCard" purpose="Translucent glass card — base (interactive) and surface (static) variants.">
           <div className="grid sm:grid-cols-2 gap-4">
             <AcrylicCard>Base variant — hover to lift</AcrylicCard>
@@ -557,7 +527,7 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="NarrativeSection" purpose="Canonical section-heading primitive for Home, About and Contact — heading + optional supporting paragraph, keeping the font-serif/size/weight treatment consistent across all three pages.">
+        <ComponentDemo name="NarrativeSection" purpose="Canonical section-heading primitive for Home, About, Contact and Resume — heading + optional supporting paragraph, keeping the font-serif/size/weight treatment consistent across all four pages.">
           <NarrativeSection
             heading="Complexity comes in different forms."
             supportingText="I've spent my career learning to design not just for the person using a product, but for the systems, teams and organizations that make the experience possible."
@@ -580,18 +550,6 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="PrincipleBlock" purpose="Numbered principle card — Home's 'How I lead' section.">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <PrincipleBlock number={1} title="Make complexity visible" iconColor="var(--icon-blue)">
-              I use systems maps, prototypes and clear narratives to turn ambiguity into
-              something teams can reason about together.
-            </PrincipleBlock>
-            <PrincipleBlock number={2} title="Design for the system" iconColor="var(--icon-purple)">
-              I look beyond the primary user to understand the operators and constraints
-              behind the experience.
-            </PrincipleBlock>
-          </div>
-        </ComponentDemo>
       </ShowcaseSection>
 
       {/* CASE STUDY */}
@@ -667,49 +625,11 @@ function DesignSystemPage() {
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="BeforeAfter family" purpose="Three sizes of the same transformation pattern (manual → automated, fragmented → unified): a two-column panel for richer content, a compact single card for dense grids, and an inline pair for a short textual contrast.">
-          <div className="space-y-4">
-            <BeforeAfterInline
-              before={{ label: 'Connected devices', sublabel: 'Users had to reconstruct context.' }}
-              after={{ label: 'A system that moves with the user', sublabel: 'Windows helps pick up where they left off.' }}
-            />
-            <div className="grid sm:grid-cols-3 gap-3">
-              <BeforeAfterCompact icon={GitCompare} before="Separate flows" after="One session flow" color="var(--icon-green)" />
-              <BeforeAfterCompact icon={GitCompare} before="Connectivity required" after="Offline capture + sync" color="var(--icon-orange)" />
-              <BeforeAfterCompact icon={GitCompare} before="Too many metrics" after="Focused signals" color="var(--icon-teal)" />
-            </div>
-            <BeforeAfter
-              color="var(--icon-blue)"
-              before={<p className="text-sm text-muted-foreground">Any content — text, a diagram, a small flow.</p>}
-              after={<p className="text-sm text-muted-foreground">Any content on the other side too.</p>}
-            />
-          </div>
-        </ComponentDemo>
-
         <ComponentDemo name="EvidenceLabel" purpose="A quiet marker distinguishing what kind of evidence an image or video represents, since the portfolio mixes real shipped screenshots with conceptual artifacts. Wired into ImageBlock/VideoBlock via an optional `evidence` prop.">
           <div className="flex flex-wrap gap-x-6 gap-y-3">
             {EVIDENCE_KINDS.map((kind) => (
               <EvidenceLabel key={kind} kind={kind} />
             ))}
-          </div>
-        </ComponentDemo>
-
-        <ComponentDemo name="Placeholder" purpose="Stand-in for a visual asset that doesn't exist yet, naming exactly what belongs there. `diagram` variant for a system/concept model; `screenshot` variant locks a fixed aspect ratio for a specific product screenshot.">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Placeholder
-              icon={Workflow}
-              title="Context Transfer Model"
-              type="System diagram placeholder"
-              descriptor="How intent, state and context travel with a task"
-              color="var(--icon-purple)"
-            />
-            <Placeholder
-              variant="screenshot"
-              icon={ImageIcon}
-              title="FS_BEFORE_AFTER"
-              type="Insert: before/after screenshot"
-              aspect="video"
-            />
           </div>
         </ComponentDemo>
 
@@ -724,38 +644,12 @@ function DesignSystemPage() {
           />
         </ComponentDemo>
 
-        <ComponentDemo name="ChecklistSection" purpose="Individually-boxed checkmark rows with an optional closing statement — Outcome sections.">
-          <ChecklistSection
-            intro="This work established a durable pattern:"
-            items={['Users move between devices without restarting work']}
-            closingStatement="This repositioned the product as a connected system."
-          />
-        </ComponentDemo>
-
         <ComponentDemo name="AppScenarioCard" purpose="Icon + title (+description) card for shipped/upcoming app-integration scenarios — 'Designing for Different Kinds of Work' style sections.">
           <div className="grid sm:grid-cols-3 gap-4">
             <AppScenarioCard icon={SpotifyIcon} title="Spotify" description="Continue playback without rebuilding context." />
           </div>
         </ComponentDemo>
 
-        <ComponentDemo name="PressGrid" purpose="Grid of press-coverage clipping screenshots — External Validation sections.">
-          <PressGrid
-            columns={2}
-            items={[
-              { src: '/images/casestudy-0/press-theverge.webp', alt: 'The Verge coverage' },
-              { src: '/images/casestudy-0/press-techradar.webp', alt: 'TechRadar coverage' },
-            ]}
-          />
-        </ComponentDemo>
-
-        <ComponentDemo name="LinkList" purpose="External reference links (documentation, press) with a consistent icon and underline treatment.">
-          <LinkList
-            links={[
-              { label: 'Cross-device Resume support page', href: 'https://support.microsoft.com' },
-              { label: 'Windows Insider Blog update', href: 'https://blogs.windows.com/windows-insider' },
-            ]}
-          />
-        </ComponentDemo>
       </ShowcaseSection>
 
       <div className="flex items-center gap-3 pt-4 text-muted-foreground">

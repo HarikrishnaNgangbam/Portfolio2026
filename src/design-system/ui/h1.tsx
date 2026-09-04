@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 
 export interface H1Props extends React.HTMLAttributes<HTMLHeadingElement> {
-  /** `hero` = Home/Work page titles (72px). `page` = About/Resume/case-study titles (60px). */
+  /** `hero` = Work/Resume page titles (72px). `page` = Home/About/Contact/case-study titles (60px). */
   size?: 'hero' | 'page';
   /**
    * Render tag override. Defaults to a real `<h1>` for every page-level use
