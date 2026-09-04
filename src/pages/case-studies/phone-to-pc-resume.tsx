@@ -32,6 +32,7 @@ import {
 import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { Section } from '@/components/casestudy/section';
 import { Beat } from '@/components/casestudy/beat';
+import { NarrativeStatement } from '@/components/casestudy/narrative-statement';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { StepFlow } from '@/components/casestudy/step-flow';
@@ -74,27 +75,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': 'var(--icon-purple)',
   '--ring': 'var(--icon-purple)',
 } as React.CSSProperties;
-
-/**
- * A major narrative-pause moment — a big centered lavender-washed statement,
- * distinct from ordinary body content. Used sparingly for the handful of
- * conceptual turns in the case study (never for routine section headings),
- * so that when it appears it reads as a deliberate beat, not a repeated
- * card pattern.
- */
-function NarrativeStatement({ children, supporting }: { children: React.ReactNode; supporting?: React.ReactNode }) {
-  return (
-    <div
-      className="rounded-2xl p-8 md:p-12 text-center"
-      style={{ backgroundColor: tint('var(--icon-purple)', 6) }}
-    >
-      <p className="font-serif text-2xl md:text-4xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
-        {children}
-      </p>
-      {supporting && <p className="text-muted-foreground mt-4 max-w-xl mx-auto">{supporting}</p>}
-    </div>
-  );
-}
 
 const IMPACT_STATS = [
   { value: '3.1M', label: 'Monthly Resume alerts surfaced to users' },
@@ -462,7 +442,10 @@ function PhoneToPcResumePage() {
               Making Windows understand transitions without interrupting.
             </Beat>
             <div className="mt-8 space-y-10">
-              <NarrativeStatement supporting="People could sometimes continue their work between phone and PC, but continuity was trapped inside the individual apps or websites that supported it.">
+              <NarrativeStatement
+                color="var(--icon-purple)"
+                supporting="People could sometimes continue their work between phone and PC, but continuity was trapped inside the individual apps or websites that supported it."
+              >
                 Continuity existed. But it was trapped inside apps.
               </NarrativeStatement>
 
@@ -476,7 +459,7 @@ function PhoneToPcResumePage() {
                 ]}
               />
 
-              <NarrativeStatement supporting="Continuity moves from an app capability to a platform capability.">
+              <NarrativeStatement color="var(--icon-purple)" supporting="Continuity moves from an app capability to a platform capability.">
                 Cross-device continuity moves that responsibility to the OS.
               </NarrativeStatement>
 
@@ -618,7 +601,7 @@ function PhoneToPcResumePage() {
             </Beat>
             <div className="mt-8 space-y-8">
               <ConfidenceSpectrum />
-              <NarrativeStatement>
+              <NarrativeStatement color="var(--icon-purple)">
                 The more confident Windows is about a user's intent, the more proactive
                 it can be.
               </NarrativeStatement>

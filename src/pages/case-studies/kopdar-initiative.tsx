@@ -20,6 +20,7 @@ import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Section } from '@/components/casestudy/section';
 import { Beat } from '@/components/casestudy/beat';
+import { NarrativeStatement } from '@/components/casestudy/narrative-statement';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
@@ -57,24 +58,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': KD_GREEN,
   '--ring': KD_GREEN,
 } as React.CSSProperties;
-
-/**
- * A major narrative-pause moment — a big centered, tinted statement, distinct
- * from ordinary body content. Mirrors the locked Phone → PC case study's
- * NarrativeStatement component verbatim, so Kopdar's own narrative-pause
- * moments sit inside the same dedicated-container treatment rather than
- * floating as bare centered text.
- */
-function NarrativeStatement({ children, supporting, color }: { children: React.ReactNode; supporting?: React.ReactNode; color: string }) {
-  return (
-    <div className="rounded-2xl p-8 md:p-12 text-center" style={{ backgroundColor: tint(color, 6) }}>
-      <p className="font-serif text-2xl md:text-4xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
-        {children}
-      </p>
-      {supporting && <div className="text-muted-foreground mt-4 max-w-xl mx-auto space-y-3">{supporting}</div>}
-    </div>
-  );
-}
 
 /**
  * A fixed-height, object-contain frame for the Design Decisions' paired UI

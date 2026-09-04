@@ -34,6 +34,7 @@ import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { MetaGrid } from '@/components/casestudy/meta-grid';
 import { Section } from '@/components/casestudy/section';
+import { NarrativeStatement } from '@/components/casestudy/narrative-statement';
 import { Prose } from '@/components/casestudy/prose';
 import { IconCardList } from '@/components/casestudy/icon-card-list';
 import { CalloutList } from '@/components/casestudy/callout-list';
@@ -81,24 +82,6 @@ function ContinuityLoop() {
       <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
         Phone → PC ↔ Phone
       </p>
-    </div>
-  );
-}
-
-/**
- * A major narrative-pause moment — a centered lavender-washed statement,
- * distinct from ordinary body content. Same recipe as the local component
- * of the same name in phone-to-pc-resume.tsx (not shared, since each case
- * study's narrative beats are its own), used sparingly for this page's
- * genuine conceptual turns.
- */
-function NarrativeStatement({ children, supporting }: { children: React.ReactNode; supporting?: React.ReactNode }) {
-  return (
-    <div className="rounded-2xl p-8 md:p-12 text-center" style={{ backgroundColor: tint('var(--icon-purple)', 6) }}>
-      <p className="font-serif text-2xl md:text-4xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
-        {children}
-      </p>
-      {supporting && <p className="text-muted-foreground mt-4 max-w-xl mx-auto">{supporting}</p>}
     </div>
   );
 }
@@ -638,7 +621,7 @@ function PcToPhoneResumePage() {
                 },
               ]}
             />
-            <NarrativeStatement>The unit of continuity is the task, not the device.</NarrativeStatement>
+            <NarrativeStatement color="var(--icon-purple)">The unit of continuity is the task, not the device.</NarrativeStatement>
             <Prose>
               <p>Three things need to travel with the task for it to feel resumed instead of restarted:</p>
             </Prose>
@@ -989,7 +972,7 @@ function PcToPhoneResumePage() {
                 ships.)
               </p>
             </Prose>
-            <NarrativeStatement supporting="Returning to the hypothesis from earlier">
+            <NarrativeStatement color="var(--icon-purple)" supporting="Returning to the hypothesis from earlier">
               It may also influence where it begins.
             </NarrativeStatement>
             <Prose>

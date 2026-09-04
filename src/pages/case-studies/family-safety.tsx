@@ -19,6 +19,7 @@ import { CaseStudyHero } from '@/components/casestudy/case-study-hero';
 import { CaseStudyNav } from '@/components/casestudy/case-study-nav';
 import { Section } from '@/components/casestudy/section';
 import { Beat } from '@/components/casestudy/beat';
+import { NarrativeStatement } from '@/components/casestudy/narrative-statement';
 import { Prose } from '@/components/casestudy/prose';
 import { ImageBlock } from '@/components/casestudy/image-block';
 import { Takeaway } from '@/components/casestudy/takeaway';
@@ -44,23 +45,6 @@ const CASESTUDY_THEME_VARS = {
   '--primary': 'var(--icon-blue)',
   '--ring': 'var(--icon-blue)',
 } as React.CSSProperties;
-
-/**
- * A major narrative-pause moment — a big centered, tinted statement, distinct
- * from ordinary body content. Mirrors the locked Phone → PC case study's
- * NarrativeStatement verbatim. Reserved for exactly one moment on this page
- * (the leadership move), matching Phone → PC's own sparing use of it.
- */
-function NarrativeStatement({ children, supporting }: { children: React.ReactNode; supporting?: React.ReactNode }) {
-  return (
-    <div className="rounded-2xl p-8 md:p-12 text-center" style={{ backgroundColor: tint('var(--icon-blue)', 6) }}>
-      <p className="font-serif text-2xl md:text-4xl font-bold text-foreground leading-snug max-w-2xl mx-auto">
-        {children}
-      </p>
-      {supporting && <p className="text-muted-foreground mt-4 max-w-xl mx-auto">{supporting}</p>}
-    </div>
-  );
-}
 
 /**
  * A mid-weight editorial conclusion — warmer and more centered than an
@@ -432,7 +416,10 @@ function FamilySafetyPage() {
           <Section>
             <Beat eyebrow="The leadership move" color="var(--icon-blue)">Instead of gatekeeping exploration, I redesigned the gate.</Beat>
             <div className="mt-8">
-              <NarrativeStatement supporting="The old model made Design the bottleneck between every idea and engineering. The new one made Design the steward of a system PMs could explore inside safely.">
+              <NarrativeStatement
+                color="var(--icon-blue)"
+                supporting="The old model made Design the bottleneck between every idea and engineering. The new one made Design the steward of a system PMs could explore inside safely."
+              >
                 I redesigned the gate, not the people.
               </NarrativeStatement>
             </div>
