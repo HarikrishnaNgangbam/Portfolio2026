@@ -9,7 +9,7 @@ export interface H1Props extends React.HTMLAttributes<HTMLHeadingElement> {
    * *examples* of this component so a document never ends up with more than
    * one actual `<h1>` — same visual styling either way.
    */
-  as?: 'h1' | 'p';
+  as?: 'h1' | 'h2' | 'p';
 }
 
 function H1({ className, size = 'page', as: Tag = 'h1', ...props }: H1Props) {

@@ -3,6 +3,7 @@ import { ChevronRight, Construction } from 'lucide-react';
 import { ImageWithFallback } from '@/design-system/ui/image-with-fallback';
 import { Badge } from '@/design-system/ui/badge';
 import { LeadParagraph } from '@/design-system/ui/lead-paragraph';
+import { H1 } from '@/design-system/ui/h1';
 import { CaseStudyProgress } from '@/components/casestudy/case-study-progress';
 import type { IconComponent } from '@/lib/utils';
 
@@ -58,7 +59,7 @@ function CaseStudyHero({
   imageBadge,
   workInProgress,
   iconFlow,
-  headingLevel: Heading = 'h1',
+  headingLevel = 'h1',
   showProgress = true,
 }: CaseStudyHeroProps) {
   const titleParts = titleHighlight ? title.split(titleHighlight) : null;
@@ -118,7 +119,7 @@ function CaseStudyHero({
         )}
       </div>
 
-      <Heading className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
+      <H1 size="page" as={headingLevel}>
         {titleParts ? (
           <>
             {titleParts[0]}
@@ -128,7 +129,7 @@ function CaseStudyHero({
         ) : (
           title
         )}
-      </Heading>
+      </H1>
       <LeadParagraph className="mt-4">{subtitle}</LeadParagraph>
       {description && (
         <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">{description}</p>
