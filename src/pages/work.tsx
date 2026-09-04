@@ -347,14 +347,14 @@ function WorkPage() {
             }
             links={
               <div className="space-y-3">
-                <CtaLinkRow to="/resume" icon={<FileText className="w-4 h-4" />} label="View my Resume" />
+                <CtaLinkRow to="/resume" icon={<FileText className="w-4 h-4" />} label="Resume" />
                 <CtaLinkRow
                   href={LINKEDIN_URL}
                   external
                   icon={<Linkedin className="w-4 h-4" />}
-                  label="Explore more on LinkedIn"
+                  label="LinkedIn"
                 />
-                <CtaLinkRow href={EMAIL_HREF} icon={<Mail className="w-4 h-4" />} label="Send me an Email" />
+                <CtaLinkRow href={EMAIL_HREF} icon={<Mail className="w-4 h-4" />} label="Email" />
               </div>
             }
           >
