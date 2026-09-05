@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Settings, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -11,15 +11,39 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(href + '/');
 }
 
+/** The wordmark on the left is the Home link, so the text nav only lists the rest. */
+const NAV_LINKS = NAV_ITEMS.filter((item) => item.href !== '/');
+
 function Header() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const navGroupRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const [indicator, setIndicator] = useState<{ left: number; width: number } | null>(null);
 
-  /** The wordmark on the left is the Home link, so the text nav only lists the rest. */
-  const navLinks = NAV_ITEMS.filter((item) => item.href !== '/');
   const activeItem = NAV_ITEMS.find((item) => isActive(location.pathname, item.href));
   const currentTitle = activeItem?.label ?? 'Home';
+
+  // Measures the active desktop link so the underline can slide to it instead
+  // of each link animating its own border independently.
+  useEffect(() => {
+    function measure() {
+      const activeLink = NAV_LINKS.find((item) => isActive(location.pathname, item.href));
+      const el = activeLink ? linkRefs.current[activeLink.href] : null;
+      const group = navGroupRef.current;
+      if (!el || !group) {
+        setIndicator(null);
+        return;
+      }
+      const elRect = el.getBoundingClientRect();
+      const groupRect = group.getBoundingClientRect();
+      setIndicator({ left: elRect.left - groupRect.left, width: elRect.width });
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, [location.pathname]);
 
   return (
     <>
@@ -35,25 +59,35 @@ function Header() {
 
             {/* Desktop layout */}
             <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((item) => {
-                const active = isActive(location.pathname, item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    aria-current={active ? 'page' : undefined}
-                    className={cn(
-                      'text-sm font-medium pb-1 border-b-2 transition-colors duration-200',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm',
-                      active
-                        ? 'text-foreground border-b-[var(--icon-purple)]'
-                        : 'text-muted-foreground border-transparent hover:text-foreground',
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+              <div ref={navGroupRef} className="relative flex items-center gap-8">
+                {NAV_LINKS.map((item) => {
+                  const active = isActive(location.pathname, item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      ref={(el) => {
+                        linkRefs.current[item.href] = el;
+                      }}
+                      to={item.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={cn(
+                        'text-sm font-medium pb-1 border-b-2 border-transparent transition-colors duration-200',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm',
+                        active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+                {indicator && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0 h-0.5 bg-[var(--icon-purple)] transition-[left,width] duration-300 ease-out motion-reduce:transition-none"
+                    style={{ left: indicator.left, width: indicator.width }}
+                  />
+                )}
+              </div>
               <button
                 type="button"
                 aria-label="Settings"
@@ -91,7 +125,7 @@ function Header() {
             className="lg:hidden border-t border-[var(--surface-warm-border)] bg-[var(--surface-warm)] px-4 py-3"
           >
             <div className="flex flex-col gap-1">
-              {navLinks.map((item) => {
+              {NAV_LINKS.map((item) => {
                 const active = isActive(location.pathname, item.href);
                 return (
                   <Link
