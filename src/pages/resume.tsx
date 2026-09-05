@@ -117,7 +117,7 @@ function ResumePage() {
                   <Logo
                     src={EXPERIENCE_LOGO_OVERRIDES[exp.company] ?? exp.companyLogo}
                     alt={exp.companyLogoAlt}
-                    className="h-7"
+                    className="h-7 max-w-[11rem]"
                   />
                   <div className="min-w-0 w-full">
                     <ExperienceHeaderRow
