@@ -91,7 +91,7 @@ function FilterPill({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        'inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wide transition-colors duration-200 shrink-0',
+        'inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-wide transition-all duration-200 shrink-0 active:scale-[0.98]',
         active ? 'text-[var(--icon-purple)]' : 'border-border text-muted-foreground hover:text-foreground',
       )}
       style={
