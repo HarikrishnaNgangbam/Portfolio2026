@@ -88,8 +88,6 @@ const JOURNEY: JourneyStage[] = [
     icon: Smartphone,
     color: 'var(--icon-cyan)',
     stage: 'Microsoft',
-    logo: '/images/logos/microsoft-windows.webp',
-    logoAlt: 'Microsoft',
     description: 'Learning to think beyond individual products toward connected experiences, devices, and platforms.',
   },
   {
@@ -140,8 +138,6 @@ const LESSONS: LessonCard[] = [
   {
     icon: Smartphone,
     color: 'var(--icon-blue)',
-    logo: '/images/logos/microsoft-windows.webp',
-    logoAlt: 'Microsoft',
     title: 'Microsoft taught me to think beyond the product.',
     paragraphs: [
       'Cross-device continuity, Windows Connected Experience & Ecosystem, platform behavior, ecosystem thinking and AI-driven contextual experiences.',
