@@ -70,19 +70,19 @@ const JOURNEY: JourneyStage[] = [
     icon: Wrench,
     color: 'var(--icon-purple)',
     stage: 'Engineering',
-    description: 'Engineering taught me to be curious about how things work. I learned to break complex problems down, understand what sits underneath them, and think about how different parts of a system connect.',
+    description: 'Learning to understand how things work — and how the pieces fit together.',
   },
   {
     icon: Ruler,
     color: 'var(--icon-blue)',
     stage: 'Industrial Design',
-    description: 'Industrial design shifted my attention from how things work to how people experience them. It taught me to think about people, context, physical constraints, and the details that turn an idea into something people can actually use.',
+    description: 'Learning to look at problems through people, context, constraints, and experience.',
   },
   {
     icon: Users,
     color: 'var(--icon-green)',
     stage: 'Gojek',
-    description: 'At Gojek, the system became impossible to ignore. Designing for drivers, customers, and internal teams meant working across products, operations, and incentives. I learned that improving one part of an experience often meant understanding everything around it.',
+    description: "Learning that products don't exist alone. They live inside operations, incentives, and real-world complexity.",
   },
   {
     icon: Smartphone,
@@ -90,13 +90,13 @@ const JOURNEY: JourneyStage[] = [
     stage: 'Microsoft',
     logo: '/images/logos/microsoft-windows.webp',
     logoAlt: 'Microsoft',
-    description: 'At Microsoft, I began thinking beyond individual products toward connected experiences and platforms. Working across devices made me think about continuity, shared systems, and how experiences should work together rather than exist as isolated surfaces.',
+    description: 'Learning to think beyond individual products toward connected experiences, devices, and platforms.',
   },
   {
     icon: Sparkles,
     color: 'var(--icon-pink)',
     stage: 'Design Leadership & AI',
-    description: "Design leadership has expanded that perspective from products to people and organisations. Today, I care not only about what a team creates, but about building the clarity, systems, and capabilities that help teams solve harder problems. AI is becoming another part of that toolkit — an exploration engine, not a substitute for judgement.",
+    description: 'Learning to create the conditions for teams to solve harder problems — and exploring how AI can expand that capacity.',
   },
 ];
 
