@@ -14,6 +14,7 @@ import {
   Sofa,
   CircuitBoard,
   Smartphone,
+  Monitor,
   Users2,
   Unlock,
   ClipboardCheck,
@@ -85,7 +86,7 @@ const JOURNEY: JourneyStage[] = [
     description: "Learning that products don't exist alone. They live inside operations, incentives, and real-world complexity.",
   },
   {
-    icon: Smartphone,
+    icon: Monitor,
     color: 'var(--icon-cyan)',
     stage: 'Microsoft',
     description: 'Learning to think beyond individual products toward connected experiences, devices, and platforms.',
@@ -136,7 +137,7 @@ const LESSONS: LessonCard[] = [
     ],
   },
   {
-    icon: Smartphone,
+    icon: Monitor,
     color: 'var(--icon-blue)',
     title: 'Microsoft taught me to think beyond the product.',
     paragraphs: [
