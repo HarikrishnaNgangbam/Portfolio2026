@@ -36,9 +36,8 @@ function Logo({ src, alt, className }: { src?: string; alt?: string; className?:
   return <ImageWithFallback src={src} alt={alt ?? ''} className={cn('w-auto object-contain', className)} />;
 }
 
-/** First-row categories in the Capabilities grid — Emerging pairs with Leadership below for width. */
-const CAPABILITIES_ROW_1 = ['Product', 'Systems', 'Craft'] as const;
-const CAPABILITIES_ROW_2 = ['Leadership', 'Emerging'] as const;
+/** Capability categories, in display order (distinct from SKILLS' own key order). */
+const CAPABILITIES = ['Product', 'Systems', 'Craft', 'Leadership', 'Emerging'] as const;
 
 /**
  * Experience uses the full Microsoft wordmark+icon lockup, while the Hero
@@ -146,23 +145,13 @@ function ResumePage() {
         </Reveal>
       </section>
 
-      {/* Capabilities — 3-column first row, 2-column second row so Leadership and Emerging get full-width columns */}
+      {/* Capabilities — single row across all 5 categories on desktop, reflowing at smaller widths */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
         <Reveal>
           <NarrativeSection heading="Capabilities" />
-          <div className="grid lg:grid-cols-3 gap-x-10 gap-y-10 mt-8">
-            {CAPABILITIES_ROW_1.map((category) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-x-10 gap-y-10 mt-8">
+            {CAPABILITIES.map((category) => (
               <div key={category}>
-                <h3 className="text-lg font-bold text-foreground">{category}</h3>
-                <div className="mt-3">
-                  <MarkerList items={SKILLS[category]} marker="dot" />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10 mt-8">
-            {CAPABILITIES_ROW_2.map((category) => (
-              <div key={category} className={category === 'Leadership' ? 'lg:col-span-2' : undefined}>
                 <h3 className="text-lg font-bold text-foreground">{category}</h3>
                 <div className="mt-3">
                   <MarkerList items={SKILLS[category]} marker="dot" />
