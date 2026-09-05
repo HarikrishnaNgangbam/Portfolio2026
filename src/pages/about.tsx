@@ -60,7 +60,6 @@ interface JourneyStage {
   icon: IconComponent;
   color: string;
   stage: string;
-  dates?: string;
   description: string;
   logo?: string;
   logoAlt?: string;
@@ -71,37 +70,33 @@ const JOURNEY: JourneyStage[] = [
     icon: Wrench,
     color: 'var(--icon-purple)',
     stage: 'Engineering',
-    dates: '2014 – 2017',
-    description: 'Learned to understand how things are built, where constraints come from and how parts work together.',
+    description: 'Engineering taught me to be curious about how things work. I learned to break complex problems down, understand what sits underneath them, and think about how different parts of a system connect.',
   },
   {
     icon: Ruler,
     color: 'var(--icon-blue)',
     stage: 'Industrial Design',
-    dates: '2014 – 2017',
-    description: 'Learned to solve real problems with empathy, function and form across physical and digital experiences.',
+    description: 'Industrial design shifted my attention from how things work to how people experience them. It taught me to think about people, context, physical constraints, and the details that turn an idea into something people can actually use.',
   },
   {
     icon: Users,
     color: 'var(--icon-green)',
     stage: 'Gojek',
-    dates: '2017 – 2022',
-    description: 'Designed for real users at scale across operations, mobility, care and communication.',
+    description: 'At Gojek, the system became impossible to ignore. Designing for drivers, customers, and internal teams meant working across products, operations, and incentives. I learned that improving one part of an experience often meant understanding everything around it.',
   },
   {
     icon: Smartphone,
     color: 'var(--icon-cyan)',
     stage: 'Microsoft',
-    dates: '2024 – Present',
     logo: '/images/logos/microsoft-windows.webp',
     logoAlt: 'Microsoft',
-    description: 'Designing platforms and ecosystems that help people move across devices, contexts and tasks.',
+    description: 'At Microsoft, I began thinking beyond individual products toward connected experiences and platforms. Working across devices made me think about continuity, shared systems, and how experiences should work together rather than exist as isolated surfaces.',
   },
   {
     icon: Sparkles,
     color: 'var(--icon-pink)',
     stage: 'Design Leadership & AI',
-    description: "Helping teams grow, raising the bar and exploring how AI can expand what's possible.",
+    description: "Design leadership has expanded that perspective from products to people and organisations. Today, I care not only about what a team creates, but about building the clarity, systems, and capabilities that help teams solve harder problems. AI is becoming another part of that toolkit — an exploration engine, not a substitute for judgement.",
   },
 ];
 
@@ -253,7 +248,10 @@ function AboutPage() {
       {/* Journey */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t">
         <Reveal>
-          <NarrativeSection heading="From the edge of the system to the platform." />
+          <NarrativeSection
+            heading="I stopped seeing products as isolated things."
+            supportingText="The more varied my work became, the more I noticed how much of an experience lives outside the interface — in the systems, people, and decisions around it. That changed not only what I design, but how I approach problems."
+          />
 
           {/* Desktop: connected row */}
           <div className="hidden md:block relative mt-10">
@@ -272,7 +270,6 @@ function AboutPage() {
                     )}
                   </div>
                   <h3 className="font-bold text-foreground leading-tight mt-3">{item.stage}</h3>
-                  {item.dates && <p className="text-xs text-muted-foreground mt-0.5">{item.dates}</p>}
                   <p className="text-muted-foreground text-sm leading-relaxed mt-2">{item.description}</p>
                 </div>
               ))}
@@ -295,7 +292,6 @@ function AboutPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-foreground leading-tight">{item.stage}</h3>
-                  {item.dates && <p className="text-xs text-muted-foreground mt-0.5">{item.dates}</p>}
                   <p className="text-muted-foreground text-sm leading-relaxed mt-1.5">{item.description}</p>
                 </div>
               </div>
