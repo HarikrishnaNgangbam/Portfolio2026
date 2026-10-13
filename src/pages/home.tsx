@@ -258,7 +258,7 @@ function HomePage() {
       <section id="selected-work" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t scroll-mt-24">
         <Reveal>
           <NarrativeSection heading="A few problems I've had the privilege to work on" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          <div className="grid sm:grid-cols-2 gap-6 mt-8">
             {projects.map((project, i) => (
               <Reveal key={project.slug} delay={i * 80}>
                 <ProjectCard project={project} number={i + 1} headingLevel="h3" />
