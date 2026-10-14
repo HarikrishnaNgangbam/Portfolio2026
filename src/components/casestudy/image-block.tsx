@@ -13,8 +13,8 @@ export interface ImageBlockProps {
   /**
    * Fixed height in pixels (desktop/tablet only) — use when this image sits
    * side by side with another of a different aspect ratio and both need to
-   * line up. The image is letterboxed (object-contain), never cropped, the
-   * same technique Kopdar's own DecisionScreenshot already uses.
+   * line up. The image scales to fill the box (object-cover), matching the
+   * plain cropped-photo treatment already used elsewhere in case studies.
    */
   height?: number;
 }
@@ -31,14 +31,14 @@ function ImageBlock({ src, alt, caption, heading, evidence, height }: ImageBlock
       <div
         className={cn(
           'rounded-2xl overflow-hidden border border-border',
-          height != null && 'bg-card flex items-center justify-center p-4 sm:h-[var(--image-block-height)]',
+          height != null && 'sm:h-[var(--image-block-height)]',
         )}
         style={height != null ? ({ '--image-block-height': `${height}px` } as React.CSSProperties) : undefined}
       >
         <ImageWithFallback
           src={src}
           alt={alt}
-          className={height != null ? 'w-full h-auto sm:h-full object-contain' : 'w-full h-auto'}
+          className={height != null ? 'w-full h-auto sm:h-full object-cover' : 'w-full h-auto'}
         />
       </div>
       {caption && <p className="text-sm text-muted-foreground mt-2 text-center">{caption}</p>}
