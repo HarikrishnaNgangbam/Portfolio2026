@@ -283,10 +283,15 @@ function KopdarInitiativePage() {
               valuable.
             </p>
             <div className="grid sm:grid-cols-2 gap-6 mt-8 items-center">
-              <ImageBlock src="/images/casestudy-3/community-meeting.webp" alt="Gojek drivers and the design team gathered face to face at a Kopdar session" />
+              <ImageBlock
+                src="/images/casestudy-3/community-meeting.webp"
+                alt="Gojek drivers and the design team gathered face to face at a Kopdar session"
+                height={320}
+              />
               <ImageBlock
                 src="/images/casestudy-3/kopdar-relationship-diagram.png"
                 alt="Diagram showing Kopdar strengthening the relationship between Gojek and the driver community through face-to-face connection, built on trust, support and growth"
+                height={320}
               />
             </div>
           </Section>
@@ -398,8 +403,8 @@ function KopdarInitiativePage() {
                   />
                   <div className="flex items-center gap-1.5 mt-2">
                     <MapPin className="w-3.5 h-3.5" style={{ color: KD_ORANGE }} />
-                    <span className="text-xs font-semibold text-foreground">Makassar</span>
-                    <span className="text-xs text-muted-foreground">· Jan 2020</span>
+                    <span className="text-xs font-semibold text-foreground">Jakarta</span>
+                    <span className="text-xs text-muted-foreground">· Oct 2019</span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">Kopdar task force team</p>
                 </div>
@@ -411,8 +416,8 @@ function KopdarInitiativePage() {
                   />
                   <div className="flex items-center gap-1.5 mt-2">
                     <MapPin className="w-3.5 h-3.5" style={{ color: KD_GREEN }} />
-                    <span className="text-xs font-semibold text-foreground">Jakarta</span>
-                    <span className="text-xs text-muted-foreground">· Oct 2019</span>
+                    <span className="text-xs font-semibold text-foreground">Makassar</span>
+                    <span className="text-xs text-muted-foreground">· Jan 2020</span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">Field research with PKs and drivers</p>
                 </div>
@@ -564,9 +569,12 @@ function KopdarInitiativePage() {
                           ))}
                         </div>
                         <details className="mt-4 group">
-                          <summary className="text-xs font-bold uppercase tracking-widest text-muted-foreground cursor-pointer select-none list-none inline-flex items-center gap-1.5">
-                            <ArrowRight className="w-3 h-3 transition-transform group-open:rotate-90" />
+                          <summary
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-bold uppercase tracking-widest cursor-pointer select-none list-none transition-all duration-200 hover:opacity-90 active:scale-[0.98]"
+                            style={{ borderColor: KD_TEAL, backgroundColor: tint(KD_TEAL, 8), color: KD_TEAL }}
+                          >
                             Complete flow
+                            <ArrowRight className="w-3.5 h-3.5 transition-transform group-open:rotate-90" />
                           </summary>
                           <div className="mt-4">
                             <ImageBlock src={decision.evidence.fullFlow.src} alt={decision.evidence.fullFlow.alt} />
