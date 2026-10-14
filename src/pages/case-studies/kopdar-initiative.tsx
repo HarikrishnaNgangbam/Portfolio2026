@@ -238,23 +238,27 @@ function KopdarInitiativePage() {
           <Section>
             <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 items-start">
               <div>
-                <Beat eyebrow="Overview" color={KD_GREEN}>A human program was becoming an operational problem.</Beat>
+                <Beat eyebrow="Overview" color={KD_GREEN}>Built on trust. Run on fragmented tools.</Beat>
                 <Prose className="mt-5">
                   <p>
-                    Kopdar, Kopi Darat, was one of Gojek's ways of bringing drivers
-                    together for direct conversations, feedback and community building.
+                    Kopdar was Gojek's face-to-face driver community program, designed
+                    to build trust, strengthen relationships, and create a channel for
+                    feedback between drivers and Gojek.
                   </p>
                   <p>
-                    As the network grew, however, the work surrounding each session
-                    became increasingly fragmented.
+                    The program had grown across multiple regions, but the operational
+                    process behind it was fragmented. Performance Katalysts—the people
+                    running these sessions—were spending too much time coordinating
+                    tools, tracking attendance, and preparing reports instead of
+                    focusing on the drivers.
                   </p>
                   <p>
-                    Planning happened in one place. Attendance somewhere else. Reporting
-                    somewhere else again.
+                    I worked on redesigning the system around the program, taking it
+                    from a fragmented, manual process to a more connected experience.
                   </p>
                   <p>
-                    The relationship was human. The operating model wasn't built to
-                    scale with it.
+                    The central design challenge was simple: how might we remove the
+                    administrative work without removing the human interaction?
                   </p>
                 </Prose>
               </div>
