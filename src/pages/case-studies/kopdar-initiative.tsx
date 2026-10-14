@@ -257,8 +257,11 @@ function KopdarInitiativePage() {
                     from a fragmented, manual process to a more connected experience.
                   </p>
                   <p>
-                    The central design challenge was simple: how might we remove the
-                    administrative work without removing the human interaction?
+                    The central design challenge was simple:{' '}
+                    <strong className="text-foreground">
+                      how might we remove the administrative work without removing the
+                      human interaction?
+                    </strong>
                   </p>
                 </Prose>
               </div>
